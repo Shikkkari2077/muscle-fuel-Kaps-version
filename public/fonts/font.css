@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'kaneda_gothic_boldbold';
+    src: url('kanedagothic-bold-webfont.woff2') format('woff2'),
+         url('kanedagothic-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+/*@font-face {
+    font-family: 'VI-Quan-Tu';
+    src:url('VI-Quan-Tu.ttf.woff') format('woff'),
+        url('VI-Quan-Tu.ttf.svg#VI-Quan-Tu') format('svg'),
+        url('VI-Quan-Tu.ttf.eot'),
+        url('VI-Quan-Tu.ttf.eot?#iefix') format('embedded-opentype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Wagner-Zip-Change-Condensed';
+    src:url('Wagner-Zip-Change-Condensed.ttf.woff') format('woff'),
+        url('Wagner-Zip-Change-Condensed.ttf.svg#Wagner-Zip-Change-Condensed') format('svg'),
+        url('Wagner-Zip-Change-Condensed.ttf.eot'),
+        url('Wagner-Zip-Change-Condensed.ttf.eot?#iefix') format('embedded-opentype'); 
+    font-weight: normal;
+    font-style: normal;
+}*/

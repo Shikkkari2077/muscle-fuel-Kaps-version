@@ -1,0 +1,45 @@
+@charset "utf-8";
+/* CSS Document*/
+* 					{font-family: 'Almarai', sans-serif;}
+body 				{font-size:16px;font-family: 'Almarai', sans-serif;direction: rtl}
+ul,ol,li,pre,
+form,blockquote,
+fieldset,input,p,select,label,button,textarea,section,a{font-family: 'Almarai', sans-serif; }
+h1,h2,h3,h4,h5,h6	{font-family:'Almarai', sans-serif; }
+.button{font:400 17px/25px 'Almarai', sans-serif;}
+.button-dark{font:400 25px/25px 'Almarai', sans-serif;}
+.banner-contents h1{float:right;text-align:right}
+.slideshow-container .swiper-pagination-bullet + .swiper-pagination-bullet{margin-left:0px;margin-right:10px;}
+.amazing-button-prev {
+    right: -75px;left:auto 
+}
+.amazing-button-next {
+    left: -75px;right:auto
+}
+.swiper-button-next:after{transform:rotate(180deg)}
+.swiper-button-prev:after{transform:rotate(180deg)}
+.popular-button-prev {
+    left:auto;right:-75px;
+}
+.popular-button-next {
+    right:auto;left:-75px;
+}
+.travel-ul, .travel-ul li,.popular-left,.copyrights-left {
+    float:right;
+}
+.travel-div .travel-head{float: left;text-align:left }
+.popular-right,.social-media {
+    float: left;
+}
+.popular-dtl h2, .popular-dtl p,.copyrights p{text-align:right}
+.offer-main{background-image:url("../img/offer-bg-ar.jpg");}
+.offer-main::after{left:auto;right:0}
+.booknow-viewdetails {
+    padding-left:25px;
+}
+.foot-logo{text-align: right}
+.subcribe-btn{right:auto;left:0}
+.subscriber-div{padding-left:100px}
+.social-media li + li {
+    margin-left: 0px;margin-right: 5px;
+}
