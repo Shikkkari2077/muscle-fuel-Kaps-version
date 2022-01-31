@@ -7,7 +7,7 @@ const Menu = () => {
   return (
     <>
      <Navbar/>
-      <section class="innerpages">
+      
         <div class="container">
             <div class="row">
                 {/* <!--<div class="col-12">
@@ -275,7 +275,7 @@ const Menu = () => {
                 </div>
             </div>
         </div>
-      </section>
+      
         <div id="lunchDishOne" class="popup-hidden modelbox dish-popup animated-modal">
             <h2 class="anim1 pt-0">Meal Title One</h2>
             <div class="package-dtl">

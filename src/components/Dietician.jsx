@@ -6,7 +6,7 @@ const Dietician = () => {
   return (
     <>
     <Navbar/>
-      <section class="innerpages">
+     
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -105,7 +105,7 @@ const Dietician = () => {
                 </div>
             </div>
         </div>
-      </section>
+     
       <Footer/>	
     </>
   );

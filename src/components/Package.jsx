@@ -6,7 +6,6 @@ const Package = () => {
   return (
     <>
     <Navbar/>
-        <section class="innerpages">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -455,7 +454,6 @@ const Package = () => {
                     </div>
                 </div>
             </div>
-        </section>
         <div id="sumbatikModel" class="popup-hidden modelbox animated-modal">
             <h2 class="anim1 pt-0">Sumbatik</h2>
             <div class="package-dtl">

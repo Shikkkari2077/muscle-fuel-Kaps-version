@@ -6,7 +6,7 @@ const SingIn = () => {
   return (
     <>
      <Navbar/>
-      <section class="innerpages sign-in-main">
+      <div class="sign-in-main">
         <div class="container">
             <div class="row">
                 {/* <!--<div class="col-12 position-relative z-index99">
@@ -69,7 +69,7 @@ const SingIn = () => {
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     </>
   );
 };
