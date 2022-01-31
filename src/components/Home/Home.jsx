@@ -1,6 +1,7 @@
 import React from "react";
-import Navbar from '../common/Navbar'
-import Footer from '../common/Footer'
+import Navbar from '../../common/Navbar'
+import Footer from '../../common/Footer'
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -8,7 +9,7 @@ const Home = () => {
     <Navbar/>
      <div class="main">
         <div id="fullpage">	
-            <section class="section banner-main" id="section0">
+            <div class="section banner-main" id="section0">
                 <div class="page-div"><div class="page-sub">
                     <div class="container">
                         <div class="row">
@@ -21,7 +22,7 @@ const Home = () => {
                                     <li>We alerts of your allergy when you select meals</li>
                                     <li>We reminds you to select meals. If you don’t our experts selects it for you</li>
                                 </ul>
-                            <div class="banner-btns"><a href="package.html" class="button">Subscribe Now</a><a href="calculate-calorie.html" class="button">Calculate Your Calories</a></div>
+                            <div class="banner-btns"><Link to="/subscribe" class="button">Subscribe Now</Link><Link to="/calculate-calorie" class="button">Calculate Calorie</Link></div>
                             </div>
                             <div class="col-lg-7 col-md-7 col-sm-6 banner-right">
                                 <img src="img/banner.svg" class="img-fluid" alt="Khalefa Chalet"/>
@@ -53,8 +54,8 @@ const Home = () => {
                         </div>
                     </div>	
                 </div></div>
-            </section>
-            <section class="section package-main" id="section1">
+            </div>
+            <div class="section package-main" id="section1">
                 <div class="page-div"><div class="page-sub">
                 <div class="container">
                     <div class="row">
@@ -186,8 +187,8 @@ const Home = () => {
                     </div>
                 </div></div>
                 </div>
-            </section>	
-            <section class="section popular-main first parallaxcont" id="section2">
+            </div>
+            <div class="section popular-main first parallaxcont" id="section2">
                 <div class="page-div"><div class="page-sub">
                     <div class="container">
                         <div class="row">
@@ -227,8 +228,8 @@ const Home = () => {
                         </div>
                     </div></div>
                 </div>	
-            </section>
-            <section class="section feature-main" id="section3">
+            </div>
+            <div class="section feature-main" id="section3">
                 <div class="page-div"><div class="page-sub">
                     <div class="container">
                         <div class="row">
@@ -296,8 +297,8 @@ const Home = () => {
                         </div>
                     </div></div>
                 </div>	
-            </section>		
-            <section class="section stories-main" id="section4">
+            </div>		
+            <div class="section stories-main" id="section4">
                 <div class="page-div"><div class="page-sub">
                     <div class="w-100">
                         <div class="container">
@@ -651,7 +652,7 @@ const Home = () => {
                     </div>
                  </div>
                 </div>	
-            </section>
+            </div>
         </div>
     </div>
     <Footer/>	

@@ -2,11 +2,11 @@ function fullpage(){
 	$('#fullpage').fullpage({
 			menu: '#menu',
 			v2compatible: true,
-			anchors: ['Homepage', 'Packages', 'Growing', 'Features', 'Testimonials'],
+			anchors: ['Homepage', '/Packages', 'Growing', 'Features', 'Testimonials'],
 			sectionsColor: ['#ffffff', '#ffffff', '#ffffff', '#ffffff', '#ffffff'],
 			navigation: true,
 			navigationPosition: 'right',
-			navigationTooltips: ['Welcome', 'Packages', 'Growing', 'Features', 'Testimonials'],
+			navigationTooltips: ['Welcome', '/Packages', 'Growing', 'Features', 'Testimonials'],
 			responsiveWidth: 300,
 			verticalCentered: true,
 			scrollingSpeed: 1000,
