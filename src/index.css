@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+*{
+  opacity: 1 !important;
+}
+.banner-text h1, .banner-text ul li, .banner-btns {
+  transform: translateX(0%);
+}

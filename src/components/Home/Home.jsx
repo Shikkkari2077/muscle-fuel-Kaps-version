@@ -9,7 +9,7 @@ const Home = () => {
     <Navbar/>
      <div class="main">
         <div id="fullpage">	
-            <div class="section banner-main" id="section0">
+            <section class="section banner-main" id="section0">
                 <div class="page-div"><div class="page-sub">
                     <div class="container">
                         <div class="row">
@@ -54,8 +54,8 @@ const Home = () => {
                         </div>
                     </div>	
                 </div></div>
-            </div>
-            <div class="section package-main" id="section1">
+            </section>
+            <section class="section package-main" id="section1">
                 <div class="page-div"><div class="page-sub">
                 <div class="container">
                     <div class="row">
@@ -187,8 +187,8 @@ const Home = () => {
                     </div>
                 </div></div>
                 </div>
-            </div>
-            <div class="section popular-main first parallaxcont" id="section2">
+            </section>
+            <section class="section popular-main first parallaxcont" id="section2">
                 <div class="page-div"><div class="page-sub">
                     <div class="container">
                         <div class="row">
@@ -228,8 +228,8 @@ const Home = () => {
                         </div>
                     </div></div>
                 </div>	
-            </div>
-            <div class="section feature-main" id="section3">
+            </section>
+            <section class="section feature-main" id="section3">
                 <div class="page-div"><div class="page-sub">
                     <div class="container">
                         <div class="row">
@@ -297,8 +297,8 @@ const Home = () => {
                         </div>
                     </div></div>
                 </div>	
-            </div>		
-            <div class="section stories-main" id="section4">
+            </section>		
+            <section class="section stories-main" id="section4">
                 <div class="page-div"><div class="page-sub">
                     <div class="w-100">
                         <div class="container">
@@ -652,7 +652,7 @@ const Home = () => {
                     </div>
                  </div>
                 </div>	
-            </div>
+            </section>
         </div>
     </div>
     <Footer/>	

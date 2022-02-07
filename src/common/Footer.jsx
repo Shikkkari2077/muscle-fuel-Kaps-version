@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+   
   return (
     <>
+    { console.log('Footer Render')}
         <div>
             <div className="container">
                 <div className="row">
