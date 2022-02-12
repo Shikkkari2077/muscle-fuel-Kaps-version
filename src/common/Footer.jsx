@@ -5,8 +5,7 @@ const Footer = () => {
    
   return (
     <>
-    { console.log('Footer Render')}
-        <div>
+        <footer>
             <div className="container">
                 <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-4 foot-column">
@@ -54,7 +53,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </footer>
         <div className="copyrights">
             <div className="container clearfix">
                 <div className="row">

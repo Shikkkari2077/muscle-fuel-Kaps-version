@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
-
+import { Link } from "react-router-dom";
 const SingIn = () => {
   return (
     <>
      <Navbar/>
-      <div class="sign-in-main">
-        <div class="container">
+     <section className="innerpages sign-in-main">
+         <div class="container">
             <div class="row">
                 {/* <!--<div class="col-12 position-relative z-index99">
                     <h1 class="text-center">Sign In</h1>
@@ -32,7 +32,7 @@ const SingIn = () => {
                                         <div class="col-6"><button class="button w-100 text-center apple-link"><span>Sign in with Apple</span></button></div>
                                         <div class="col-6"><button class="button w-100 text-center google-link"><span>Sign in with Google</span></button></div>
                                         <div class="col-12 an-account">
-                                            Don’t have an account? <a href="sign-up.html">SIGN UP</a>
+                                            Don’t have an account? <Link to="/sign-up">SIGN UP</Link>
                                         </div>		
                                     </div>
                                 </div></div>
@@ -69,7 +69,7 @@ const SingIn = () => {
                 </div>
             </div>
         </div>
-    </div>
+     </section>
     </>
   );
 };

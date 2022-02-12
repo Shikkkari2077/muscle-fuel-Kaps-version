@@ -31,7 +31,7 @@ const Navbar = () => {
     }, [navActive]);
  
   return (
-      <>
+      <header>
         <div className="container">
             <div className="row">
                 <div className="col-12 d-flex justify-content-between">
@@ -66,7 +66,7 @@ const Navbar = () => {
                 </div>
             </div>
  	    </div>
-    </>
+     </header>
   );
 };
 

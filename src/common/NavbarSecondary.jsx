@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const NavbarSecondary = () => {
   return (
-    <>
+    <header>
       	<div class="container">
 		<div class="row">
 			<div class="col-12 d-flex justify-content-between">
@@ -17,7 +17,7 @@ const NavbarSecondary = () => {
 						<div class="wsmain">
 							<nav class="wsmenu clearfix">
 								<ul class="mobile-sub wsmenu-list">
-									<li><Link to="/" class="active">Home</Link></li>
+									<li><Link to="/">Home</Link></li>
 									<li><a href="javascript:void(0);">Why Muscle Fuel?</a>
 										<ul class="wsmenu-submenu why-muscle-fuel">
 											<li>
@@ -100,7 +100,7 @@ const NavbarSecondary = () => {
 			</div>
 		</div>
  	</div>
-    </>
+    </header>
   );
 };
 

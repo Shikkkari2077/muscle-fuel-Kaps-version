@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
-
+import { Link } from "react-router-dom";
 const SignUp = () => {
   return (
     <>
     <Navbar/>
-      <div class="sign-in-main">
+      <section class="innerpages sign-in-main">
         <div class="container">
             <div class="row">
                 {/* <!--<div class="col-12 position-relative z-index99">
@@ -28,7 +28,7 @@ const SignUp = () => {
                                     <div class="or form-group text-center"><span>OR</span></div>
                                     <div class="login-box-sub row">
                                         <div class="col-12 already-account">
-                                            Already have an account? <a href="sign-in.html">SIGN IN</a>
+                                            Already have an account? <Link to="/sign-in">SIGN IN</Link>
                                         </div>		
                                     </div>
                                 </div></div>
@@ -65,7 +65,7 @@ const SignUp = () => {
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     </>
   );
 };

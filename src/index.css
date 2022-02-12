@@ -12,9 +12,23 @@ code {
     monospace;
 }
 
-*{
-  opacity: 1 !important;
+.H_SEC{
+  opacity: 1;
+  height: 657px;
+  background-color: rgb(255, 255, 255);
+  /* margin-bottom: 1rem; */
+  /* border:1px solid red; */
 }
-.banner-text h1, .banner-text ul li, .banner-btns {
-  transform: translateX(0%);
+
+.IMPORTANT{
+  width: 360px !important;
+  margin-right: 15px !important;
+}
+.IMPORTANT2{
+  width: 370px !important;
+  margin: 0px 7px;
+}
+.WEEK{
+  width: 176px;
+  margin: 0px 5px;
 }
