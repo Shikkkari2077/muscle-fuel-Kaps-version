@@ -1,8 +1,34 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
 
 const CalculateCalorie = () => {
+
+    const [data, setData] = useState({
+        gender:'',
+        height:null,
+        weight:null,
+        dob:'',
+    })
+
+    const [BMI, setBMI] = useState('No Data Yet!')
+
+    const handleChange =(e)=>{
+        const { name, value } = e.target;
+
+        setData({
+        ...data,
+        [name]: value,
+        });
+    }
+
+    const Calculate =(e)=>{
+        e.preventDefault()
+        var hM = data.height/100
+        var result = data.weight/(hM*hM)
+        setBMI(result.toFixed(2))
+    }   
+
   return (
     <>
     <Navbar/>
@@ -18,32 +44,38 @@ const CalculateCalorie = () => {
                                 <div class="swiper calculateCalorie">
                                 <div class="swiper-wrapper">
 
-                                    <div class="swiper-slide">
+                                    <form onSubmit={Calculate} class="swiper-slide">
                                         <h3>What are your Profile of a Muscle Fuel diet?</h3>
                                         <ul class="calorie-profile">
                                             <li>
                                                 <label for="Gender">Gender</label>
-                                                <div class="select-div"><select class="form-control"><option>-- Gender --</option><option>Male</option><option>Female</option></select></div>
+                                                <div class="select-div">
+                                                    <select name='gender' required class="form-control" value={data.gender} onChange={handleChange}>
+                                                        <option value=''>-- Gender --</option>
+                                                        <option value='male'>Male</option>
+                                                        <option value='female'>Female</option>
+                                                    </select>
+                                                </div>
                                             </li>
                                             <li>
                                                 <label for="">Height in CM</label>
-                                                <div class="form-div"><input type="text" class="form-control" placeholder="Height in CM" id="" name="" value=""/><div class="measurement">CM</div></div>
+                                                <div class="form-div"><input required type="text" class="form-control" placeholder="Height in CM" id="" onChange={handleChange} name="height" value={data.height} /><div class="measurement">CM</div></div>
                                             </li>
                                             <li>
                                                 <label for="">Weight in KG</label>
-                                                <div class="form-div"><input type="text" class="form-control" placeholder="Weight in KG" id="" name="" value=""/><div class="measurement">KG</div></div>
+                                                <div class="form-div"><input required type="text" class="form-control" placeholder="Weight in KG" id="" onChange={handleChange} name="weight" value={data.weight} /><div class="measurement">KG</div></div>
                                             </li>
                                             <li>
                                                 <label for="Birth">Date of Birth</label>
-                                                <input type="date" class="form-control" placeholder="DD/MM/YYYY" id="Birth" name="" value=""/>
+                                                <input required type="date" class="form-control" placeholder="DD/MM/YYYY" id="Birth" onChange={handleChange} name="dob" value={data.dob}/>
                                             </li>
                                         </ul>
-                                        <div class="mt-2"><button class="button calorie-btn">Continue</button></div>
+                                        <div class="mt-2"><button type="submit" class="button calorie-btn">Continue</button></div>
                                         <div class="info">
                                             <h5 class="p-0">Your BMI is </h5>
-                                            <h2 class="p-0">24.9</h2>
+                                            <h2 class="p-0">{BMI}</h2>
                                         </div>
-                                    </div>
+                                    </form>
                                     <div class="swiper-slide">
                                         <h3>What are your end goals of a Muscle Fuel diet?</h3>
                                         <ul class="unstyled cc-ul">

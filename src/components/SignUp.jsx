@@ -1,8 +1,45 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
 import { Link } from "react-router-dom";
+import { useSelector , useDispatch } from "react-redux";
+import { onRegister } from "../Actions/homeActions";
+
 const SignUp = () => {
+    const [register, setRegister] = useState({
+        first_name:'',
+        last_name:'',
+        email:'',
+        mobile_no:null,
+        password:'',
+        CPassword:'',
+    })
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.home.user);
+    
+    const handleChange =(e)=>{
+        const { name, value } = e.target;
+
+        setRegister({
+        ...register,
+        [name]: value,
+        });
+    }
+
+    const onSubmit =()=>{
+        var formData = new FormData()
+        formData.append('first_name',register.first_name)
+        formData.append('last_name',register.last_name)
+        formData.append('email',register.email)
+        formData.append('mobile_no',register.mobile_no)
+        formData.append('password',register.password)
+        formData.append('device_name','android')
+        formData.append('device_token','frwNMKysQEm')
+        formData.append('device_id',352631555654243)
+
+        dispatch(onRegister(formData))
+    }
+
   return (
     <>
     <Navbar/>
@@ -18,11 +55,26 @@ const SignUp = () => {
                             <h2 class="text-center mb-2">Sign Up</h2>
                             <div class="login-box">
                                 <div class="login-box-sub">
-                                    <div class="form-group"><input type="text" class="form-control" placeholder="Name" value=""/></div>
-                                    <div class="form-group"><input type="text" class="form-control" placeholder="Email" value=""/></div>
-                                    <div class="form-group"><input type="password" class="form-control" placeholder="Password" value=""/></div>
-                                    <div class="form-group"><input type="password" class="form-control" placeholder="Confirm Password" value=""/></div>
-                                    <div class="form-group"><button class="button">Register</button></div>
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="text" class="form-control" placeholder="First Name" name='first_name' value={register.first_name}/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="text" class="form-control" placeholder="Last Name" name='last_name' value={register.last_name}/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="email" class="form-control" placeholder="Email" name='email' value={register.email}/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="number" class="form-control" placeholder="Mobile" name='mobile_no' value={register.mobile_no}/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="password" class="form-control" placeholder="Password" name='password' value={register.password}/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="password" class="form-control" placeholder="Confirm Password" name='CPassword' value={register.CPassword}/>
+                                    </div>
+                                    <div class="form-group">
+                                        <button onClick={onSubmit} class="button">Register</button></div>
                                     
                                 <div class="login-width">
                                     <div class="or form-group text-center"><span>OR</span></div>

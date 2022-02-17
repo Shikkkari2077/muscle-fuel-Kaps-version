@@ -3,6 +3,12 @@ import { Link,useLocation } from "react-router-dom";
 
 const Navbar = () => {
     let location = useLocation()
+    const [userData] = useState({
+        first_name:localStorage.getItem('first_name'),
+        last_name:localStorage.getItem('last_name'),
+        email:localStorage.getItem('email'),
+        user_id:localStorage.getItem('user_id'),
+    })
 
     const [navActive, setNavActive] = useState(1);
     
@@ -50,18 +56,26 @@ const Navbar = () => {
                                         <li><Link to="/calculate-calorie" className={navActive==3?"active":null}>Calculate Calorie</Link></li>
                                         <li><Link to="/dietician" className={navActive==4?"active":null}>Dietician</Link></li>
                                         <li><Link to="/menu" className={navActive==5?"active":null}>Menu</Link></li>
+                                        {!localStorage.getItem('user_id')?(
                                         <li><Link to="/sign-in" className={navActive==6||navActive==7?"active":null}>Sign in</Link>
                                             <ul className="wsmenu-submenu">
                                                 <li><Link to="/sign-in" className={navActive==6?"active":null}>Login</Link></li>
                                                 <li><Link to="/sign-up" className={navActive==7?"active":null}>Register</Link></li>
                                             </ul>	
                                         </li>
+                                        ):null}
                                     </ul>
                                 </nav>
                             </div>
                         </div>
-                        <div className="language-div"><Link to="#">العربية</Link></div>
-                        <div className="subscribe-div"><Link to="/subscribe" className="button">Subscribe Now</Link></div>
+                        <div className="language-div USER_NAME">
+                            <span>
+                                {userData.user_id?`${userData.first_name} ${userData.last_name}`:'User Name'}
+                            </span>
+                        </div>
+                        <Link className="subscribe-div USER_PHOTO" to={userData.user_id?'/myProfile':'/'}>
+                            <span class="material-icons-sharp">account_circle</span>
+                        </Link>
                     </div>				
                 </div>
             </div>

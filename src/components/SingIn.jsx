@@ -1,8 +1,35 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
 import { Link } from "react-router-dom";
+import { useSelector , useDispatch } from "react-redux";
+import { onLogin } from "../Actions/homeActions";
+
 const SingIn = () => {
+    const [user, setUser] = useState({
+        email:'',
+        password:'',
+    })
+    const dispatch = useDispatch()
+    const handleChange =(e)=>{
+        const { name, value } = e.target;
+
+        setUser({
+        ...user,
+        [name]: value,
+        });
+    }
+
+    const onSubmit =()=>{
+        var formData = new FormData
+        formData.append('email',user.email)
+        formData.append('password',user.password)
+        formData.append('device_name','android')
+        formData.append('device_token','frwNMKysQEm')
+        formData.append('device_id',352631555654243)
+        
+        dispatch(onLogin(formData))
+    }
   return (
     <>
      <Navbar/>
@@ -18,9 +45,15 @@ const SingIn = () => {
                             <h2 class="text-center mb-2">Login</h2>
                             <div class="login-box">
                                 <div class="login-box-sub">
-                                    <div class="form-group"><input type="text" class="form-control" placeholder="Email" value=""/></div>
-                                    <div class="form-group"><input type="password" class="form-control" placeholder="Password" value=""/></div>
-                                    <div class="form-group"><button class="button">Login</button> <a href="javascript:void(0);" class="forgot-link">Forgot Password?</a></div>
+
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="text" class="form-control" placeholder="Email" name='email' value={user.email}/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="password" class="form-control" placeholder="Password" name="password" value={user.password}/>
+                                    </div>
+
+                                    <div class="form-group"><button onClick={onSubmit} class="button">Login</button> <a href="javascript:void(0);" class="forgot-link">Forgot Password?</a></div>
                                     <div class="forgot-main">
                                         <div class="forgot-main-sub">
                                             <div class="forgot-div"><input type="text" class="form-control" placeholder="Enter mobile or email" value=""/><button type="submit" class="button">Reset Password</button></div>
