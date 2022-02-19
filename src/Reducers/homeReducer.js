@@ -1,7 +1,9 @@
-import { SET_REGISTER } from "../Actions/types";
+import { SET_REGISTER, SET_PACKAGE_LIST, SET_PACKAGE_DETAILS } from "../Actions/types";
 
 const initialState = {
-  user: []
+  user: [],
+  PackageList:false,
+  PackageDetails:false,
 };
 
 const homeReducer = (state = initialState, action) => {
@@ -11,6 +13,16 @@ const homeReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case SET_PACKAGE_LIST:
+      return {
+        ...state,
+        PackageList: action.payload,
+      };
+    case SET_PACKAGE_DETAILS:
+        return {
+          ...state,
+          PackageDetails: action.payload,
+        };
     default:
 			return state;
   }

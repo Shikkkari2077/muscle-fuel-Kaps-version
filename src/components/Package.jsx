@@ -1,8 +1,79 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getPackageList, getPackageDetails } from "../Actions/homeActions";
+
 
 const Package = () => {
+
+    const dispatch = useDispatch()
+    const PackageDetails = useSelector(state => state.home.PackageDetails);
+    const PackageList = useSelector(state => state.home.PackageList);
+
+    const [packageID, setPackageID] = useState()
+    const [subPackageID, setSubPackageID] = useState()
+    const [dishValue, setVishValue] = useState()
+    const [subPackage, setSubPackage] = useState()
+    const [finalPrice, setFinalPrice] = useState('0.000')
+
+    console.log('subPackageID',subPackageID);
+    console.log('finalPrice',finalPrice);
+
+    useEffect(() => {
+        onPackages();
+    }, [])
+    
+    const onPackages = () =>{
+        var formData = new FormData
+        formData.append('lang_id',1)
+        formData.append('show_festival_package',0)
+
+        dispatch(getPackageList(formData))
+    }
+
+    useEffect(() => {
+        var formData = new FormData
+        formData.append('lang_id',1)
+        formData.append('package_id',packageID)
+
+        dispatch(getPackageDetails(formData))
+    }, [packageID])
+    
+    const DishValueChange =(e)=>{
+        const { name, value } = e.target;
+
+        setVishValue({
+        ...dishValue,
+        [name]: value,
+        });
+    }
+
+    useEffect(() => {
+       if(PackageDetails){
+        var subPKG = PackageDetails.sub_package_list
+        var selectSP = subPKG.filter(data=>data.package_for_id==subPackageID)
+        console.log('selectSP',selectSP);
+        setSubPackage(selectSP[0])
+       }
+    }, [subPackageID])
+    
+    useEffect(() => {
+       if(dishValue){
+        var meal = parseInt(dishValue.Meals)
+        var snack = parseInt(dishValue.Snacks)
+        var soup = parseInt(dishValue.Soups)
+
+        var Combo = subPackage.sub_packages.filter(pack=>pack.total_combo_count.meals==meal&&pack.total_combo_count.snacks==snack&&pack.total_combo_count.soup==soup)
+        console.log('Combo',Combo);
+        var PRICE = Combo.length>0?Combo[0].price:'0.000'
+        setFinalPrice(PRICE)
+       }
+
+    }, [dishValue,subPackage])
+    
+    console.log('dishValue',dishValue);
   return (
     <>
     <Navbar/>
@@ -15,51 +86,24 @@ const Package = () => {
                             <h3 className="text-center text-transform-none color-black">Select a Package</h3>
                             <div className="package-container swiper-container">
                                 <div className="swiper-wrapper">
-                                    <div className="swiper-slide IMPORTANT2">
-                                        <div className="package-card">
-                                            <input type="radio" className="styled-checkbox" id="package1" name="packages" />
-                                            <label htmlFor="package1" title="Sumbatik">
-                                                <div className="package-img">
-                                                    <img src="img/sumbatik.jpg" className="img-fluid" alt="Sumbatik Package"/>
-                                                    <div className="package-head">
-                                                        <h2>Sumbatik</h2><p>100g Protein</p>
-                                                        <div><p>Starting from 150 KWD</p></div>
-                                                        <div className="read-more-select"><a href="#sumbatikModel" data-fancybox className="button">Read More</a><span className="button select-btn">Select</span></div>
+                                    {PackageList?PackageList.map((pack,index)=>(
+                                        <div className="swiper-slide IMPORTANT2">
+                                            <div className="package-card">
+                                                <input onClick={()=>setPackageID(pack.package_master_id)} type="radio" className="styled-checkbox" id={`package${index+1}`} name="packages" />
+                                                <label htmlFor={`package${index+1}`} title="Sumbatik">
+                                                    <div className="package-img">
+                                                        <img src="img/sumbatik.jpg" className="img-fluid" alt="Sumbatik Package"/>
+                                                        <div className="package-head">
+                                                            <h2>{pack.package_name}</h2><p>{pack.gram_label}</p>
+                                                            <div dangerouslySetInnerHTML={{__html:pack.description}} />
+                                                            {/* <div><p>Starting from 150 KWD</p></div> */}
+                                                            <div className="read-more-select"><a href="#sumbatikModel" data-fancybox className="button">Read More</a><span className="button select-btn">Select</span></div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </label>	
+                                                </label>	
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="swiper-slide IMPORTANT2">
-                                        <div className="package-card">
-                                            <input type="radio" className="styled-checkbox" id="package2" name="packages" />
-                                            <label htmlFor="package2" title="FiT">
-                                                <div className="package-img">
-                                                    <img src="img/FiT.jpg" className="img-fluid" alt="FiT Package"/>
-                                                    <div className="package-head">
-                                                        <h2>FiT</h2><p>150g Protein</p>
-                                                        <div><p>Starting from 175 KWD</p></div>
-                                                        <div className="read-more-select"><a href="#fitModel" data-fancybox className="button">Read More</a><span className="button select-btn">Select</span></div>
-                                                    </div>
-                                                </div>
-                                            </label>	
-                                        </div>
-                                    </div>
-                                    <div className="swiper-slide IMPORTANT2">
-                                        <div className="package-card">
-                                            <input type="radio" className="styled-checkbox" id="package3" name="packages" />
-                                            <label htmlFor="package3" title="Bulk">
-                                                <div className="package-img">
-                                                    <img src="img/Bulk.jpg" className="img-fluid" alt="Bulk Package"/>
-                                                    <div className="package-head">
-                                                        <h2>Bulk</h2><p>200g Protein</p>
-                                                        <div><p>Starting from 200 KWD</p></div>
-                                                        <div className="read-more-select"><a href="#bulkModel" data-fancybox className="button">Read More</a><span className="button select-btn">Select</span></div>
-                                                    </div>
-                                                </div>
-                                            </label>	
-                                        </div>
-                                    </div>
+                                    )):null}
                                 </div>
                             </div>
                             {/* <div className="package-button-prev swiper-button-prev"></div> */}
@@ -69,30 +113,14 @@ const Package = () => {
                             <h3 className="text-center text-transform-none color-black">Select Number of Day(s)</h3>
                             <div className="text-center">
                                 <ul className="unstyled days-ul d-inline-block">
-                                    <li>
-                                        <input type="radio" className="styled-checkbox" id="day30" name="day" />
-                                        <label htmlFor="day30" title="25 Days">
-                                            <h2>30</h2><p>Days</p>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" className="styled-checkbox" id="day26" name="day" />
-                                        <label htmlFor="day26" title="25 Days">
-                                            <h2>26</h2><p>Days</p>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" className="styled-checkbox" id="day6" name="day" />
-                                        <label htmlFor="day6" title="6 Days">
-                                            <h2>6</h2><p>Days</p>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <input type="radio" className="styled-checkbox" id="day1" name="day" />
-                                        <label htmlFor="day1" title="25 Days">
-                                            <h2>1</h2><p>Day</p>
-                                        </label>
-                                    </li>
+                                    {PackageDetails?PackageDetails.sub_package_list.map((subPackage,index)=>(
+                                        <li>
+                                            <input onClick={()=>setSubPackageID(subPackage.package_for_id)} type="radio" className="styled-checkbox" id={`days${subPackage.days}`} name="day" />
+                                            <label htmlFor={`days${subPackage.days}`}>
+                                                <h2>{subPackage.days}</h2><p>Days</p>
+                                            </label>
+                                        </li>
+                                    )):null}
                                 </ul>
                             </div>	
                         </div>
@@ -103,207 +131,36 @@ const Package = () => {
                                 <div className="carousel-dishes">
                                     <div className="dishes-container swiper-container">
                                         <div className="swiper-wrapper" style={{marginBottom:'5px'}}>
-                                            <div className="swiper-slide IMPORTANT" >
-                                                <div className="dish-box meal-dish">
-                                                    <h2><span>Choose Number of</span> Meal(s)</h2>
-                                                    <ul className="unstyled dish-ul justify-content-between">
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="meal0" name="Meal" value="0"/>
-                                                            <label htmlFor="meal0"><strong>0</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="meal1" name="Meal" value="1"/>
-                                                            <label htmlFor="meal1"><strong>1</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="meal2" name="Meal" value="2"/>
-                                                            <label htmlFor="meal2"><strong>2</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="meal3" name="Meal" value="3"/>
-                                                            <label htmlFor="meal3"><strong>3</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="meal4" name="Meal" value="4"/>
-                                                            <label htmlFor="meal4"><strong>4</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="meal5" name="Meal" value="5"/>
-                                                            <label htmlFor="meal5"><strong>5</strong></label>
-                                                        </li>
-                                                    </ul>	
+                                            {PackageDetails?PackageDetails.max_values_as_per_meal_type.filter(data=>data.meal_type_id!==1).map((value,index)=>(
+                                                <div className="swiper-slide IMPORTANT" >
+                                                    <div className="dish-box meal-dish">
+                                                        <h2><span>Choose Number of</span>{value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''}</h2>
+                                                        <ul className="unstyled dish-ul justify-content-between">
+                                                           {new Array(value.max_value).fill(value.max_value).map((subValue,idx)=>(
+                                                                <li>
+                                                                    <input onChange={DishValueChange} type="radio" className="styled-checkbox" id={`${value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''}${idx}`}  name={value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''} value={idx}/>
+                                                                    <label htmlFor={`${value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''}${idx}`}><strong>{idx}</strong></label>
+                                                                </li>
+                                                           ))}
+                                                        </ul>	
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="swiper-slide IMPORTANT" >
-                                                <div className="dish-box snacks-dish">
-                                                    <h2><span>Choose Number of</span> Snacks</h2>
-                                                    <ul className="unstyled dish-ul justify-content-between">
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Snacks0" name="snacks" value="0"/>
-                                                            <label htmlFor="Snacks0"><strong>0</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Snacks1" name="snacks" value="1"/>
-                                                            <label htmlFor="Snacks1"><strong>1</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Snacks2" name="snacks" value="2"/>
-                                                            <label htmlFor="Snacks2"><strong>2</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Snacks3" name="snacks" value="3"/>
-                                                            <label htmlFor="Snacks3"><strong>3</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Snacks4" name="snacks" value="4"/>
-                                                            <label htmlFor="Snacks4"><strong>4</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Snacks5" name="snacks" value="5"/>
-                                                            <label htmlFor="Snacks5"><strong>5</strong></label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div className="swiper-slide IMPORTANT" >
-                                                <div className="dish-box soup-dish">
-                                                    <h2><span>Choose Number of</span> Soup(s)</h2>
-                                                    <ul className="unstyled dish-ul justify-content-between">
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Soup0" name="Soup" value="0"/>
-                                                            <label htmlFor="Soup0"><strong>0</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Soup1" name="Soup" value="1"/>
-                                                            <label htmlFor="Soup1"><strong>1</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Soup2" name="Soup" value="2"/>
-                                                            <label htmlFor="Soup2"><strong>2</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Soup3" name="Soup" value="3"/>
-                                                            <label htmlFor="Soup3"><strong>3</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Soup4" name="Soup" value="4"/>
-                                                            <label htmlFor="Soup4"><strong>4</strong></label>
-                                                        </li>
-                                                        <li>
-                                                            <input type="radio" className="styled-checkbox" id="Soup5" name="Soup" value="5"/>
-                                                            <label htmlFor="Soup5"><strong>5</strong></label>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            )):null}
                                         </div>
                                     </div>
                                     {/* <div className="dishes-button-prev swiper-button-prev"></div> */}
                                     {/* <div className="dishes-button-next swiper-button-next"></div> */}
                                 </div>
                             </div>		
-                                {/* <div className="col-lg-4 col-md-4 col-sm-4">
-                                    <div className="dish-box meal-dish">
-                                        <h2><span>Choose Number of</span> Meal(s)</h2>
-                                        <ul className="unstyled dish-ul justify-content-between">
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="meal0" name="Meal" value="0">
-                                                <label for="meal0"><strong>0</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="meal1" name="Meal" value="1">
-                                                <label for="meal1"><strong>1</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="meal2" name="Meal" value="2">
-                                                <label for="meal2"><strong>2</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="meal3" name="Meal" value="3">
-                                                <label for="meal3"><strong>3</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="meal4" name="Meal" value="4">
-                                                <label for="meal4"><strong>4</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="meal5" name="Meal" value="5">
-                                                <label for="meal5"><strong>5</strong></label>
-                                            </li>
-                                        </ul>	
-                                    </div>
-                                </div>
-                                <div className="col-lg-4 col-md-4 col-sm-4">
-                                    <div className="dish-box snacks-dish">
-                                        <h2><span>Choose Number of</span> Snacks</h2>
-                                        <ul className="unstyled dish-ul justify-content-between">
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Snacks0" name="snacks" value="0">
-                                                <label for="Snacks0"><strong>0</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Snacks1" name="snacks" value="1">
-                                                <label for="Snacks1"><strong>1</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Snacks2" name="snacks" value="2">
-                                                <label for="Snacks2"><strong>2</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Snacks3" name="snacks" value="3">
-                                                <label for="Snacks3"><strong>3</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Snacks4" name="snacks" value="4">
-                                                <label for="Snacks4"><strong>4</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Snacks5" name="snacks" value="5">
-                                                <label for="Snacks5"><strong>5</strong></label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="col-lg-4 col-md-4 col-sm-4">
-                                    <div className="dish-box soup-dish">
-                                        <h2><span>Choose Number of</span> Soup(s)</h2>
-                                        <ul className="unstyled dish-ul justify-content-between">
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Soup0" name="Soup" value="0">
-                                                <label for="Soup0"><strong>0</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Soup1" name="Soup" value="1">
-                                                <label for="Soup1"><strong>1</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Soup2" name="Soup" value="2">
-                                                <label for="Soup2"><strong>2</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Soup3" name="Soup" value="3">
-                                                <label for="Soup3"><strong>3</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Soup4" name="Soup" value="4">
-                                                <label for="Soup4"><strong>4</strong></label>
-                                            </li>
-                                            <li>
-                                                <input type="radio" className="styled-checkbox" id="Soup5" name="Soup" value="5">
-                                                <label for="Soup5"><strong>5</strong></label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div> */}
                                 <div className="col-g-12 col-md-12 col-sm-12 starting-column">
                                     <div className="text-center starting-box pt-0 border-top-red max-width780">
                                         <div className="summary-div-box">Food Dishes Summary</div>
                                         <div className="starting-sub">
-                                            <h4><strong className="mealVal">0</strong> Meals + <strong className="SnakcsVal">0</strong> Snakcs + <strong className="SoupVal">0</strong> Soup</h4>
+                                            <h4><strong className="mealVal">{dishValue?dishValue.Meals?dishValue.Meals:0:0}</strong> Meals + <strong className="SnakcsVal">{dishValue?dishValue.Snacks?dishValue.Snacks:0:0}</strong> Snacks + <strong className="SoupVal">{dishValue?dishValue.Soups?dishValue.Soups:0:0}</strong> Soups</h4>
                                             <p>You selected starting date is <strong>20 September 2021</strong></p>
                                         </div>
                                         <div className="starting-sub">
-                                            <h4 className="pt-0"><span>150.000 KWD</span></h4>
+                                            <h4 className="pt-0"><span>{finalPrice} KWD</span></h4>
                                         </div>
                                     </div>
                                 </div>

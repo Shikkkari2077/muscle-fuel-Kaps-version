@@ -1,5 +1,7 @@
 import { 
   SET_REGISTER,
+  SET_PACKAGE_LIST,
+  SET_PACKAGE_DETAILS,
  } from "./types";
 
 import Constant from "../Constant";
@@ -30,6 +32,8 @@ export const onRegister = (data) => (dispatch)=>{
         localStorage.setItem('last_name',res.data.data.last_name)
         localStorage.setItem('email',res.data.data.email)
 
+      
+        window.location.href = '#/'
         window.location.reload()
       }
     })
@@ -56,6 +60,7 @@ export const onLogin = (data) => (dispatch)=>{
         localStorage.setItem('email',res.data.data.email)
 
         window.location.href = '#/'
+        window.location.reload()
       }
     })
     .catch((err) => {
@@ -73,3 +78,42 @@ export const onLogOut = (data) => (dispatch)=>{
         window.location.href = '#/'
 };
 
+export const getPackageList = (data) => (dispatch)=>{
+
+  axios
+    .post(Constant.getAPI() + `/packagetypelist`, data, config)
+    .then((res) => {
+
+          if(res.data){
+
+            dispatch({
+              type:SET_PACKAGE_LIST,
+              payload:res.data.data
+            })
+            
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getPackageDetails = (data) => (dispatch)=>{
+
+  axios
+    .post(Constant.getAPI() + `/packagelistV2`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+              // console.log('res.data',res.data.data);
+            dispatch({
+              type:SET_PACKAGE_DETAILS,
+              payload:res.data.data
+            })
+            
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};

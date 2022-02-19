@@ -73,7 +73,7 @@ const Navbar = () => {
                                 {userData.user_id?`${userData.first_name} ${userData.last_name}`:'User Name'}
                             </span>
                         </div>
-                        <Link className="subscribe-div USER_PHOTO" to={userData.user_id?'/myProfile':'/'}>
+                        <Link className="subscribe-div USER_PHOTO" to={userData.user_id?'/myProfile':'#'}>
                             <span class="material-icons-sharp">account_circle</span>
                         </Link>
                     </div>				
