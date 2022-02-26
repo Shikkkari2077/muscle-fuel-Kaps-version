@@ -1,29 +1,116 @@
 import {React, useState, useEffect} from "react";
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getPackageList, getPackageDetails } from "../Actions/homeActions";
+import { 
+    getPackageList,
+    getPackageDetails,
+    getDeliveryTime,
+    getDeliveryMethod,
+    getUserAddress,
+    getAreaList,
+    addAddress,
+    purchasePackage,
+    getDislikeItems,
+    getReadMore,
+} from "../Actions/homeActions";
+import { toast } from "react-toastify";
 
 
 const Package = () => {
 
+    const PackageID = useParams()
+
+    const disablePastDate = () => {
+        const today = new Date();
+        const dd = String(today.getDate() + 3).padStart(2, "0");
+        const mm = String(today.getMonth() + 1).padStart(2, "0");
+        const yyyy = today.getFullYear();
+        return yyyy + "-" + mm + "-" + dd;
+    };
+
     const dispatch = useDispatch()
+
     const PackageDetails = useSelector(state => state.home.PackageDetails);
     const PackageList = useSelector(state => state.home.PackageList);
+    const DeliveryTime = useSelector(state => state.home.DeliveryTime);
+    const DeliveryMethod = useSelector(state => state.home.DeliveryMethod);
+    const DislikeItems = useSelector(state => state.home.DislikeItems);
+    const UserAddress = useSelector(state => state.home.UserAddress);
+    const AreaList = useSelector(state => state.home.AreaList);
+    const Refresh = useSelector(state => state.home.Refresh);
+    const ReadMore = useSelector(state => state.home.ReadMore);
+
+
+    const [modalReadMore, setModalReadMore] = useState(false)
+    const [modalAddress, setModalAddress] = useState(false)
+    const [modalDislikes, setModalDislikes] = useState(false)
+
+
 
     const [packageID, setPackageID] = useState()
     const [subPackageID, setSubPackageID] = useState()
+    const [sub_package_id, setSub_package_id] = useState()
     const [dishValue, setVishValue] = useState()
     const [subPackage, setSubPackage] = useState()
     const [finalPrice, setFinalPrice] = useState('0.000')
+    const [startDate, setStartDate] = useState()
+    const [startDateS, setStartDateS] = useState()
+    const [deliveryTime, setDeliveryTime] = useState()
+    const [deliveryMethod, setDeliveryMethod] = useState()
+    const [isFriday, setIsFriday] = useState('no')
+    const [paymentType, setPaymentType] = useState('')
+    const [address, setAddress] = useState({})
+    const [dislikeItems, setDislikeItems] = useState([])
+  
+    const [USER_ID] = useState(localStorage.getItem('user_id'));
 
-    console.log('subPackageID',subPackageID);
-    console.log('finalPrice',finalPrice);
+    console.log('ReadMore',ReadMore);
 
+    const AddressChange =(e)=>{
+        const { name, value } = e.target;
+
+        setAddress({
+        ...address,
+        [name]: value,
+        });
+    }
+    
+    useEffect(() => {
+     var StartDate = new Date(startDate).getTime()
+     var date = new Date(StartDate).getDate()
+     var month = new Date(StartDate).getMonth()
+     var year = new Date(StartDate).getFullYear()
+
+    var Fmonth = month==0?'January':month==1?'February':month==2?'March':month==3?'April':month==4?'May':month==5?'June':month==6?'July':month==7?'August':month==8?'September':month==9?'October':month==10?'November':month==11?'December':''
+    var final = `${date} ${Fmonth} ${year}`
+    localStorage.setItem('startDate',final)
+     setStartDateS(final)
+    }, [startDate])
+    
+    useEffect(() => {
+        
+        if(PackageID){
+            setPackageID(PackageID.PackageID)
+            console.log('PARAM');
+        }
+
+    }, [PackageID])
+    
     useEffect(() => {
         onPackages();
+        onDeliveryTime();
+        onDeliveryMethod();
+        onDislikeItem()
+        onReadMore()
     }, [])
+
+    useEffect(() => {
+       dispatch(getUserAddress())
+       dispatch(getAreaList())
+       
+    }, [Refresh])
     
     const onPackages = () =>{
         var formData = new FormData
@@ -33,6 +120,31 @@ const Package = () => {
         dispatch(getPackageList(formData))
     }
 
+    const onDeliveryTime =()=> {
+        var formData = new FormData
+        formData.append('language_id',1)
+        dispatch(getDeliveryTime(formData));
+    }
+
+    const onDeliveryMethod =()=> {
+        var formData = new FormData
+        formData.append('language_id',1)
+        dispatch(getDeliveryMethod(formData));
+    }
+
+    const onDislikeItem =()=> {
+        var formData = new FormData
+        formData.append('language_id',1)
+        dispatch(getDislikeItems(formData));
+    }
+
+    const onReadMore =()=> {
+        var formData = new FormData
+        formData.append('text_for','general_note_in_profile_page')
+        formData.append('lang_id',1)
+        dispatch(getReadMore(formData));
+    }
+    
     useEffect(() => {
         var formData = new FormData
         formData.append('lang_id',1)
@@ -49,7 +161,9 @@ const Package = () => {
         [name]: value,
         });
     }
-
+    const DislikeChange = (dislike) => {
+        setDislikeItems([...dislikeItems,dislike])
+    }
     useEffect(() => {
        if(PackageDetails){
         var subPKG = PackageDetails.sub_package_list
@@ -68,12 +182,135 @@ const Package = () => {
         var Combo = subPackage.sub_packages.filter(pack=>pack.total_combo_count.meals==meal&&pack.total_combo_count.snacks==snack&&pack.total_combo_count.soup==soup)
         console.log('Combo',Combo);
         var PRICE = Combo.length>0?Combo[0].price:'0.000'
+        var id = Combo.length>0?Combo[0].sub_package_id:''
+        setSub_package_id(id)
         setFinalPrice(PRICE)
        }
 
     }, [dishValue,subPackage])
     
-    console.log('dishValue',dishValue);
+    const EditAddress =()=>{
+
+        if(UserAddress){
+            setAddress({
+                address_type: UserAddress.address_type,
+                directions: UserAddress.directions,
+                street: UserAddress.street,
+                block: UserAddress.block,
+                floor_no: UserAddress.floor_no,
+                flat_no: UserAddress.flat_no,
+                avenue: UserAddress.avenue,
+                house_number: UserAddress.house_number,
+                area_id: UserAddress.area.area_id,
+                lang: UserAddress.lang,
+                lat: UserAddress.lat,
+            })
+            
+        }else if(!USER_ID){
+            toast.warning("User Not Found Please Sign In!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+            window.location.href = '#/sign-in'
+        }
+    }
+
+    const AddressSubmit =(e)=>{
+        e.preventDefault()
+        
+        var formData = new FormData
+        formData.append('user_id',localStorage.getItem('user_id'))
+        formData.append('lang_id',1)
+        formData.append('address_type',address.address_type)
+        formData.append('directions',address.directions)
+        formData.append('street',address.street)
+        formData.append('block',address.block)
+        formData.append('floor_no',address.floor_no)
+        formData.append('flat_no',address.flat_no)
+        formData.append('avenue',address.avenue)
+        formData.append('house_number',address.house_number)
+        formData.append('area_id',address.area_id)
+
+        dispatch(addAddress(formData))
+    }
+
+    const PayNow = ()=>{
+        if(USER_ID){
+            if(!packageID){
+                toast.warning("Select A Package!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                  return false
+            }else if(!deliveryTime){
+                toast.warning("Select Delivery Time!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                  return false
+            }else if(!subPackageID){
+                toast.warning("Select A Sub Package!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                  return false
+            }else if(!deliveryMethod){
+                toast.warning("Select Delivery Method!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                  return false
+            }else if(!startDate){
+                toast.warning("Select Package Start Date!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                  return false
+            }else if(!UserAddress){
+                toast.warning("Add Delivery Address!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                  return false
+            }else if(finalPrice=='0.000'){
+                toast.warning("Make A Combination Meals, Snacks & Soups!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                  return false
+            }else if(!paymentType){
+                toast.warning("Select A Payment Method!", {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+                  return false
+            }
+
+            var endDate = new Date(startDate)
+            var END_DATE = endDate.setDate(endDate.getDate() + 6)
+
+            var formData = new FormData
+            formData.append('delivery_time_id',deliveryTime)
+            formData.append('end_date','')
+            formData.append('package_for',subPackageID)
+            formData.append('package_amount',finalPrice)
+            formData.append('promo_code_discount',0.0)
+            formData.append('delivery_address_id',UserAddress.address_id)
+            formData.append('package_id',packageID)
+            formData.append('consultant_fees',0)
+            formData.append('sub_package_id',sub_package_id)
+            formData.append('payment_type',paymentType)
+            formData.append('delivery_method_id',deliveryMethod)
+            formData.append('total_amount',finalPrice)
+            formData.append('user_id',localStorage.getItem('user_id'))
+            formData.append('app_mode','dev')
+            formData.append('unique_code',endDate.getTime()*32)
+            formData.append('friday_delivery',isFriday)
+            formData.append('start_date',startDate)
+            formData.append('dislike_ingredients',dislikeItems.toString())
+    
+            dispatch(purchasePackage(formData))
+        }
+        else{
+            toast.warning("User Not Found Please Sign In!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+            window.location.href = '#/sign-in'
+        }
+
+    }
+
   return (
     <>
     <Navbar/>
@@ -89,15 +326,15 @@ const Package = () => {
                                     {PackageList?PackageList.map((pack,index)=>(
                                         <div className="swiper-slide IMPORTANT2">
                                             <div className="package-card">
-                                                <input onClick={()=>setPackageID(pack.package_master_id)} type="radio" className="styled-checkbox" id={`package${index+1}`} name="packages" />
+                                                <input checked={pack.package_master_id==packageID?true:false} onClick={()=>setPackageID(pack.package_master_id)} type="radio" className="styled-checkbox" id={`package${index+1}`} name="packages" />
                                                 <label htmlFor={`package${index+1}`} title="Sumbatik">
                                                     <div className="package-img">
-                                                        <img src="img/sumbatik.jpg" className="img-fluid" alt="Sumbatik Package"/>
+                                                        <img src={pack.img_url} className="img-fluid" alt="Sumbatik Package"/>
                                                         <div className="package-head">
                                                             <h2>{pack.package_name}</h2><p>{pack.gram_label}</p>
-                                                            <div dangerouslySetInnerHTML={{__html:pack.description}} />
+                                                            <div style={{padding:'0px'}} dangerouslySetInnerHTML={{__html:pack.description}} />
                                                             {/* <div><p>Starting from 150 KWD</p></div> */}
-                                                            <div className="read-more-select"><a href="#sumbatikModel" data-fancybox className="button">Read More</a><span className="button select-btn">Select</span></div>
+                                                            <div className="read-more-select"><a onClick={()=>setModalReadMore(true)} className="button">Read More</a><span className="button select-btn">Select</span></div>
                                                         </div>
                                                     </div>
                                                 </label>	
@@ -110,7 +347,7 @@ const Package = () => {
                             {/* <div className="package-button-next swiper-button-next"></div> */}
                         </div>
                         <div className="number-of-days">
-                            <h3 className="text-center text-transform-none color-black">Select Number of Day(s)</h3>
+                            <h3 className="text-center text-transform-none color-black">Select Number of Day</h3>
                             <div className="text-center">
                                 <ul className="unstyled days-ul d-inline-block">
                                     {PackageDetails?PackageDetails.sub_package_list.map((subPackage,index)=>(
@@ -157,10 +394,11 @@ const Package = () => {
                                         <div className="summary-div-box">Food Dishes Summary</div>
                                         <div className="starting-sub">
                                             <h4><strong className="mealVal">{dishValue?dishValue.Meals?dishValue.Meals:0:0}</strong> Meals + <strong className="SnakcsVal">{dishValue?dishValue.Snacks?dishValue.Snacks:0:0}</strong> Snacks + <strong className="SoupVal">{dishValue?dishValue.Soups?dishValue.Soups:0:0}</strong> Soups</h4>
-                                            <p>You selected starting date is <strong>20 September 2021</strong></p>
+                                            {startDate?<p>You selected starting date is <strong>{startDateS}</strong></p>
+                                            :<strong>No date Selected Yet!</strong>}
                                         </div>
                                         <div className="starting-sub">
-                                            <h4 className="pt-0"><span>{finalPrice} KWD</span></h4>
+                                            <h4 className="pt-0"><span>{finalPrice=='0.000'?'Combination Not Available!':finalPrice} {finalPrice=='0.000'?null:'KWD'}</span></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -170,8 +408,9 @@ const Package = () => {
                         <div className="value-choice">
                             <div className="value-choice-left">
                                 <p>Do you want the Friday delivery?</p>
-                                <div className="mb-5">
-                                    <a href="#" className="button-line mr-3">Yes</a> <a href="#" className="button-line">No</a>
+                                <div className="mb-5"> 
+                                    <span onClick={()=>setIsFriday('yes')} style={{background:`${isFriday=='yes'?'#C5251C':'#fff'}`,color:`${isFriday=='yes'?'#fff':'#000'}`}} className="button-line mr-3 ISFRYD">Yes</span> 
+                                    <span onClick={()=>setIsFriday('no')} style={{background:`${isFriday=='no'?'#C5251C':'#fff'}`,color:`${isFriday=='no'?'#fff':'#000'}`}} className="button-line ISFRYD">No</span>
                                 </div>
                             </div>
                             <div className="value-choice-right">
@@ -182,12 +421,9 @@ const Package = () => {
                         <div className="carousel">
                             <div className="week-container menu-container">
                                 <div className="swiper-wrapper">
-                                    <div className="swiper-slide WEEK"><input type="radio" className="styled-checkbox" id="sat" name="weekday" /><label htmlFor="sat"><span>Sat</span>25 Sept</label></div>
-                                    <div className="swiper-slide WEEK"><input type="radio" className="styled-checkbox" id="sun" name="weekday" /><label htmlFor="sun"><span>Sun</span>26 Sept</label></div>								
-                                    <div className="swiper-slide WEEK"><input type="radio" className="styled-checkbox" id="mon" name="weekday" /><label htmlFor="mon"><span>Mon</span>27 Sept</label></div>
-                                    <div className="swiper-slide WEEK"><input type="radio" className="styled-checkbox" id="tue" name="weekday" /><label htmlFor="tue"><span>Tue</span>28 Sept</label></div>								
-                                    <div className="swiper-slide WEEK"><input type="radio" className="styled-checkbox" id="wed" name="weekday" /><label htmlFor="wed"><span>Wed</span>29 Sept</label></div>
-                                    <div className="swiper-slide WEEK"><input type="radio" className="styled-checkbox" id="thu" name="weekday" /><label htmlFor="thu"><span>Thu</span>30 Sept</label></div>
+                                    <div className="swiper-slide WEEK DATE_STL">
+                                        <h3 style={{marginRight:'2rem'}}>Package Start Date</h3><input name='startDate' onChange={(e)=>setStartDate(e.target.value)} type="date" className="PACK_DATE" min={disablePastDate()}/>
+                                    </div>
                                 </div>
                             </div>
                             {/* <div className="swiper-button-prev week-button-prev"></div> */}
@@ -199,24 +435,14 @@ const Package = () => {
                                 <div className="text-center starting-box">
                                     <h4>Select the delivery time</h4>
                                     <ul className="unstyled delivery-time">
-                                        <li>
-                                            <input type="radio" className="styled-checkbox" id="9am" name="delivery" />
-                                            <label htmlFor="9am">
-                                                <div>9AM to 1PM</div>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" className="styled-checkbox" id="2am" name="delivery" />
-                                            <label htmlFor="2am">
-                                                <div>2PM to 4PM</div>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" className="styled-checkbox" id="4am" name="delivery" />
-                                            <label htmlFor="4am">
-                                                <div>4PM to 6PM</div>
-                                            </label>
-                                        </li>
+                                        {DeliveryTime?DeliveryTime.map((time,index)=>(
+                                            <li>
+                                                <input onClick={()=>setDeliveryTime(time.timeid)} type="radio" className="styled-checkbox" id={time.timeid} name="delivery" />
+                                                <label htmlFor={time.timeid}>
+                                                    <div>{time.timename}</div>
+                                                </label>
+                                            </li>
+                                        )):null}
                                     </ul>
                                 </div>
                             </div>
@@ -224,24 +450,14 @@ const Package = () => {
                                 <div className="text-center starting-box">
                                     <h4>Contact on Delivery</h4>
                                     <ul className="unstyled delivery-time">
+                                        {DeliveryMethod?DeliveryMethod.map((method,index)=>(
                                         <li>
-                                            <input type="radio" className="styled-checkbox" id="door" name="deliverymethod" />
-                                            <label htmlFor="door">
-                                                <div>Leave the box at the door</div>
+                                            <input onChange={()=>setDeliveryMethod(method.methodid)} type="radio" className="styled-checkbox" id={'method'+method.methodid} name="deliverymethod" />
+                                            <label htmlFor={'method'+method.methodid}>
+                                                <div>{method.methodname}</div>
                                             </label>
                                         </li>
-                                        <li>
-                                            <input type="radio" className="styled-checkbox" id="bell" name="deliverymethod" />
-                                            <label htmlFor="bell">
-                                                <div>Ring the bell</div>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" className="styled-checkbox" id="call" name="deliverymethod" />
-                                            <label htmlFor="call">
-                                                <div>Call</div>
-                                            </label>
-                                        </li>
+                                        )):null}
                                     </ul>
                                 </div>
                             </div>
@@ -249,7 +465,7 @@ const Package = () => {
                                 <div className="text-center starting-box">
                                     <h4>Dislikes</h4>
                                     <div className="form-group">
-                                        <a href="#dislikesModel" className="button" data-fancybox>Choose Dislikes Items</a>
+                                        <a className="button" onClick={()=> setModalDislikes(true)}>Choose Dislikes Items</a>
                                     </div>
                                 </div>
                             </div>
@@ -257,34 +473,40 @@ const Package = () => {
                         <div className="row">
                             <div className="col-g-6 col-md-6 col-sm-6 starting-column">
                                 <div className="address-sub-div delivery-address">
-                                    <h3 className="text-left">Delivery Address <a href="#newAddressModel" data-fancybox className="button change-btn">Change</a></h3>
+                                    <h3 className="text-left">Delivery Address <a onClick={()=>{
+                                        EditAddress()
+                                        setModalAddress(true)
+                                    }} className="button change-btn">{UserAddress?'Change':'Add'}</a></h3>
                                     <div className="profiledata">
-                                        <div className=" ">
+                                       {UserAddress? <div className=" ">
                                             <div className="form-group">
-                                                <label>Governate</label><p>Mubarak Al-Kabeer</p>
+                                                <label>Type</label><p>{UserAddress?UserAddress.address_type:null}</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>Area</label><p>Salmiya</p>
+                                                <label>Area</label><p>{UserAddress?UserAddress.area.area_name:null}</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>Block</label><p>116</p>
+                                                <label>Block</label><p>{UserAddress?UserAddress.block:null}</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>Street </label><p>Salem Al Mubarak Street</p>
+                                                <label>Street </label><p>{UserAddress?UserAddress.street:null}</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>Judda</label><p>Lorem Ipsum</p>
+                                                <label>Judda</label><p>{UserAddress?UserAddress.avenue:null}</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>Building No</label><p>5</p>
+                                                <label>Floor No</label><p>{UserAddress?UserAddress.floor_no:null}</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>Floor No</label><p>5</p>
+                                                <span style={{color:'#34384e'}}>Flat No</span><p>{UserAddress?UserAddress.flat_no:'null'}</p>
                                             </div>
                                             <div className="form-group">
-                                                <label>House No</label><p>2</p>
+                                                <label>House No</label><p>{UserAddress?UserAddress.house_number:null}</p>
                                             </div>
-                                        </div>
+                                            <div className="form-group">
+                                                <label>Directions</label><p>{UserAddress?UserAddress.directions:null}</p>
+                                            </div>
+                                        </div>:null}
                                     </div>
                                 </div>
                             </div>
@@ -295,204 +517,178 @@ const Package = () => {
                                     <div className="payment-method">
                                         <div className="payment-detail">
                                             <ul className="unstyled">
-                                                <li><input type="radio" className="styled-checkbox" id="knet" name="payment" /><label htmlFor="knet" title="K-Net"><img src="img/k-net.png" alt="k net"/></label><div>k net</div></li>
-                                                <li><input type="radio" className="styled-checkbox" id="visa" name="payment" /><label htmlFor="visa" title="Credit Card"><img src="img/creditcard.png" alt="Credit Card"/></label><div>Credit Card</div></li>
-                                                <li><input type="radio" className="styled-checkbox" id="cash" name="payment" /><label htmlFor="cash" title="Cash on Delivery"><img src="img/cash.png" alt="Cash on Delivery"/></label><div>Cash on Delivery</div></li>
+                                                <li><input onClick={()=>setPaymentType('knet')} type="radio" className="styled-checkbox" id="knet" name="payment" /><label htmlFor="knet" title="K-Net"><img src="img/k-net.png" alt="k net"/></label><div>k net</div></li>
+                                                <li><input onClick={()=>setPaymentType('visa')} type="radio" className="styled-checkbox" id="visa" name="payment" /><label htmlFor="visa" title="Credit Card"><img src="img/creditcard.png" alt="Credit Card"/></label><div>Credit Card</div></li>
+                                                <li><input onClick={()=>setPaymentType('cash')} type="radio" className="styled-checkbox" id="cash" name="payment" /><label htmlFor="cash" title="Cash on Delivery"><img src="img/cash.png" alt="Cash on Delivery"/></label><div>Cash on Delivery</div></li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <p className="text-center total-amount">Total: <strong>215.500</strong> KWD</p>
-                                    <div className="text-center"><button type="submit" /*onClick="location.href='thank-you.html'"*/ className="button">Pay Now</button></div>
+                                    <p className="text-center total-amount">Total: <strong>{finalPrice?finalPrice:0.000}</strong> KWD</p>
+                                    <div className="text-center"><button type="submit" onClick={PayNow} className="button">Pay Now</button></div>
                                 </div>	
                             </div>
                         </div>	
                     </div>
-                    
-                    
                 </div>
             </div>
         </div>
     </section>
     <Footer/>
-        <div id="sumbatikModel" className="popup-hidden modelbox animated-modal">
-            <h2 className="anim1 pt-0">Sumbatik</h2>
-            <div className="package-dtl">
-                <h3 className="pt-0 anim2">Popular amongst those</h3>
-                <p className="anim3">Whose looking for weight lose and get in shape</p>
-                <h4 className="anim4">Most popular Meals choice</h4>
-                <ul className="anim5">
-                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                </ul>
-                <div className="starting-from anim6"><strong>Starting from 150 KWD</strong></div>
-            </div>
+
+        <div style={{
+            display: modalReadMore?'block':'none',
+            position:'absolute',
+            bottom: '0rem',
+            left:'0',
+            right:'0',
+            margin: '0 auto',
+            zIndex:'100',
+            background: '#fff',
+            width:'40%',
+            padding: "2rem",
+            borderRadius:'7px',
+            boxShadow:'3px 3px 5px grey',
+        }}>
+            <span style={{
+                position:'absolute',
+                top:'-10px',
+                right:'-10px',
+                boxShadow:'3px 3px 5px grey',
+                borderRadius:'50%',
+                background: '#fff',
+                width: '20px',
+                height: '20px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+            }} onClick={()=>setModalReadMore(false)}>x</span>
+           {ReadMore?(
+               <div dangerouslySetInnerHTML={{ __html: ReadMore.description }} />
+           ):null}
         </div>
-        <div id="fitModel" className="popup-hidden modelbox animated-modal">
-            <h2 className="anim1 pt-0">Fit</h2>
-            <div className="package-dtl">
-                <h3 className="pt-0 anim2">Popular amongst those</h3>
-                <p className="anim3">Whose looking for weight lose and get in shape</p>
-                <h4 className="anim4">Most popular Meals choice</h4>
-                <ul className="anim5">
-                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                </ul>
-                <div className="starting-from anim6"><strong>Starting from 175 KWD</strong></div>
-            </div>
-        </div>
-        <div id="bulkModel" className="popup-hidden modelbox animated-modal">
-            <h2 className="anim1 pt-0">Bulk</h2>
-            <div className="package-dtl">
-                <h3 className="pt-0 anim2">Popular amongst those</h3>
-                <p className="anim3">Whose looking for weight lose and get in shape</p>
-                <h4 className="anim4">Most popular Meals choice</h4>
-                <ul className="anim5">
-                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                </ul>
-                <div className="starting-from anim6"><strong>Starting from 200 KWD</strong></div>
-            </div>
-        </div>	
-        <div id="dislikesModel" className="popup-hidden modelbox animated-modal">
+
+        <div style={{
+            display: modalDislikes?'block':'none',
+            position:'absolute',
+            bottom: '-50rem',
+            left:'0',
+            right:'0',
+            margin: '0 auto',
+            zIndex:'100',
+            background: '#fff',
+            width:'70%',
+            height:'70%',
+            overflowY:'scroll',
+            padding: "2rem",
+            borderRadius:'7px',
+            boxShadow:'3px 3px 5px grey',
+        }}>
+            
             <h2 className="anim1 pt-0">Choose Dislikes Items</h2>
             <div className="row">
                 <div className="col-12 anim2">
                     <ul className="unstyled checkbox dislikes-items">
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item1" name="dislikes" />
-                            <label htmlFor="item1">
-                                <div>Pepper</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item2" name="dislikes" />
-                            <label htmlFor="item2">
-                                <div>Olive oil</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item3" name="dislikes" />
-                            <label htmlFor="item3">
-                                <div>Vegetable oil</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item4" name="dislikes" />
-                            <label htmlFor="item4">
-                                <div>Granulated sugar</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item5" name="dislikes" />
-                            <label htmlFor="item5">
-                                <div>Lentils</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item6" name="dislikes" />
-                            <label htmlFor="item6">
-                                <div>Split peas</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item7" name="dislikes" />
-                            <label htmlFor="item7">
-                                <div>Onions</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item8" name="dislikes" />
-                            <label htmlFor="item8">
-                                <div>Chilly Papper</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item9" name="dislikes" />
-                            <label htmlFor="item9">
-                                <div>Garlic</div>
-                            </label>
-                        </li>
-                        <li>
-                            <input type="checkbox" className="styled-checkbox" id="item10" name="dislikes" />
-                            <label htmlFor="item10">
-                                <div>Hot sauce</div>
-                            </label>
-                        </li>
+                        {DislikeItems?DislikeItems.map((item,index)=>(
+                            <li>
+                                <input onClick={()=>DislikeChange(item.main_ingredients_id)} type="checkbox" className="styled-checkbox" id={`item${index+1}`} name="dislikes" />
+                                <label htmlFor={`item${index+1}`}>
+                                    <div>{item.ingredients_name}</div>
+                                </label>
+                            </li>
+                        )):null}
+                       
                     </ul>
                 </div>
-                <div className="col-12 anim3 pt-2"><button className="button" type="submit">Submit</button></div>
+                <div className="col-12 anim3 pt-2"><button onClick={()=> setModalDislikes(false)} className="button" type="submit">Submit</button></div>
             </div>
-        </div>		
-        <div id="newAddressModel" className="popup-hidden modelbox animated-modal">
-            <h2 className="anim1">Add New Address</h2>
-            <div className="row">
+        </div>
+        		
+        <div style={{
+            display: modalAddress?'block':'none',
+            position:'absolute',
+            bottom: '-75rem',
+            left:'0',
+            right:'0',
+            margin: '0 auto',
+            zIndex:'100',
+            background: '#fff',
+            width:'40%',
+            padding: "2rem",
+            borderRadius:'7px',
+            boxShadow:'3px 3px 5px grey',
+        }}>
+             <span style={{
+                position:'absolute',
+                top:'-10px',
+                right:'-10px',
+                boxShadow:'3px 3px 5px grey',
+                borderRadius:'50%',
+                background: '#fff',
+                width: '20px',
+                height: '20px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                cursor: 'pointer',
+            }} onClick={()=>setModalAddress(false)}>x</span>
+            <h2 className="anim1">{UserAddress?'Change Your Address':'Add New Address'}</h2>
+            <form onSubmit={AddressSubmit} className="row">
                 <div className="col-12 anim2">
                     <div className="form-group">
                         <ul className="unstyled">
                             <li className="white">
-                                <input className="styled-checkbox" id="a_house" name="addresstype" type="radio" />
-                                <label htmlFor="a_house"><span>House</span></label>
+                                <input required checked={address.address_type=='house'?true:false} value='house' name='address_type' onChange={AddressChange} className="styled-checkbox" id="a_house" type="radio" />
+                                <label  htmlFor="a_house"><span>House</span></label>
                             </li>
                             <li className="black">
-                                <input className="styled-checkbox" id="a_aparment" name="addresstype" type="radio" />
-                                <label htmlFor="a_aparment"><span>Apartment</span></label>
+                                <input required checked={address.address_type=='building'?true:false} value='building' name='address_type' onChange={AddressChange} className="styled-checkbox" id="a_aparment" type="radio" />
+                                <label htmlFor="a_aparment"><span>Building</span></label>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 anim3">
-                    <div className="form-group">
-                        <div className="inputbox">
-                            <select className="form-control"><option>-- Governate --</option><option>Capital</option>
-                                <option>Hawalli</option>
-                                <option>Mubarak Al-Kabeer</option>
-                                <option>Ahmadi</option>
-                                <option>Farwaniya</option>
-                                <option>Jahra</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-sm-6 anim3">
-                    <div className="form-group"><div className="inputbox"><select className="form-control"><option>-- Area --</option>
-                        <option value="Al Ahmadi">Al Ahmadi</option><option value="Al Farwaniyah">Al Farwaniyah</option><option value="Al Asimah">Al Asimah</option><option value="Al Jahra">Al Jahra</option><option value="Hawalli">Hawalli</option><option value="Mubarak Al-Kabeer">Mubarak Al-Kabeer</option>
+                    <div className="form-group"><div className="inputbox">
+                        <select required value={address.area_id} name='area_id' onChange={AddressChange} className="form-control">
+                            <option>-- Area --</option>
+                            {AreaList?AreaList.map((area,index)=>(
+                                <option value={area.main_area_id}>{area.area_name}</option>
+                            )):null}
                         </select></div></div>
                 </div>	
                 <div className="col-lg-6 col-md-6 col-sm-6 anim4">
                     <div className="form-group">
-                        <div className="inputbox"><input type="text"  placeholder="Block" className="form-control"/></div>
+                        <div className="inputbox"><input required value={address.block} name='block' onChange={AddressChange} type="text"  placeholder="Block" className="form-control"/></div>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 anim4">
                     <div className="form-group">
-                        <div className="inputbox"><input type="text"  placeholder="Street" className="form-control"/></div>
+                        <div className="inputbox"><input required value={address.street} name='street' onChange={AddressChange} type="text"  placeholder="Street" className="form-control"/></div>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 anim5">	
                     <div className="form-group">
-                        <div className="inputbox"><input type="text"  placeholder="Avenue / Judda" className="form-control"/></div>
+                        <div className="inputbox"><input required value={address.avenue} name='avenue' onChange={AddressChange} type="text"  placeholder="Avenue / Judda" className="form-control"/></div>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 anim5">
                     <div className="form-group">
-                        <div className="inputbox"><input type="text"  placeholder="Building No" className="form-control"/></div>
+                        <div className="inputbox"><input required value={address.flat_no} name='flat_no' onChange={AddressChange} type="text"  placeholder="Flat No" className="form-control"/></div>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 anim6">	
                     <div className="form-group">
-                        <div className="inputbox"><input type="text"  placeholder="Floor No" className="form-control"/></div>
+                        <div className="inputbox"><input required value={address.floor_no} name='floor_no' onChange={AddressChange} type="text"  placeholder="Floor No" className="form-control"/></div>
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 anim6">
                     <div className="form-group">
-                        <div className="inputbox"><input type="text"  placeholder="House No" className="form-control"/></div>
+                        <div className="inputbox"><input required value={address.house_number} name='house_number' onChange={AddressChange} type="text"  placeholder="House No" className="form-control"/></div>
                     </div>
                 </div>
-                <div className="col-12 anim7"><button className="button" type="submit">Submit</button></div>
-            </div>
+                <div className="col-12 anim7"><button onClick={()=>setModalAddress(false)} className="button" type="submit" title="Close">Submit</button></div>
+            </form>
         </div>
     </>
   );

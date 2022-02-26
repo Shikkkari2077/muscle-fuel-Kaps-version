@@ -1,0 +1,33 @@
+{
+  address_type: "house",
+  directions: "Yes",
+  user_id: "4329",
+  street: "Free",
+  lang_id: "1",
+  block: "Hey",
+  avenue: "Gift",
+  house_number: "Igor",
+  area_id: "24",
+  lang: "48.0727047",
+  lat: "29.3352682"
+}
+
+{
+  "address_id": 21766,
+  "address_type": "house",
+  "area": {
+      "area_id": 24,
+      "city_id": 10,
+      "area_name": "Adailiya",
+      "area_name_ar": "العديلية"
+  },
+  "block": "T6",
+  "street": "Krnk",
+  "lat": "29.3668428",
+  "lang": "47.9667387",
+  "avenue": "5rff",
+  "house_number": "5f",
+  "floor_no": "0",
+  "flat_no": "",
+  "directions": "Gubbb"
+},

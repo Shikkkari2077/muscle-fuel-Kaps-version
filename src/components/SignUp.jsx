@@ -4,8 +4,10 @@ import Footer from '../common/Footer'
 import { Link } from "react-router-dom";
 import { useSelector , useDispatch } from "react-redux";
 import { onRegister } from "../Actions/homeActions";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
+
     const [register, setRegister] = useState({
         first_name:'',
         last_name:'',
@@ -27,6 +29,32 @@ const SignUp = () => {
     }
 
     const onSubmit =()=>{
+        if(!register.first_name){
+            toast.warning("Enter First Name!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              return false
+        }else if(!register.last_name){
+            toast.warning("Enter Last Name!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              return false
+        }else if(!register.email){
+            toast.warning("Enter Your Email!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              return false
+        }else if(!register.mobile_no){
+            toast.warning("Enter Your Mobile No.!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              return false
+        }else if(register.password!==register.CPassword){
+            toast.warning("Password Dose Not Match!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              return false
+        }
         var formData = new FormData()
         formData.append('first_name',register.first_name)
         formData.append('last_name',register.last_name)

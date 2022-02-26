@@ -2,6 +2,13 @@ import {
   SET_REGISTER,
   SET_PACKAGE_LIST,
   SET_PACKAGE_DETAILS,
+  SET_DELIVERY_TIME,
+  SET_DELIVERY_METHOD,
+  SET_ADDRESS,
+  SET_AREA_LIST,
+  SET_REFRESH,
+  SET_DISLIKE_ITEMS,
+  SET_READ_MORE,
  } from "./types";
 
 import Constant from "../Constant";
@@ -17,7 +24,10 @@ const config = {
 };
 
 export const onRegister = (data) => (dispatch)=>{
-
+  dispatch({
+    type:SET_REFRESH,
+    payload:true
+  })  
   axios
     .post(Constant.getAPI() + `/userregistration`, data, config)
     .then((res) => {
@@ -32,7 +42,10 @@ export const onRegister = (data) => (dispatch)=>{
         localStorage.setItem('last_name',res.data.data.last_name)
         localStorage.setItem('email',res.data.data.email)
 
-      
+        dispatch({
+          type:SET_REFRESH,
+          payload:false
+        })  
         window.location.href = '#/'
         window.location.reload()
       }
@@ -44,7 +57,10 @@ export const onRegister = (data) => (dispatch)=>{
 
 
 export const onLogin = (data) => (dispatch)=>{
-
+  dispatch({
+    type:SET_REFRESH,
+    payload:true
+  })  
   axios
     .post(Constant.getAPI() + `/userlogin`, data, config)
     .then((res) => {
@@ -59,8 +75,21 @@ export const onLogin = (data) => (dispatch)=>{
         localStorage.setItem('last_name',res.data.data.last_name)
         localStorage.setItem('email',res.data.data.email)
 
+        dispatch({
+          type:SET_REFRESH,
+          payload:false
+        })  
+
         window.location.href = '#/'
         window.location.reload()
+      }else{
+        dispatch({
+          type:SET_REFRESH,
+          payload:false
+        })  
+        toast.success("User Not Exist!", {
+          position: toast.POSITION.TOP_RIGHT
+        });
       }
     })
     .catch((err) => {
@@ -111,6 +140,193 @@ export const getPackageDetails = (data) => (dispatch)=>{
               payload:res.data.data
             })
             
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getDeliveryTime = (data) => (dispatch)=>{
+
+  axios
+    .post(Constant.getAPI() + `/DeliveryTime`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+              console.log('res.data',res.data.data);
+            dispatch({
+              type:SET_DELIVERY_TIME,
+              payload:res.data.data
+            })
+            
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getDeliveryMethod = (data) => (dispatch)=>{
+
+  axios
+    .post(Constant.getAPI() + `/DeliveryMethod`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+              console.log('res.data',res.data.data);
+            dispatch({
+              type:SET_DELIVERY_METHOD,
+              payload:res.data.data
+            })
+            
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getDislikeItems = (data) => (dispatch)=>{
+  axios
+    .post(Constant.getAPI() + `/ingredientlist`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+            dispatch({
+              type:SET_DISLIKE_ITEMS,
+              payload:res.data.data
+            })
+            
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getReadMore = (data) => (dispatch)=>{
+  axios
+    .post(Constant.getAPI() + `/generalnote`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+            dispatch({
+              type:SET_READ_MORE,
+              payload:res.data.data
+            })
+            
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getUserAddress = (data) => (dispatch)=>{
+  
+  var formData =new FormData
+      formData.append('user_id',localStorage.getItem('user_id'))
+  var DATA = formData
+
+  axios
+    .post(Constant.getAPI() + `/getuserprofile`, DATA, config)
+    .then((res) => {
+      
+          if(res.data){
+              console.log('res.data',res.data.data.address);
+            dispatch({
+              type:SET_ADDRESS,
+              payload:res.data.data.address
+            })
+            
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getAreaList = (data) => (dispatch)=>{
+  
+  var formData =new FormData
+      formData.append('language_id',1)
+
+  var DATA = formData
+
+  axios
+    .post(Constant.getAPI() + `/arealist`, DATA, config)
+    .then((res) => {
+      
+          if(res.data){
+              var areaList = []
+              var areas = res.data.data.map((area)=>{
+                areaList = areaList.concat(area.areas)
+              })
+              dispatch({
+                type:SET_AREA_LIST,
+                payload:areaList
+              })
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const addAddress = (data) => (dispatch)=>{
+  dispatch({
+    type:SET_REFRESH,
+    payload:true
+  })  
+  axios
+    .post(Constant.getAPI() + `/addaddress`, data, config)
+    .then((res) => {
+      
+          if(res.data.data){
+              toast.success("Address Updated", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              dispatch({
+                type:SET_REFRESH,
+                payload:false
+              })  
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const purchasePackage = (data) => (dispatch)=>{
+  dispatch({
+      type:SET_REFRESH,
+      payload:true
+  })  
+  axios
+    .post(Constant.getAPI() + `/purchasepackage`, data, config)
+    .then((res) => {
+      
+          if(res.data.data){
+            console.log('PAY',res.data.data);
+              dispatch({
+                type:SET_REFRESH,
+                payload:false
+              })  
+
+              toast.success("Purchased Successfully", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+
+              window.location.href = '#/ThankYou'
+          }else{
+            dispatch({
+              type:SET_REFRESH,
+              payload:false
+            })  
+            toast.error(`You Already Have a Package`,{
+              position: toast.POSITION.TOP_RIGHT
+            });
           }
     })
     .catch((err) => {

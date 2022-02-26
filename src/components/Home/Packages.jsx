@@ -1,9 +1,30 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import Navbar from "../../common/Navbar";
 import Footer from "../../common/Footer";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { getPackageList } from "../../Actions/homeActions";
+import { Link } from "react-router-dom";
 
 
 const Packages = () => {
+    const dispatch = useDispatch()
+
+    const PackageList = useSelector(state => state.home.PackageList);
+
+    useEffect(() => {
+        onPackages();
+    }, [])
+
+    const onPackages = () =>{
+        var formData = new FormData
+        formData.append('lang_id',1)
+        formData.append('show_festival_package',0)
+
+        dispatch(getPackageList(formData))
+    }
+    
+    console.log('PackageList',PackageList);
   return (
     <>
     <section class="section package-main fp-section fp-table active fp-completely H_SEC" id="section1"
@@ -23,199 +44,39 @@ const Packages = () => {
                                                 class="package-container swiper-container swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
                                                 <div class="swiper-wrapper" id="swiper-wrapper-4a983da3c1b2fefc"
                                                     aria-live="polite" >
-                                                    <div class="swiper-slide IMPORTANT" role="group" aria-label="1 / 6">
-                                                        <div class="package-card">
-                                                            <div class="package-img"><img src="img/sumbatik.jpg"
-                                                                    class="img-fluid" alt="Sumbatik"/>
-                                                                <div class="package-head">
-                                                                    <h2>Sumbatik</h2>
-                                                                    <p>100g Protein</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="package-dtl">
-                                                                <h3>Popular amongst those</h3>
-                                                                <p>Whose looking for weight lose and get in shape</p>
-                                                                <h4>Most popular Meals choice</h4>
-                                                                <ul>
-                                                                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                                                                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                                                                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                                                                </ul>
-                                                                <div class="price-subscribe d-flex justify-content-between">
-                                                                    <div>
-                                                                        <p><strong>Starting from</strong>Starting from 150
-                                                                            KWD</p>
+                                                        {PackageList?PackageList.map((pack,index)=>(
+                                                            <div class="swiper-slide IMPORTANT"  role="group" aria-label="1 / 6">
+                                                            <div class="package-card">
+                                                                <div class="package-img"><img src={pack.img_url}
+                                                                        class="img-fluid" alt="Sumbatik"/>
+                                                                    <div class="package-head">
+                                                                        <h2>{pack.package_name}</h2>
+                                                                        <p>{pack.gram_label}</p>
                                                                     </div>
-                                                                    <div><button type="submit"
-                                                                            onclick="location.href='package.html'"
-                                                                            class="button">Subscribe Now</button></div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide IMPORTANT" role="group" aria-label="2 / 6">
-                                                        <div class="package-card">
-                                                            <div class="package-img"><img src="img/FiT.jpg"
-                                                                    class="img-fluid" alt="FiT"/>
-                                                                <div class="package-head">
-                                                                    <h2>FiT</h2>
-                                                                    <p>150g Protein</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="package-dtl">
-                                                                <h3>Popular amongst those</h3>
-                                                                <p>Whose looking for weight lose and get in shape</p>
-                                                                <h4>Most popular Meals choice</h4>
-                                                                <ul>
-                                                                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                                                                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                                                                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                                                                </ul>
-                                                                <div class="price-subscribe d-flex justify-content-between">
-                                                                    <div>
-                                                                        <p><strong>Starting from</strong>Starting from 150
-                                                                            KWD</p>
+                                                                <div class="package-dtl" style={{height:'300px'}}>
+                                                                    {/* <h3>Popular amongst those</h3>
+                                                                    <p>Whose looking for weight lose and get in shape</p>
+                                                                    <h4>Most popular Meals choice</h4> */}
+                                                                    <h5><div dangerouslySetInnerHTML={{__html:pack.description}} /></h5>
+                                                                    <ul>
+                                                                        <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
+                                                                        <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
+                                                                        <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
+                                                                    </ul>
+                                                                    <div class="price-subscribe d-flex justify-content-between">
+                                                                        <div>
+                                                                            <p><strong>Starting from</strong>Starting from 150
+                                                                                KWD</p>
+                                                                        </div>
+                                                                        <div><Link to={`/package/${pack.package_master_id}`} type="submit" class="button">Subscribe Now</Link></div>
                                                                     </div>
-                                                                    <div><button type="submit"
-                                                                            onclick="location.href='package.html'"
-                                                                            class="button">Subscribe Now</button></div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide swiper-slide-prev IMPORTANT" role="group"
-                                                        aria-label="3 / 6">
-                                                        <div class="package-card">
-                                                            <div class="package-img"><img src="img/Bulk.jpg"
-                                                                    class="img-fluid" alt="Bulk"/>
-                                                                <div class="package-head">
-                                                                    <h2>Bulk</h2>
-                                                                    <p>200g Protein</p>
-                                                                </div>
                                                             </div>
-                                                            <div class="package-dtl">
-                                                                <h3>Popular amongst those</h3>
-                                                                <p>Whose looking for weight lose and get in shape</p>
-                                                                <h4>Most popular Meals choice</h4>
-                                                                <ul>
-                                                                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                                                                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                                                                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                                                                </ul>
-                                                                <div class="price-subscribe d-flex justify-content-between">
-                                                                    <div>
-                                                                        <p><strong>Starting from</strong>Starting from 150
-                                                                            KWD</p>
-                                                                    </div>
-                                                                    <div><button type="submit"
-                                                                            onclick="location.href='package.html'"
-                                                                            class="button">Subscribe Now</button></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide swiper-slide-active IMPORTANT" role="group"
-                                                        aria-label="4 / 6">
-                                                        <div class="package-card">
-                                                            <div class="package-img"><img src="img/sumbatik.jpg"
-                                                                    class="img-fluid" alt="Sumbatik"/>
-                                                                <div class="package-head">
-                                                                    <h2>Sumbatik</h2>
-                                                                    <p>100g Protein</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="package-dtl">
-                                                                <h3>Popular amongst those</h3>
-                                                                <p>Whose looking for weight lose and get in shape</p>
-                                                                <h4>Most popular Meals choice</h4>
-                                                                <ul>
-                                                                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                                                                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                                                                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                                                                </ul>
-                                                                <div class="price-subscribe d-flex justify-content-between">
-                                                                    <div>
-                                                                        <p><strong>Starting from</strong>Starting from 150
-                                                                            KWD</p>
-                                                                    </div>
-                                                                    <div><button type="submit"
-                                                                            onclick="location.href='package.html'"
-                                                                            class="button">Subscribe Now</button></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide swiper-slide-next IMPORTANT" role="group"
-                                                        aria-label="5 / 6">
-                                                        <div class="package-card">
-                                                            <div class="package-img"><img src="img/FiT.jpg"
-                                                                    class="img-fluid" alt="FiT"/>
-                                                                <div class="package-head">
-                                                                    <h2>FiT</h2>
-                                                                    <p>150g Protein</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="package-dtl">
-                                                                <h3>Popular amongst those</h3>
-                                                                <p>Whose looking for weight lose and get in shape</p>
-                                                                <h4>Most popular Meals choice</h4>
-                                                                <ul>
-                                                                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                                                                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                                                                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                                                                </ul>
-                                                                <div class="price-subscribe d-flex justify-content-between">
-                                                                    <div>
-                                                                        <p><strong>Starting from</strong>Starting from 150
-                                                                            KWD</p>
-                                                                    </div>
-                                                                    <div><button type="submit"
-                                                                            onclick="location.href='package.html'"
-                                                                            class="button">Subscribe Now</button></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="swiper-slide IMPORTANT" role="group" aria-label="6 / 6">
-                                                        <div class="package-card">
-                                                            <div class="package-img"><img src="img/Bulk.jpg"
-                                                                    class="img-fluid" alt="Bulk"/>
-                                                                <div class="package-head">
-                                                                    <h2>Bulk</h2>
-                                                                    <p>200g Protein</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="package-dtl">
-                                                                <h3>Popular amongst those</h3>
-                                                                <p>Whose looking for weight lose and get in shape</p>
-                                                                <h4>Most popular Meals choice</h4>
-                                                                <ul>
-                                                                    <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                                                                    <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                                                                    <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                                                                </ul>
-                                                                <div class="price-subscribe d-flex justify-content-between">
-                                                                    <div>
-                                                                        <p><strong>Starting from</strong>Starting from 150
-                                                                            KWD</p>
-                                                                    </div>
-                                                                    <div><button type="submit"
-                                                                            onclick="location.href='package.html'"
-                                                                            class="button">Subscribe Now</button></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                        )):null}
                                                 </div>
-                                                <span class="swiper-notification" aria-live="assertive"
-                                                    aria-atomic="true"></span>
                                             </div>
-                                            <div class="package-button-prev swiper-button-prev" tabindex="0" role="button"
-                                                aria-label="Previous slide" aria-controls="swiper-wrapper-4a983da3c1b2fefc"
-                                                aria-disabled="false"></div>
-                                            <div class="package-button-next swiper-button-next swiper-button-disabled"
-                                                tabindex="-1" role="button" aria-label="Next slide"
-                                                aria-controls="swiper-wrapper-4a983da3c1b2fefc" aria-disabled="true"></div>
                                         </div>
                                     </div>
                                 </div>

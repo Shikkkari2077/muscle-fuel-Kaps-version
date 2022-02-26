@@ -21,7 +21,7 @@ const IntroDuction = () => {
                                     <li>We reminds you to select meals. If you don’t our experts selects it for you
                                     </li>
                                 </ul>
-                                <div class="banner-btns"><a class="button" href="#/subscribe">Subscribe Now</a><a
+                                <div class="banner-btns"><a class="button" href="#/package">Subscribe Now</a><a
                                         class="button" href="#/calculate-calorie">Calculate Calorie</a></div>
                             </div>
                             <div class="col-lg-7 col-md-7 col-sm-6 banner-right"><img src="img/banner.svg"

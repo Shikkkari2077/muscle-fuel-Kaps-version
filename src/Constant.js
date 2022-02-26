@@ -1,6 +1,6 @@
 module.exports = {
     getAPI: function () {
-      return "http://testv0.musclefuel-kw.com/testv0/ws"
+      // return "https://testv0.musclefuel-kw.com/ws"
+      return "https://musclefuel-kw.com/musclefuel/ws"
     },
   };
-  
