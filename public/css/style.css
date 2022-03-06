@@ -502,7 +502,7 @@ font-size: 18px;font-weight: bold;
 .delivery-time li{width:33.33%;margin:0}
 .delivery-time li .styled-checkbox + label,.delivery-time li .styled-checkbox + label::before,.delivery-time li .styled-checkbox + label div{display:block;margin:0 auto}
 .delivery-time li .styled-checkbox + label div{padding:10px 0 0 0;font-size:18px;line-height:20px;}
-.delivery-time li .styled-checkbox + label::after{left:45%;transform:translateX(-50%);top:3px;}
+.delivery-time li .styled-checkbox + label::after{left:48%;transform:translateX(-50%);top:5px;}
 .delivery-time li + li{border-left:1px solid #ccc}
 .address-sub-div h3 .button{position:absolute;right:0;top:0 }
 .address-sub-div .form-group{margin-bottom:5px}

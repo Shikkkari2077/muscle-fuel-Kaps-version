@@ -28,7 +28,7 @@ const RoutesPage = () => {
          {render?<Route exact path='/myProfile' element={<MyProfile /> }/>:null}
 
           <Route exact path='/' element={<Home/> }/>
-          <Route exact path='/package/:PackageID' element={<Package/>}/>
+          <Route exact path='/PACKAGE/:PackageID' element={<Package/>}/>
           <Route exact path='/package' element={<Package/>}/>
           <Route exact path='/calculate-calorie' element={<CalculateCalorie/>}/>
           <Route exact path='/dietician' element={<Dietician/>}/>

@@ -1,7 +1,7 @@
 import {React, useState, useEffect} from "react";
 import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { 
     getPackageList,
@@ -15,16 +15,17 @@ import {
     getDislikeItems,
     getReadMore,
 } from "../Actions/homeActions";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 
 const Package = () => {
 
     const PackageID = useParams()
+    const Location = useLocation()
 
     const disablePastDate = () => {
         const today = new Date();
-        const dd = String(today.getDate() + 3).padStart(2, "0");
+        const dd = String(today.getDate() + 5).padStart(2, "0");
         const mm = String(today.getMonth() + 1).padStart(2, "0");
         const yyyy = today.getFullYear();
         return yyyy + "-" + mm + "-" + dd;
@@ -45,14 +46,14 @@ const Package = () => {
 
     const [modalReadMore, setModalReadMore] = useState(false)
     const [modalAddress, setModalAddress] = useState(false)
-    const [modalDislikes, setModalDislikes] = useState(false)
+    // const [modalDislikes, setModalDislikes] = useState(false)
 
 
 
     const [packageID, setPackageID] = useState()
     const [subPackageID, setSubPackageID] = useState()
     const [sub_package_id, setSub_package_id] = useState()
-    const [dishValue, setVishValue] = useState()
+    const [dishValue, setVishValue] = useState({Meals: '3', Snacks: '2', Soups: '1'})
     const [subPackage, setSubPackage] = useState()
     const [finalPrice, setFinalPrice] = useState('0.000')
     const [startDate, setStartDate] = useState()
@@ -62,7 +63,7 @@ const Package = () => {
     const [isFriday, setIsFriday] = useState('no')
     const [paymentType, setPaymentType] = useState('')
     const [address, setAddress] = useState({})
-    const [dislikeItems, setDislikeItems] = useState([])
+    // const [dislikeItems, setDislikeItems] = useState([])
   
     const [USER_ID] = useState(localStorage.getItem('user_id'));
 
@@ -102,15 +103,39 @@ const Package = () => {
         onPackages();
         onDeliveryTime();
         onDeliveryMethod();
-        onDislikeItem()
+        // onDislikeItem()
         onReadMore()
+        
     }, [])
 
     useEffect(() => {
-       dispatch(getUserAddress())
-       dispatch(getAreaList())
+        if(Location.pathname.includes('/package')){
+            setPackageID(24)
+        }
+    }, [])
+    
+    useEffect(() => {
+      
+        if(PackageDetails){
+          setSubPackageID('1')
+        }
        
-    }, [Refresh])
+    }, [packageID,PackageDetails])
+
+    // useEffect(() => {
+      
+    //     if(subPackageID){
+    //         setVishValue({Meals: '3', Snacks: '2', Soups: '1'})
+    //     }
+       
+    // }, [subPackageID])
+
+    useEffect(() => {
+        dispatch(getUserAddress())
+        dispatch(getAreaList())
+        
+     }, [Refresh])
+     
     
     const onPackages = () =>{
         var formData = new FormData
@@ -132,11 +157,11 @@ const Package = () => {
         dispatch(getDeliveryMethod(formData));
     }
 
-    const onDislikeItem =()=> {
-        var formData = new FormData
-        formData.append('language_id',1)
-        dispatch(getDislikeItems(formData));
-    }
+    // const onDislikeItem =()=> {
+    //     var formData = new FormData
+    //     formData.append('language_id',1)
+    //     dispatch(getDislikeItems(formData));
+    // }
 
     const onReadMore =()=> {
         var formData = new FormData
@@ -161,9 +186,9 @@ const Package = () => {
         [name]: value,
         });
     }
-    const DislikeChange = (dislike) => {
-        setDislikeItems([...dislikeItems,dislike])
-    }
+    // const DislikeChange = (dislike) => {
+    //     setDislikeItems([...dislikeItems,dislike])
+    // }
     useEffect(() => {
        if(PackageDetails){
         var subPKG = PackageDetails.sub_package_list
@@ -174,7 +199,7 @@ const Package = () => {
     }, [subPackageID])
     
     useEffect(() => {
-       if(dishValue){
+       if(dishValue&&subPackage){
         var meal = parseInt(dishValue.Meals)
         var snack = parseInt(dishValue.Snacks)
         var soup = parseInt(dishValue.Soups)
@@ -207,10 +232,10 @@ const Package = () => {
             })
             
         }else if(!USER_ID){
-            toast.warning("User Not Found Please Sign In!", {
+            toast.warning("You Are Not Logged In, Do You Want to Sign Up!", {
                 position: toast.POSITION.TOP_RIGHT
               });
-            window.location.href = '#/sign-in'
+            
         }
     }
 
@@ -296,21 +321,24 @@ const Package = () => {
             formData.append('user_id',localStorage.getItem('user_id'))
             formData.append('app_mode','dev')
             formData.append('unique_code',endDate.getTime()*32)
-            formData.append('friday_delivery',isFriday)
+            // formData.append('friday_delivery',isFriday)
             formData.append('start_date',startDate)
-            formData.append('dislike_ingredients',dislikeItems.toString())
-    
-            dispatch(purchasePackage(formData))
+            // formData.append('dislike_ingredients',dislikeItems.toString())
+            var DATA = {
+                payment:paymentType,
+                totalAmount:finalPrice
+            }
+            dispatch(purchasePackage(formData,DATA))
         }
         else{
-            toast.warning("User Not Found Please Sign In!", {
+            toast.warning("You Are Not Logged In, Do You Want to Sign Up!", {
                 position: toast.POSITION.TOP_RIGHT
               });
-            window.location.href = '#/sign-in'
+           
         }
 
     }
-
+    // console.log('dishValue',dishValue.Meals);
   return (
     <>
     <Navbar/>
@@ -322,14 +350,18 @@ const Package = () => {
                         <div className="select-package-carousel">
                             <h3 className="text-center text-transform-none color-black">Select a Package</h3>
                             <div className="package-container swiper-container">
-                                <div className="swiper-wrapper">
+                                <div className="swiper-wrapper" style={{
+                                            // border:"1px solid red",
+                                            display:'flex',
+                                            justifyContent:'center'
+                                        }}>
                                     {PackageList?PackageList.map((pack,index)=>(
                                         <div className="swiper-slide IMPORTANT2">
                                             <div className="package-card">
                                                 <input checked={pack.package_master_id==packageID?true:false} onClick={()=>setPackageID(pack.package_master_id)} type="radio" className="styled-checkbox" id={`package${index+1}`} name="packages" />
                                                 <label htmlFor={`package${index+1}`} title="Sumbatik">
                                                     <div className="package-img">
-                                                        <img src={pack.img_url} className="img-fluid" alt="Sumbatik Package"/>
+                                                        <img src={pack.package_master_id==24?"img/sumbatik.jpg":pack.package_master_id==26?"img/FiT.jpg":pack.package_master_id==28?"img/Bulk.jpg":null} className="img-fluid" alt="Sumbatik Package"/>
                                                         <div className="package-head">
                                                             <h2>{pack.package_name}</h2><p>{pack.gram_label}</p>
                                                             <div style={{padding:'0px'}} dangerouslySetInnerHTML={{__html:pack.description}} />
@@ -352,7 +384,7 @@ const Package = () => {
                                 <ul className="unstyled days-ul d-inline-block">
                                     {PackageDetails?PackageDetails.sub_package_list.map((subPackage,index)=>(
                                         <li>
-                                            <input onClick={()=>setSubPackageID(subPackage.package_for_id)} type="radio" className="styled-checkbox" id={`days${subPackage.days}`} name="day" />
+                                            <input checked={subPackage.package_for_id==subPackageID?true:false} onClick={()=>setSubPackageID(subPackage.package_for_id)} type="radio" className="styled-checkbox" id={`days${subPackage.days}`} name="day" />
                                             <label htmlFor={`days${subPackage.days}`}>
                                                 <h2>{subPackage.days}</h2><p>Days</p>
                                             </label>
@@ -366,8 +398,12 @@ const Package = () => {
                             <div className="row">
                                 <div className="col-12">
                                 <div className="carousel-dishes">
-                                    <div className="dishes-container swiper-container">
-                                        <div className="swiper-wrapper" style={{marginBottom:'5px'}}>
+                                    <div className="dishes-container swiper-container" >
+                                        <div className="swiper-wrapper"style={{
+                                            marginBottom:'5px',
+                                            display:'flex',
+                                            justifyContent:'center'
+                                        }}>
                                             {PackageDetails?PackageDetails.max_values_as_per_meal_type.filter(data=>data.meal_type_id!==1).map((value,index)=>(
                                                 <div className="swiper-slide IMPORTANT" >
                                                     <div className="dish-box meal-dish">
@@ -375,7 +411,7 @@ const Package = () => {
                                                         <ul className="unstyled dish-ul justify-content-between">
                                                            {new Array(value.max_value).fill(value.max_value).map((subValue,idx)=>(
                                                                 <li>
-                                                                    <input onChange={DishValueChange} type="radio" className="styled-checkbox" id={`${value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''}${idx}`}  name={value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''} value={idx}/>
+                                                                    <input checked={index==0&&dishValue.Meals==idx?true:index==1&&dishValue.Snacks==idx?true:index==2&&dishValue.Soups==idx?true:false} onChange={DishValueChange} type="radio" className="styled-checkbox" id={`${value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''}${idx}`}  name={value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''} value={idx}/>
                                                                     <label htmlFor={`${value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''}${idx}`}><strong>{idx}</strong></label>
                                                                 </li>
                                                            ))}
@@ -395,7 +431,7 @@ const Package = () => {
                                         <div className="starting-sub">
                                             <h4><strong className="mealVal">{dishValue?dishValue.Meals?dishValue.Meals:0:0}</strong> Meals + <strong className="SnakcsVal">{dishValue?dishValue.Snacks?dishValue.Snacks:0:0}</strong> Snacks + <strong className="SoupVal">{dishValue?dishValue.Soups?dishValue.Soups:0:0}</strong> Soups</h4>
                                             {startDate?<p>You selected starting date is <strong>{startDateS}</strong></p>
-                                            :<strong>No date Selected Yet!</strong>}
+                                            :null}
                                         </div>
                                         <div className="starting-sub">
                                             <h4 className="pt-0"><span>{finalPrice=='0.000'?'Combination Not Available!':finalPrice} {finalPrice=='0.000'?null:'KWD'}</span></h4>
@@ -406,13 +442,13 @@ const Package = () => {
                         </div>	
                         <h3 className="text-transform-none mt-4 text-left value-added-choice"><span>Value added Choice</span></h3>
                         <div className="value-choice">
-                            <div className="value-choice-left">
+                            {/* <div className="value-choice-left">
                                 <p>Do you want the Friday delivery?</p>
                                 <div className="mb-5"> 
                                     <span onClick={()=>setIsFriday('yes')} style={{background:`${isFriday=='yes'?'#C5251C':'#fff'}`,color:`${isFriday=='yes'?'#fff':'#000'}`}} className="button-line mr-3 ISFRYD">Yes</span> 
                                     <span onClick={()=>setIsFriday('no')} style={{background:`${isFriday=='no'?'#C5251C':'#fff'}`,color:`${isFriday=='no'?'#fff':'#000'}`}} className="button-line ISFRYD">No</span>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="value-choice-right">
                                 <p><strong>Note : </strong></p>
                                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor</p>
@@ -434,11 +470,14 @@ const Package = () => {
                             <div className="col-g-4 col-md-4 col-sm-6 starting-column">
                                 <div className="text-center starting-box">
                                     <h4>Select the delivery time</h4>
-                                    <ul className="unstyled delivery-time">
+                                    <ul className="unstyled delivery-time" style={{
+                                        display:'flex',
+                                        justifyContent:'center'
+                                    }}>
                                         {DeliveryTime?DeliveryTime.map((time,index)=>(
                                             <li>
                                                 <input onClick={()=>setDeliveryTime(time.timeid)} type="radio" className="styled-checkbox" id={time.timeid} name="delivery" />
-                                                <label htmlFor={time.timeid}>
+                                                <label className="TIME_LABLE" htmlFor={time.timeid}>
                                                     <div>{time.timename}</div>
                                                 </label>
                                             </li>
@@ -446,7 +485,7 @@ const Package = () => {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="col-g-4 col-md-4 col-sm-6 starting-column">
+                            <div className="col-g-8 col-md-8 col-sm-10 starting-column">
                                 <div className="text-center starting-box">
                                     <h4>Contact on Delivery</h4>
                                     <ul className="unstyled delivery-time">
@@ -461,21 +500,21 @@ const Package = () => {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="col-g-4 col-md-4 col-sm-6 starting-column">
+                            {/* <div className="col-g-4 col-md-4 col-sm-6 starting-column">
                                 <div className="text-center starting-box">
                                     <h4>Dislikes</h4>
                                     <div className="form-group">
                                         <a className="button" onClick={()=> setModalDislikes(true)}>Choose Dislikes Items</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="row">
                             <div className="col-g-6 col-md-6 col-sm-6 starting-column">
                                 <div className="address-sub-div delivery-address">
                                     <h3 className="text-left">Delivery Address <a onClick={()=>{
                                         EditAddress()
-                                        setModalAddress(true)
+                                        setModalAddress(USER_ID?true:false)
                                     }} className="button change-btn">{UserAddress?'Change':'Add'}</a></h3>
                                     <div className="profiledata">
                                        {UserAddress? <div className=" ">
@@ -519,7 +558,7 @@ const Package = () => {
                                             <ul className="unstyled">
                                                 <li><input onClick={()=>setPaymentType('knet')} type="radio" className="styled-checkbox" id="knet" name="payment" /><label htmlFor="knet" title="K-Net"><img src="img/k-net.png" alt="k net"/></label><div>k net</div></li>
                                                 <li><input onClick={()=>setPaymentType('visa')} type="radio" className="styled-checkbox" id="visa" name="payment" /><label htmlFor="visa" title="Credit Card"><img src="img/creditcard.png" alt="Credit Card"/></label><div>Credit Card</div></li>
-                                                <li><input onClick={()=>setPaymentType('cash')} type="radio" className="styled-checkbox" id="cash" name="payment" /><label htmlFor="cash" title="Cash on Delivery"><img src="img/cash.png" alt="Cash on Delivery"/></label><div>Cash on Delivery</div></li>
+                                                {/* <li><input onClick={()=>setPaymentType('cash')} type="radio" className="styled-checkbox" id="cash" name="payment" /><label htmlFor="cash" title="Cash on Delivery"><img src="img/cash.png" alt="Cash on Delivery"/></label><div>Cash on Delivery</div></li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -568,7 +607,7 @@ const Package = () => {
            ):null}
         </div>
 
-        <div style={{
+        {/* <div style={{
             display: modalDislikes?'block':'none',
             position:'absolute',
             bottom: '-50rem',
@@ -602,7 +641,7 @@ const Package = () => {
                 </div>
                 <div className="col-12 anim3 pt-2"><button onClick={()=> setModalDislikes(false)} className="button" type="submit">Submit</button></div>
             </div>
-        </div>
+        </div> */}
         		
         <div style={{
             display: modalAddress?'block':'none',
@@ -685,6 +724,11 @@ const Package = () => {
                 <div className="col-lg-6 col-md-6 col-sm-6 anim6">
                     <div className="form-group">
                         <div className="inputbox"><input required value={address.house_number} name='house_number' onChange={AddressChange} type="text"  placeholder="House No" className="form-control"/></div>
+                    </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-sm-6 anim6">
+                    <div className="form-group">
+                        <div className="inputbox"><input required value={address.directions} name='directions' onChange={AddressChange} type="text"  placeholder="Directions" className="form-control"/></div>
                     </div>
                 </div>
                 <div className="col-12 anim7"><button onClick={()=>setModalAddress(false)} className="button" type="submit" title="Close">Submit</button></div>

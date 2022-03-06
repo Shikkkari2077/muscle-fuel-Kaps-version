@@ -14,10 +14,14 @@ const Features = () => {
                                 <div class="row">
                                     <div class="col-12">
                                         <h1 class="text-center"><span>FEATURES</span></h1>
-                                        <div class="featurs-carousel">
+                                        <div class="featurs-carousel" style={{
+                                            // border:"1px solid red",
+                                            display:'flex',
+                                            justifyContent:'center'
+                                        }}>
                                             <div
                                                 class="swiper-container feature-container swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
-                                                <div class="swiper-wrapper" id="swiper-wrapper-98a34dfca68ef222"
+                                                <div class="swiper-wrapper FTR_BOX" id="swiper-wrapper-98a34dfca68ef222"
                                                     aria-live="polite" style={{transform: 'translate3d(0px, 0px, 0px)'}}>
                                                     <div class="swiper-slide swiper-slide-active" role="group"
                                                         aria-label="1 / 5" style={{width: '214px', marginRight: '10px'}}>

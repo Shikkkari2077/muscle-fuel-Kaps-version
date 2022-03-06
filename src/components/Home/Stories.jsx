@@ -2,13 +2,13 @@ import React from "react";
 
 function Stories() {
   return (
-    <section class="section stories-main fp-section fp-table active fp-completely H_SEC" id="section4"
+    <section class="section stories-main fp-section fp-table active fp-completely" id="section4"
         style={{opacity: '1', height: '657px', backgroundColor: 'rgb(255, 255, 255)'}} data-fp-styles={{opacity: '1'}}
         data-anchor="Testimonials">
-        <div class="fp-tableCell" style={{height: '657px'}}>
-            <div class="fp-scrollable" style={{height: '657px'}}>
+        <div class="fp-tableCell">
+            <div class="fp-scrollable">
                 <div class="fp-scroller"
-                    style={{transitionTimingFunction: 'cubic-bezier(0.1, 0.57, 0.1, 1)', transitionDuration: '0ms', transform: 'translate(0px, 0px) translateZ(0px)'}}>
+                   >
                     <div class="page-div">
                         <div class="page-sub">
                             <div class="w-100">
@@ -19,9 +19,8 @@ function Stories() {
                                             <div class="stories-carousel">
                                                 <div
                                                     class="swiper-container stories-container swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
-                                                    <div class="swiper-wrapper" id="swiper-wrapper-489e5105f57564439"
-                                                        aria-live="polite"
-                                                        style={{transform: 'translate3d(-1140px, 0px, 0px)', transitionDuration: '0ms'}}>
+                                                    <div  class="swiper-wrapper" id="swiper-wrapper-489e5105f57564439"
+                                                        aria-live="polite">
                                                         <div class="swiper-slide" role="group" aria-label="1 / 10"
                                                             style={{width: '198px', marginRight: '30px'}}>
                                                             <div class="stories-box">

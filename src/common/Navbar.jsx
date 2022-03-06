@@ -1,5 +1,7 @@
 import {React, useEffect, useState} from "react";
 import { Link,useLocation } from "react-router-dom";
+import { onLogOut } from "../Actions/homeActions";
+import { useDispatch } from "react-redux";
 
 const Navbar = () => {
     let location = useLocation()
@@ -9,14 +11,20 @@ const Navbar = () => {
         email:localStorage.getItem('email'),
         user_id:localStorage.getItem('user_id'),
     })
-
+    const [logOutBTN, setlogOutBTN] = useState(false)
     const [navActive, setNavActive] = useState(1);
-    
+
+    const dispatch = useDispatch()
+
+    const LogOut =()=>{
+       dispatch(onLogOut())
+    }
+
     useEffect(() => {
      if(location.pathname.includes('/')){
         setNavActive(1)
      }
-     if(location.pathname.includes('/package')){
+     if(location.pathname.includes('/package')||location.pathname.includes('/PACKAGE')){
         setNavActive(2)
      }
      if(location.pathname.includes('/calculate-calorie')){
@@ -55,7 +63,7 @@ const Navbar = () => {
                                         <li><Link to="/package" className={navActive==2?"active":null}>Package</Link></li>
                                         <li><Link to="/calculate-calorie" className={navActive==3?"active":null}>Calculate Calorie</Link></li>
                                         {/* <li><Link to="/dietician" className={navActive==4?"active":null}>Dietician</Link></li> */}
-                                        {/* <li><Link to="/menu" className={navActive==5?"active":null}>Menu</Link></li> */}
+                                        <li><Link to="/menu" className={navActive==5?"active":null}>Menu</Link></li>
                                         {!localStorage.getItem('user_id')?(
                                         <li><Link to="/sign-in" className={navActive==6||navActive==7?"active":null}>Sign in</Link>
                                             <ul className="wsmenu-submenu">
@@ -68,14 +76,24 @@ const Navbar = () => {
                                 </nav>
                             </div>
                         </div>
-                        <div className="language-div USER_NAME">
-                            <span>
-                                {userData.user_id?`${userData.first_name} ${userData.last_name}`:'User Name'}
+                       
+                       {localStorage.getItem('user_id')?<>
+                            <div className="language-div USER_NAME">
+                                <span>
+                                    {userData.user_id?`${userData.first_name} ${userData.last_name}`:'User Name'}
+                                </span>
+                                
+                            </div>
+                            <span className="subscribe-div USER_PHOTO">
+                                <span class="material-icons-sharp" onClick={()=>setlogOutBTN(!logOutBTN)}>account_circle</span>
+                                {logOutBTN?<p onClick={LogOut} className="LOGOUT">Log Out</p>:null}
                             </span>
+                       </>:null}
+                       <div className="subscribe-div" >
+                            <Link style={{width:'9rem'}} className="button" to='/package'>
+                            SUBSCRIBE
+                            </Link>
                         </div>
-                        <Link className="subscribe-div USER_PHOTO" to={userData.user_id?'/myProfile':'#'}>
-                            <span class="material-icons-sharp">account_circle</span>
-                        </Link>
                     </div>				
                 </div>
             </div>

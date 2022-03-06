@@ -41,6 +41,7 @@ export const onRegister = (data) => (dispatch)=>{
         localStorage.setItem('first_name',res.data.data.first_name)
         localStorage.setItem('last_name',res.data.data.last_name)
         localStorage.setItem('email',res.data.data.email)
+        localStorage.setItem('mobile_no',res.data.data.mobile_no)
 
         dispatch({
           type:SET_REFRESH,
@@ -48,6 +49,15 @@ export const onRegister = (data) => (dispatch)=>{
         })  
         window.location.href = '#/'
         window.location.reload()
+      }else if(res.data.error_msg=='Referral code not found'){
+        toast.success('Referral code is Wrong or Expired', {
+          position: toast.POSITION.TOP_RIGHT
+        });
+
+        dispatch({
+          type:SET_REFRESH,
+          payload:false
+        })  
       }
     })
     .catch((err) => {
@@ -74,6 +84,7 @@ export const onLogin = (data) => (dispatch)=>{
         localStorage.setItem('first_name',res.data.data.first_name)
         localStorage.setItem('last_name',res.data.data.last_name)
         localStorage.setItem('email',res.data.data.email)
+        localStorage.setItem('mobile_no',res.data.data.mobile_no)
 
         dispatch({
           type:SET_REFRESH,
@@ -298,7 +309,9 @@ export const addAddress = (data) => (dispatch)=>{
     });
 };
 
-export const purchasePackage = (data) => (dispatch)=>{
+export const purchasePackage = (data,payData) => (dispatch)=>{
+  console.log('payData',payData);
+
   dispatch({
       type:SET_REFRESH,
       payload:true
@@ -308,17 +321,28 @@ export const purchasePackage = (data) => (dispatch)=>{
     .then((res) => {
       
           if(res.data.data){
-            console.log('PAY',res.data.data);
+           
               dispatch({
                 type:SET_REFRESH,
                 payload:false
               })  
 
-              toast.success("Purchased Successfully", {
+              toast.success("Proceed To Payment", {
                 position: toast.POSITION.TOP_RIGHT
               });
+              
+              
+                window.open(`${Constant.getPaymentAPI()}payment/index.php?custname=${
+                  localStorage.getItem('first_name')+localStorage.getItem('last_name')
+                }&custemail=${localStorage.getItem('email')}&phone=${localStorage.getItem('mobile_no')}&totAmount=${
+                  payData.totalAmount
+                }&productnames=testProduct&order_id_app=${res.data.data.purchase_id}&user_id=${
+                  localStorage.getItem('user_id')
+                }`,"_blank")
+              
+              
 
-              window.location.href = '#/ThankYou'
+              // window.location.href = '#/ThankYou'
           }else{
             dispatch({
               type:SET_REFRESH,

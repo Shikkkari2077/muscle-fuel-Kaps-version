@@ -3,13 +3,21 @@ import Navbar from '../common/Navbar'
 import Footer from '../common/Footer'
 
 const CalculateCalorie = () => {
-
+    const [USER_ID] = useState(localStorage.getItem('user_id'));
+    const [toggle, setToggle] = useState(1)
     const [data, setData] = useState({
         gender:'',
         height:null,
         weight:null,
         dob:'',
     })
+
+    useEffect(() => {
+        if(data.gender && data.height && data.weight && data.dob){
+            Calculate()
+            console.log('TRRIGGER');
+        }
+    }, [data.dob, data.gender, data.height, data.weight])
 
     const [BMI, setBMI] = useState('No Data Yet!')
 
@@ -22,8 +30,9 @@ const CalculateCalorie = () => {
         });
     }
 
-    const Calculate =(e)=>{
-        e.preventDefault()
+   
+    
+    const Calculate =()=>{
         var hM = data.height/100
         var result = data.weight/(hM*hM)
         setBMI(result.toFixed(2))
@@ -44,7 +53,7 @@ const CalculateCalorie = () => {
                                 <div class="swiper calculateCalorie">
                                 <div class="swiper-wrapper">
 
-                                    <form onSubmit={Calculate} class="swiper-slide">
+                                   {toggle==1? <form  class="swiper-slide">
                                         <h3>What are your Profile of a Muscle Fuel diet?</h3>
                                         <ul class="calorie-profile">
                                             <li>
@@ -70,13 +79,13 @@ const CalculateCalorie = () => {
                                                 <input required type="date" class="form-control" placeholder="DD/MM/YYYY" id="Birth" onChange={handleChange} name="dob" value={data.dob}/>
                                             </li>
                                         </ul>
-                                        <div class="mt-2"><button type="submit" class="button calorie-btn">Continue</button></div>
+                                        <div class="mt-2"><button onClick={()=>setToggle(2)} type="submit" class="button calorie-btn">Continue</button></div>
                                         <div class="info">
                                             <h5 class="p-0">Your BMI is </h5>
                                             <h2 class="p-0">{BMI}</h2>
                                         </div>
-                                    </form>
-                                    <div class="swiper-slide">
+                                    </form>:null}
+                                    {toggle==2?<div class="swiper-slide">
                                         <h3>What are your end goals of a Muscle Fuel diet?</h3>
                                         <ul class="unstyled cc-ul">
                                             <li><input type="radio" class="styled-checkbox" id="GainWeight" name="Calorie" value=""/><label for="GainWeight"><div class="cc-div"><span>I want to Gain Weight</span></div></label></li>
@@ -84,13 +93,13 @@ const CalculateCalorie = () => {
                                             <li><input type="radio" class="styled-checkbox" id="looseWeight" name="Calorie" value=""/><label for="looseWeight"><div class="cc-div"><span>I want to Loose Weight</span></div></label></li>
                                             <li><input type="radio" class="styled-checkbox" id="Muscle" name="Calorie" value=""/><label for="Muscle"><div class="cc-div"><span>I want to Gain Muscle</span></div></label></li>
                                         </ul>
-                                        <div class="mt-2"><button class="button calorie-btn">Continue</button> <a href="javascript:void(0);" class="button back-btn">Back</a></div>
+                                        <div class="mt-2"><button onClick={()=>setToggle(3)} class="button calorie-btn">Continue</button> <a  onClick={()=>setToggle(1)} href="javascript:void(0);" class="button back-btn">Back</a></div>
                                         <div class="info">
                                             <h5>How to identify your goal?</h5>
                                             <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs.</p>
                                         </div>
-                                    </div>
-                                    <div class="swiper-slide">
+                                    </div>:null}
+                                    {toggle==3? <div class="swiper-slide">
                                         <h3>Active Level</h3>
                                         <ul class="unstyled active-level cc-ul">
                                             <li><input type="radio" class="styled-checkbox" id="Low" name="ActiveLevel" value=""/><label for="Low"><div class="cc-div">If you are lightly active (light exercise/sports 1-3 days/week)</div></label></li>
@@ -100,25 +109,25 @@ const CalculateCalorie = () => {
                                             <li><input type="radio" class="styled-checkbox" id="VeryActive" name="ActiveLevel" value=""/><label for="VeryActive"><div class="cc-div">If you are extra active (very hard exercise/sports & physical job or 2x training)</div></label></li>
                                             <li><input type="radio" class="styled-checkbox" id="NotSure" name="ActiveLevel" value=""/><label for="NotSure"><div class="cc-div">Not sure - Everyday is different</div></label></li>
                                         </ul>
-                                        <div class="mt-2"><button class="button calorie-btn">Continue</button> <a href="javascript:void(0);" class="button back-btn">Back</a></div>
+                                        <div class="mt-2"><button onClick={()=>setToggle(4)} class="button calorie-btn">Continue</button> <a onClick={()=>setToggle(2)} href="javascript:void(0);" class="button back-btn">Back</a></div>
                                         <div class="info">
                                             <h5>How the being your active makes difference</h5>
                                             <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs.</p>
                                         </div>
-                                    </div>
-                                    <div class="swiper-slide">
+                                    </div>:null}
+                                    {toggle==4?<div class="swiper-slide">
                                         <h3>Target Weight</h3>
                                         <p>What is Target Weight? Your current weight is 85 kg</p>
                                         <div class="kg-input">
                                             <div class="form-group"><input type="text" class="form-control" placeholder="Weight" value=""/></div><p>KG</p>
                                         </div>
-                                        <div class="mt-2"><button class="button calorie-btn">Continue</button> <a href="javascript:void(0);" class="button back-btn">Back</a></div>
+                                        <div class="mt-2"><button onClick={()=>setToggle(5)} class="button calorie-btn">Continue</button> <a onClick={()=>setToggle(3)} href="javascript:void(0);" class="button back-btn">Back</a></div>
                                         <div class="info">
                                             <h5>How to choose the Target Weight?</h5>
                                             <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs.</p>
                                         </div>
-                                    </div>
-                                    <div class="swiper-slide">
+                                    </div>:null}
+                                    {toggle==5&&!USER_ID?<div class="swiper-slide">
                                         <h3>Personal Detail</h3>
                                         <div class="form-group">
                                             <div class="inputbox"><input type="text" id="" name="" placeholder="Name" class="form-control" /></div>
@@ -132,13 +141,13 @@ const CalculateCalorie = () => {
                                         <div class="form-group">
                                             <div class="inputbox"><input type="password" id="" name="" placeholder="Password" class="form-control" /></div>
                                         </div>
-                                        <div class="mt-2"><button class="button calorie-btn">Submit</button> <a href="javascript:void(0);" class="button back-btn">Back</a></div>
+                                        <div class="mt-2"><button onClick={()=>setToggle(6)} class="button calorie-btn">Submit</button> <a onClick={()=>setToggle(4)} href="javascript:void(0);" class="button back-btn">Back</a></div>
                                         {/* <!--<div class="info">
                                             <h5>What is the common loosing weight style?</h5>
                                             <p>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs.</p>
                                         </div>--> */}
-                                    </div>
-                                    <div class="swiper-slide">
+                                    </div>:null}
+                                    {toggle==(USER_ID?5:6)?<div class="swiper-slide">
                                         <h3>Muscle Fuel Recommends </h3>
                                         <div class="package-name">Sumbatik Package</div>
                                         <div class="package-meal">3 Meals + 2 Snack +1 Soup</div>
@@ -180,15 +189,18 @@ const CalculateCalorie = () => {
                                                 </li>
                                             </ul>	
                                         </div>
-                                        <div class="package-btns">
-                                            <a href="thank-you.html" class="button">Continue with this Package</a>
-                                            <a href="package.html" class="button">Select my own Package</a>
+                                        <div class="package-btns" style={{
+                                            display:'flex',
+                                            justifyContent:'space-between'
+                                        }}>
+                                            <a href="javascript:void(0);" class="button">Continue with this Package</a>
+                                            <a href="javascript:void(0);" class="button">Select my own Package</a>
                                         </div>
                                         <div class="info">
                                             <h5>Note : </h5>
                                             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor</p>
                                         </div>
-                                    </div>
+                                    </div>:null}
                                 </div>
                                 </div>
                             </div>

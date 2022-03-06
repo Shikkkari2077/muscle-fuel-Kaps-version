@@ -13,6 +13,7 @@ const SignUp = () => {
         last_name:'',
         email:'',
         mobile_no:null,
+        referral_code:'',
         password:'',
         CPassword:'',
     })
@@ -60,6 +61,7 @@ const SignUp = () => {
         formData.append('last_name',register.last_name)
         formData.append('email',register.email)
         formData.append('mobile_no',register.mobile_no)
+        formData.append('referral_code',register.referral_code)
         formData.append('password',register.password)
         formData.append('device_name','android')
         formData.append('device_token','frwNMKysQEm')
@@ -94,6 +96,9 @@ const SignUp = () => {
                                     </div>
                                     <div class="form-group">
                                         <input onChange={handleChange} type="number" class="form-control" placeholder="Mobile" name='mobile_no' value={register.mobile_no}/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input onChange={handleChange} type="text" class="form-control" placeholder="Referral Code" name='referral_code' value={register.referral_code}/>
                                     </div>
                                     <div class="form-group">
                                         <input onChange={handleChange} type="password" class="form-control" placeholder="Password" name='password' value={register.password}/>

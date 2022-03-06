@@ -62,8 +62,8 @@ const SingIn = () => {
                                 <div class="login-width">
                                     <div class="or form-group text-center"><span>OR</span></div>
                                     <div class="login-box-sub row">
-                                        <div class="col-6"><button class="button w-100 text-center apple-link"><span>Sign in with Apple</span></button></div>
-                                        <div class="col-6"><button class="button w-100 text-center google-link"><span>Sign in with Google</span></button></div>
+                                        {/* <div class="col-6"><button class="button w-100 text-center apple-link"><span>Sign in with Apple</span></button></div> */}
+                                        {/* <div class="col-6"><button class="button w-100 text-center google-link"><span>Sign in with Google</span></button></div> */}
                                         <div class="col-12 an-account">
                                             Don’t have an account? <Link to="/sign-up">SIGN UP</Link>
                                         </div>		

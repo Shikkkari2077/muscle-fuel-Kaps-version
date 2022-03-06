@@ -39,7 +39,11 @@ const Packages = () => {
                                 <div class="row">
                                     <div class="col-12">
                                         <h1 class="text-center pb-4"><span>OUR PACKAGES</span></h1>
-                                        <div class="package-carousel">
+                                        <div class="package-carousel" style={{
+                                            // border:"1px solid red",
+                                            display:'flex',
+                                            justifyContent:'center'
+                                        }}>
                                             <div
                                                 class="package-container swiper-container swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
                                                 <div class="swiper-wrapper" id="swiper-wrapper-4a983da3c1b2fefc"
@@ -47,14 +51,14 @@ const Packages = () => {
                                                         {PackageList?PackageList.map((pack,index)=>(
                                                             <div class="swiper-slide IMPORTANT"  role="group" aria-label="1 / 6">
                                                             <div class="package-card">
-                                                                <div class="package-img"><img src={pack.img_url}
+                                                                <div class="package-img"><img src={pack.package_master_id==24?"img/sumbatik.jpg":pack.package_master_id==26?"img/FiT.jpg":pack.package_master_id==28?"img/Bulk.jpg":null}
                                                                         class="img-fluid" alt="Sumbatik"/>
                                                                     <div class="package-head">
                                                                         <h2>{pack.package_name}</h2>
                                                                         <p>{pack.gram_label}</p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="package-dtl" style={{height:'300px'}}>
+                                                                <div class="package-dtl">
                                                                     {/* <h3>Popular amongst those</h3>
                                                                     <p>Whose looking for weight lose and get in shape</p>
                                                                     <h4>Most popular Meals choice</h4> */}
@@ -69,7 +73,7 @@ const Packages = () => {
                                                                             <p><strong>Starting from</strong>Starting from 150
                                                                                 KWD</p>
                                                                         </div>
-                                                                        <div><Link to={`/package/${pack.package_master_id}`} type="submit" class="button">Subscribe Now</Link></div>
+                                                                        <div><Link to={`/PACKAGE/${pack.package_master_id}`} type="submit" class="button">Subscribe Now</Link></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
