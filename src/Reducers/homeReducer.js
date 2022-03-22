@@ -9,6 +9,11 @@ import {
   SET_REFRESH,
   SET_DISLIKE_ITEMS,
   SET_READ_MORE,
+  SET_MEAL_LIST,
+  SET_SNACK_LIST,
+  SET_SOUP_LIST,
+  SET_COUPON,
+  SET_WALLET,
 } from "../Actions/types";
 
 const initialState = {
@@ -18,10 +23,17 @@ const initialState = {
   DeliveryTime:false,
   DeliveryMethod:false,
   UserAddress:false,
+  UserWallet:false,
   AreaList:false,
   Refresh:false,
   DislikeItems:false,
   ReadMore:false,
+
+  MealsList:false,
+  SnacksList:false,
+  SoupsList:false,
+  
+  Coupon:false,
 };
 
 const homeReducer = (state = initialState, action) => {
@@ -76,6 +88,32 @@ const homeReducer = (state = initialState, action) => {
           ...state,
           ReadMore: action.payload,
         };
+  case SET_MEAL_LIST:
+        return {
+          ...state,
+          MealsList: action.payload,
+        };
+  case SET_SNACK_LIST:
+        return {
+          ...state,
+          SnacksList: action.payload,
+        };
+  case SET_SOUP_LIST:
+        return {
+          ...state,
+          SoupsList: action.payload,
+        };
+  case SET_COUPON:
+          return {
+            ...state,
+            Coupon: action.payload,
+          };
+  case SET_WALLET:
+          return {
+            ...state,
+            UserWallet: action.payload,
+          };
+        
     default:
 			return state;
   }

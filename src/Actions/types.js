@@ -3,8 +3,18 @@ export const SET_PACKAGE_LIST = 'SET_PACKAGE_LIST';
 export const SET_PACKAGE_DETAILS = 'SET_PACKAGE_DETAILS';
 export const SET_DELIVERY_TIME = 'SET_DELIVERY_TIME';
 export const SET_DELIVERY_METHOD = 'SET_DELIVERY_METHOD';
+
 export const SET_ADDRESS = 'SET_ADDRESS';
+export const SET_WALLET = 'SET_WALLET';
+
+
 export const SET_AREA_LIST = 'SET_AREA_LIST';
 export const SET_DISLIKE_ITEMS = 'SET_DISLIKE_ITEMS';
 export const SET_REFRESH = 'SET_REFRESH';
 export const SET_READ_MORE = 'SET_READ_MORE';
+
+export const SET_MEAL_LIST = 'SET_MEAL_LIST';
+export const SET_SNACK_LIST = 'SET_SNACK_LIST';
+export const SET_SOUP_LIST = 'SET_SOUP_LIST';
+export const SET_COUPON = 'SET_COUPON';
+

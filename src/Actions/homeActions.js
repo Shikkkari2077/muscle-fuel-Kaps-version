@@ -9,6 +9,11 @@ import {
   SET_REFRESH,
   SET_DISLIKE_ITEMS,
   SET_READ_MORE,
+  SET_MEAL_LIST,
+  SET_SNACK_LIST,
+  SET_SOUP_LIST,
+  SET_COUPON,
+  SET_WALLET,
  } from "./types";
 
 import Constant from "../Constant";
@@ -327,6 +332,7 @@ export const purchasePackage = (data,payData) => (dispatch)=>{
                 payload:false
               })  
 
+             if(payData.totalAmount>0){
               toast.success("Proceed To Payment", {
                 position: toast.POSITION.TOP_RIGHT
               });
@@ -338,7 +344,12 @@ export const purchasePackage = (data,payData) => (dispatch)=>{
                   payData.totalAmount
                 }&productnames=testProduct&order_id_app=${res.data.data.purchase_id}&user_id=${
                   localStorage.getItem('user_id')
-                }`,"_blank")
+                }`,"_self")
+             }else{
+                toast.success("Package Puchased Successfully", {
+                  position: toast.POSITION.TOP_RIGHT
+                });
+             }
               
               
 
@@ -351,6 +362,107 @@ export const purchasePackage = (data,payData) => (dispatch)=>{
             toast.error(`You Already Have a Package`,{
               position: toast.POSITION.TOP_RIGHT
             });
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getMealList = (data) => (dispatch)=>{
+
+  axios
+    .post(Constant.getAPI() + `/meallist`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+              dispatch({
+                type:SET_MEAL_LIST,
+                payload:res.data.data,
+              })
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getSnackList = (data) => (dispatch)=>{
+
+  axios
+    .post(Constant.getAPI() + `/meallist`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+              dispatch({
+                type:SET_SNACK_LIST,
+                payload:res.data.data,
+              })
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getSoupList = (data) => (dispatch)=>{
+
+  axios
+    .post(Constant.getAPI() + `/meallist`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+              dispatch({
+                type:SET_SOUP_LIST,
+                payload:res.data.data,
+              })
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getCoupon = (data) => (dispatch)=>{
+
+  axios
+    .post(Constant.getAPI() + `/verifyCoupon`, data, config)
+    .then((res) => {
+      
+          if(res.data){
+              dispatch({
+                type:SET_COUPON,
+                payload:res.data.data,
+              })
+          }else{
+            dispatch({
+              type:SET_COUPON,
+              payload:'No DATA Available',
+            })
+          }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const getUserWallet = (data) => (dispatch)=>{
+  
+  var formData =new FormData
+      formData.append('user_id',localStorage.getItem('user_id'))
+  var DATA = formData
+
+  axios
+    .post(Constant.getAPI() + `/getuserprofile`, DATA, config)
+    .then((res) => {
+      
+          if(res.data){
+              // console.log('res.data',res.data.data.wallet_array);
+            dispatch({
+              type:SET_WALLET,
+              payload:res.data.data.wallet_array
+            })
+            
           }
     })
     .catch((err) => {

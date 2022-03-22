@@ -14,6 +14,8 @@ import {
     purchasePackage,
     getDislikeItems,
     getReadMore,
+    getCoupon,
+    getUserWallet,
 } from "../Actions/homeActions";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -39,9 +41,11 @@ const Package = () => {
     const DeliveryMethod = useSelector(state => state.home.DeliveryMethod);
     const DislikeItems = useSelector(state => state.home.DislikeItems);
     const UserAddress = useSelector(state => state.home.UserAddress);
+    const UserWallet = useSelector(state => state.home.UserWallet);
     const AreaList = useSelector(state => state.home.AreaList);
     const Refresh = useSelector(state => state.home.Refresh);
     const ReadMore = useSelector(state => state.home.ReadMore);
+    const Coupon = useSelector(state => state.home.Coupon);
 
 
     const [modalReadMore, setModalReadMore] = useState(false)
@@ -55,7 +59,11 @@ const Package = () => {
     const [sub_package_id, setSub_package_id] = useState()
     const [dishValue, setVishValue] = useState({Meals: '3', Snacks: '2', Soups: '1'})
     const [subPackage, setSubPackage] = useState()
-    const [finalPrice, setFinalPrice] = useState('0.000')
+
+    const [finalPrice, setFinalPrice] = useState(0)
+    const [DISCOUNT, setDISCOUNT] = useState(0)
+    const [SUBTOTAL, setSUBTOTAL] = useState(0)
+
     const [startDate, setStartDate] = useState()
     const [startDateS, setStartDateS] = useState()
     const [deliveryTime, setDeliveryTime] = useState()
@@ -63,12 +71,15 @@ const Package = () => {
     const [isFriday, setIsFriday] = useState('no')
     const [paymentType, setPaymentType] = useState('')
     const [address, setAddress] = useState({})
+    const [CouponCode, setCouponCode] = useState('')
+
+    const [WalletSpend, setWalletSpend] = useState(null)
     // const [dislikeItems, setDislikeItems] = useState([])
   
     const [USER_ID] = useState(localStorage.getItem('user_id'));
 
-    console.log('ReadMore',ReadMore);
-
+   console.log('WalletSpend',WalletSpend);
+    
     const AddressChange =(e)=>{
         const { name, value } = e.target;
 
@@ -104,9 +115,12 @@ const Package = () => {
         onDeliveryTime();
         onDeliveryMethod();
         // onDislikeItem()
+        dispatch(getUserWallet())
         onReadMore()
-        
+        localStorage.setItem('P_ID',24)
     }, [])
+
+    console.log('UserWallet',UserWallet);
 
     useEffect(() => {
         if(Location.pathname.includes('/package')){
@@ -119,7 +133,7 @@ const Package = () => {
         if(PackageDetails){
           setSubPackageID('1')
         }
-       
+
     }, [packageID,PackageDetails])
 
     // useEffect(() => {
@@ -131,6 +145,7 @@ const Package = () => {
     // }, [subPackageID])
 
     useEffect(() => {
+        
         dispatch(getUserAddress())
         dispatch(getAreaList())
         
@@ -209,11 +224,99 @@ const Package = () => {
         var PRICE = Combo.length>0?Combo[0].price:'0.000'
         var id = Combo.length>0?Combo[0].sub_package_id:''
         setSub_package_id(id)
-        setFinalPrice(PRICE)
+        setSUBTOTAL(parseInt(PRICE))
+        setFinalPrice(parseInt(PRICE))
        }
 
     }, [dishValue,subPackage])
+
+    const [Applied, setApplied] = useState(false)
     
+    const [disCountTEXT, setdisCountTEXT] = useState('No Discount Yet!')
+
+    const ApplyCoupon = ()=>{
+
+        setApplied(true)
+        var formData = new FormData()
+        formData.append('user_id',USER_ID)
+        formData.append('coupon_code',CouponCode)
+
+        dispatch(getCoupon(formData))
+    }
+
+    useEffect(() => {
+        if(Coupon){
+            if(Coupon.discount_type=="percentage"){
+                setdisCountTEXT(`Congrats!  You Will get ${Coupon.discount_value}% Discount`)
+                var discount = finalPrice*parseInt(Coupon.discount_value)/100
+                var NewPrice = finalPrice - discount
+                setDISCOUNT(discount)
+                setFinalPrice(NewPrice)
+            }
+        }
+    }, [Coupon,SUBTOTAL])
+
+    useEffect(() => {
+     if(Coupon==false&&Applied==true){
+        setdisCountTEXT('Sorry! Your Coupon Code is Wrong or Expired')
+     }
+    }, [Applied])
+
+    const [WalletAmount, setWalletAmount] = useState(null)
+
+    useEffect(() => {
+        if(UserWallet){
+            setWalletAmount(parseInt(UserWallet.wallet_amount))
+            // setWalletAmount(450)
+        }
+    }, [UserWallet])
+    
+    const OnSpend =()=>{
+
+        console.log('WalletSpend',WalletSpend>finalPrice?'All Okay':'Not Okay');
+
+        if(WalletAmount==0){
+            toast.warning("Sorry! Your Wallet Balance is Zero", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              return false
+        }
+
+        if(WalletSpend>WalletAmount){
+            toast.warning("Enter Amount Exceeding Wallet Limit!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              return false
+        }else if(WalletSpend>finalPrice){
+            toast.warning("Enter Amount Cannot be Greater than Package Price!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+              return false
+        }else{
+            var AfterSpend = finalPrice - WalletSpend
+            var newWallet = WalletAmount - WalletSpend
+            // setSUBTOTAL(AfterSpend)
+            setFinalPrice(AfterSpend)
+            setWalletAmount(newWallet)
+
+            toast.warning(`You Avail ${WalletSpend} KWD From Wallet`, {
+                position: toast.POSITION.TOP_RIGHT
+              });
+        }
+        
+    }
+
+    useEffect(() => {
+        var amount = parseInt(UserWallet.wallet_amount)-WalletAmount
+      setFinalPrice(finalPrice-amount)
+    }, [SUBTOTAL])
+    
+    
+    console.log('finalPrice',finalPrice);
+    console.log('DISCOUNT',DISCOUNT);
+
+    const [POP_UP, setPOP_UP] = useState(false)
+
     const EditAddress =()=>{
 
         if(UserAddress){
@@ -232,9 +335,10 @@ const Package = () => {
             })
             
         }else if(!USER_ID){
-            toast.warning("You Are Not Logged In, Do You Want to Sign Up!", {
-                position: toast.POSITION.TOP_RIGHT
-              });
+            // toast.warning("You Are Not Logged In, Do You Want to Sign Up!", {
+            //     position: toast.POSITION.TOP_RIGHT
+            //   });
+            setPOP_UP(true)
             
         }
     }
@@ -290,11 +394,6 @@ const Package = () => {
                     position: toast.POSITION.TOP_RIGHT
                   });
                   return false
-            }else if(finalPrice=='0.000'){
-                toast.warning("Make A Combination Meals, Snacks & Soups!", {
-                    position: toast.POSITION.TOP_RIGHT
-                  });
-                  return false
             }else if(!paymentType){
                 toast.warning("Select A Payment Method!", {
                     position: toast.POSITION.TOP_RIGHT
@@ -320,25 +419,35 @@ const Package = () => {
             formData.append('total_amount',finalPrice)
             formData.append('user_id',localStorage.getItem('user_id'))
             formData.append('app_mode','dev')
+
+            if(WalletSpend!==null){
+                formData.append('wallet_id',UserWallet.wallet_id)
+                formData.append('wallet_amount',parseInt(UserWallet.wallet_amount)-WalletAmount)
+            }else{}
+
             formData.append('unique_code',endDate.getTime()*32)
             // formData.append('friday_delivery',isFriday)
             formData.append('start_date',startDate)
             // formData.append('dislike_ingredients',dislikeItems.toString())
             var DATA = {
                 payment:paymentType,
-                totalAmount:finalPrice
+                totalAmount:finalPrice,
             }
             dispatch(purchasePackage(formData,DATA))
         }
         else{
-            toast.warning("You Are Not Logged In, Do You Want to Sign Up!", {
-                position: toast.POSITION.TOP_RIGHT
-              });
+            // toast.warning("You Are Not Logged In, Do You Want to Sign Up!", {
+            //     position: toast.POSITION.TOP_RIGHT
+            //   });
+            setPOP_UP(true)
            
         }
 
     }
     // console.log('dishValue',dishValue.Meals);
+    const SET_ID = (id)=>{
+        localStorage.setItem('P_ID',id)
+    }
   return (
     <>
     <Navbar/>
@@ -361,15 +470,18 @@ const Package = () => {
                                                 <input checked={pack.package_master_id==packageID?true:false} onClick={()=>setPackageID(pack.package_master_id)} type="radio" className="styled-checkbox" id={`package${index+1}`} name="packages" />
                                                 <label htmlFor={`package${index+1}`} title="Sumbatik">
                                                     <div className="package-img">
+                                                        <Link to='/menu' onClick={()=>SET_ID(pack.package_master_id)} className="button MENU_BTN">Menu</Link>	
                                                         <img src={pack.package_master_id==24?"img/sumbatik.jpg":pack.package_master_id==26?"img/FiT.jpg":pack.package_master_id==28?"img/Bulk.jpg":null} className="img-fluid" alt="Sumbatik Package"/>
                                                         <div className="package-head">
+                                                           
                                                             <h2>{pack.package_name}</h2><p>{pack.gram_label}</p>
                                                             <div style={{padding:'0px'}} dangerouslySetInnerHTML={{__html:pack.description}} />
                                                             {/* <div><p>Starting from 150 KWD</p></div> */}
-                                                            <div className="read-more-select"><a onClick={()=>setModalReadMore(true)} className="button">Read More</a><span className="button select-btn">Select</span></div>
+                                                            <div className="read-more-select">{/*<a onClick={()=>setModalReadMore(true)} className="button">Read More</a>*/}<span className="button select-btn">Select</span></div>
                                                         </div>
                                                     </div>
-                                                </label>	
+                                                </label>
+                                               
                                             </div>
                                         </div>
                                     )):null}
@@ -434,26 +546,26 @@ const Package = () => {
                                             :null}
                                         </div>
                                         <div className="starting-sub">
-                                            <h4 className="pt-0"><span>{finalPrice=='0.000'?'Combination Not Available!':finalPrice} {finalPrice=='0.000'?null:'KWD'}</span></h4>
+                                            <h4 className="pt-0"><span>{SUBTOTAL=='0.000'?'Combination Not Available!':SUBTOTAL.toFixed(3)} {finalPrice=='0.000'?null:'KWD'}</span></h4>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>	
-                        <h3 className="text-transform-none mt-4 text-left value-added-choice"><span>Value added Choice</span></h3>
+                        {/* <h3 className="text-transform-none mt-4 text-left value-added-choice"><span>Value added Choice</span></h3>
                         <div className="value-choice">
-                            {/* <div className="value-choice-left">
+                            <div className="value-choice-left">
                                 <p>Do you want the Friday delivery?</p>
                                 <div className="mb-5"> 
                                     <span onClick={()=>setIsFriday('yes')} style={{background:`${isFriday=='yes'?'#C5251C':'#fff'}`,color:`${isFriday=='yes'?'#fff':'#000'}`}} className="button-line mr-3 ISFRYD">Yes</span> 
                                     <span onClick={()=>setIsFriday('no')} style={{background:`${isFriday=='no'?'#C5251C':'#fff'}`,color:`${isFriday=='no'?'#fff':'#000'}`}} className="button-line ISFRYD">No</span>
                                 </div>
-                            </div> */}
+                            </div>
                             <div className="value-choice-right">
                                 <p><strong>Note : </strong></p>
                                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor</p>
                             </div>	
-                        </div>
+                        </div> */}
                         <div className="carousel">
                             <div className="week-container menu-container">
                                 <div className="swiper-wrapper">
@@ -509,9 +621,45 @@ const Package = () => {
                                 </div>
                             </div> */}
                         </div>
+                       {USER_ID? <div className="row">
+                            <div  className="col-g-6 col-md-6 col-sm-6 starting-column">
+                                <div className="CPN_DIV">
+                                    <h3>Coupon Code</h3>
+                                    <h4><span>{disCountTEXT}</span></h4>
+                                    {Applied && Coupon!== false ?null:<div>
+                                    <input onChange={(e)=>setCouponCode(e.target.value)} value={CouponCode} type="text" placeholder="Enter Coupon Here"/>
+                                    <button onClick={ApplyCoupon} className="button">Apply</button>
+                                   </div>}
+                                   
+                                 
+                                </div>
+                            </div>
+                            <div  className="col-g-6 col-md-6 col-sm-6 starting-column">
+                                <div className="WALLET_DIV">
+                                    <h3>Wallet Balance</h3>
+                                    <span>
+                                        <span class="material-icons-sharp">account_balance_wallet</span>
+                                        {UserWallet?parseInt(WalletAmount).toFixed(3):'0.000'} KWD
+                                    </span>
+                                    <div>
+                                        <input min="0" onChange={(e)=>setWalletSpend(e.target.value)} value={WalletSpend} type="number" placeholder="Enter Amount"/>
+                                        <button onClick={OnSpend} className="button">Spend</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>:null}
                         <div className="row">
                             <div className="col-g-6 col-md-6 col-sm-6 starting-column">
                                 <div className="address-sub-div delivery-address">
+
+                                    <div className="POP_UP" style={{display:POP_UP?'flex':'none'}}>
+                                        <h4>You Are Not Logged In, Do You Want To Sign UP</h4>
+                                        <div>
+                                            <Link to='/sign-up' className="button">Yes</Link>
+                                            <Link onClick={()=>setPOP_UP(false)} to='#' className="button">No</Link>
+                                        </div>
+                                    </div>
+                                    
                                     <h3 className="text-left">Delivery Address <a onClick={()=>{
                                         EditAddress()
                                         setModalAddress(USER_ID?true:false)
@@ -562,7 +710,10 @@ const Package = () => {
                                             </ul>
                                         </div>
                                     </div>
-                                    <p className="text-center total-amount">Total: <strong>{finalPrice?finalPrice:0.000}</strong> KWD</p>
+                                    <p className="text-center total-amount">SubTotal: <b>{SUBTOTAL.toFixed(3)}</b> KWD</p>
+                                    <p className="text-center total-amount">Wallet Spend: <b>{UserWallet?(parseInt(UserWallet.wallet_amount)-WalletAmount).toFixed(3):'0.000'}</b> KWD</p>
+                                    <p className="text-center total-amount">Discount: <b>{DISCOUNT.toFixed(3)}</b> KWD</p>
+                                    <p className="text-center total-amount">Total: <strong>{finalPrice?finalPrice.toFixed(3):0.000}</strong> KWD</p>
                                     <div className="text-center"><button type="submit" onClick={PayNow} className="button">Pay Now</button></div>
                                 </div>	
                             </div>
