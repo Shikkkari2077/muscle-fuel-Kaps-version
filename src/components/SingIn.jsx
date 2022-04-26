@@ -41,7 +41,7 @@ const SingIn = () => {
                 </div>--> */}
                 <div class="col-12">
                     <div class="row fp-completely">
-                        <div class="col-lg-5 col-md-5 col-sm-6 banner-text">
+                        <div class="col-lg-5 col-md-5 col-sm-12 banner-text">
                             <h2 class="text-center mb-2">Login</h2>
                             <div class="login-box">
                                 <div class="login-box-sub">
@@ -71,7 +71,7 @@ const SingIn = () => {
                                 </div></div>
                             </div>
                         </div>
-                        <div class="col-lg-7 col-md-7 col-sm-6 banner-right">
+                        <div class="col-lg-7 col-md-7 col-sm-12 banner-right">
                             <img src="img/banner.svg" class="img-fluid" alt="Khalefa Chalet"/>
                             <div class="fider-main">
                                 <div class="fider-one pipe-one">

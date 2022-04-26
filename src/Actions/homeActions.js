@@ -291,10 +291,13 @@ export const getAreaList = (data) => (dispatch)=>{
 };
 
 export const addAddress = (data) => (dispatch)=>{
-  dispatch({
-    type:SET_REFRESH,
-    payload:true
-  })  
+  // dispatch({
+  //   type:SET_REFRESH,
+  //   payload:true
+  // })  
+  toast.warning("Please Wait While Address is Updating", {
+    position: toast.POSITION.TOP_RIGHT
+  });
   axios
     .post(Constant.getAPI() + `/addaddress`, data, config)
     .then((res) => {
@@ -303,10 +306,12 @@ export const addAddress = (data) => (dispatch)=>{
               toast.success("Address Updated", {
                 position: toast.POSITION.TOP_RIGHT
               });
-              dispatch({
-                type:SET_REFRESH,
-                payload:false
-              })  
+              // dispatch({
+              //   type:SET_REFRESH,
+              //   payload:false
+              // })  
+              dispatch(getUserAddress())
+              dispatch(getAreaList())
           }
     })
     .catch((err) => {

@@ -4,7 +4,32 @@ import Footer from '../common/Footer'
 import { getMealList, getSnackList, getSoupList } from "../Actions/homeActions";
 import { useDispatch, useSelector } from "react-redux";
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const Menu = () => {
+
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        initialSlide: 0,
+        className:'MenuSlider',
+        responsive:[
+            {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  infinite: true,
+                  dots: true
+                }
+            },
+        ]
+      };
 
     const dispatch = useDispatch()
     const MealsList = useSelector(state => state.home.MealsList);
@@ -28,7 +53,7 @@ const Menu = () => {
         var formData = new FormData()
     
         formData.append('lang_id',1)
-        formData.append('package_id',localStorage.getItem('P_ID'))
+        formData.append('package_id',localStorage.getItem('P_ID')||24)
         formData.append('mealtype_id',1)
         formData.append('days_master_id',Day)
         formData.append('week_id',Week)
@@ -40,7 +65,7 @@ const Menu = () => {
         var formData = new FormData()
     
         formData.append('lang_id',1)
-        formData.append('package_id',localStorage.getItem('P_ID'))
+        formData.append('package_id',localStorage.getItem('P_ID')||24)
         formData.append('mealtype_id',3)
         formData.append('days_master_id',Day)
         formData.append('week_id',Week)
@@ -52,7 +77,7 @@ const Menu = () => {
         var formData = new FormData()
     
         formData.append('lang_id',1)
-        formData.append('package_id',localStorage.getItem('P_ID'))
+        formData.append('package_id',localStorage.getItem('P_ID')||24)
         formData.append('mealtype_id',11)
         formData.append('days_master_id',Day)
         formData.append('week_id',Week)

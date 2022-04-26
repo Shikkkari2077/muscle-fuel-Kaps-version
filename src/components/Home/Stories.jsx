@@ -1,1026 +1,303 @@
-import React from "react";
+import {React, useRef, useEffect, useState} from "react";
+import './Stories.css'
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function Stories() {
-  return (
-    <section class="section stories-main fp-section fp-table active fp-completely" id="section4"
-        style={{opacity: '1', height: '657px', backgroundColor: 'rgb(255, 255, 255)'}} data-fp-styles={{opacity: '1'}}
-        data-anchor="Testimonials">
-        <div class="fp-tableCell">
-            <div class="fp-scrollable">
-                <div class="fp-scroller"
-                   >
-                    <div class="page-div">
-                        <div class="page-sub">
-                            <div class="w-100">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h1 class="text-center"><span>CUSTOMER STORIES</span></h1>
-                                            <div class="stories-carousel">
-                                                <div
-                                                    class="swiper-container stories-container swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
-                                                    <div  class="swiper-wrapper" id="swiper-wrapper-489e5105f57564439"
-                                                        aria-live="polite">
-                                                        <div class="swiper-slide" role="group" aria-label="1 / 10"
-                                                            style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls=""
-                                                                            __idm_id__="2465793">
-                                                                            <source src="mp3/01.mp3" type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                                
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                               
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                                
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                        style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                          
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                       
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                       
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="swiper-slide" role="group" aria-label="2 / 10"
-                                                            style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls=""
-                                                                            __idm_id__="2465794">
-                                                                            <source src="mp3/B4S5R3APER - Rise .mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="swiper-slide" role="group" aria-label="3 / 10"
-                                                            style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls=""
-                                                                            __idm_id__="2465795">
-                                                                            <source src="mp3/Missiony - Facts.mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                                
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="swiper-slide" role="group" aria-label="4 / 10"
-                                                            style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls=""
-                                                                            __idm_id__="2465796">
-                                                                            <source src="mp3/Nowaveus - RECKEDGE.mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="swiper-slide swiper-slide-prev" role="group"
-                                                            aria-label="5 / 10" style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls=""
-                                                                            __idm_id__="2465797">
-                                                                            <source src="mp3/Viper - berries.mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+  var settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    className: "StorySlider",
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: false,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          infinite: false,
+          dots: true,
+        },
+      },
+    ],
+  };
 
-                                                        <div class="swiper-slide swiper-slide-active" role="group"
-                                                            aria-label="6 / 10" style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls=""
-                                                                            __idm_id__="2465798">
-                                                                            <source
-                                                                                src="mp3/Aquarius - long gone - aquarius_drpepper115.mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="swiper-slide swiper-slide-next" role="group"
-                                                            aria-label="7 / 10" style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls="">
-                                                                            <source src="mp3/B4S5R3APER - Rise .mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="swiper-slide" role="group" aria-label="8 / 10"
-                                                            style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio  ">
-                                                                        <audio class="slide__audio-player" controls="">
-                                                                            <source src="mp3/Missiony - Facts.mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 0 0">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="262.54919680241017">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{opacity: '0', transform: 'rotate(-50.4deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(129.6deg)', opacity: '1'}}>
-                                                                                                
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(129.6deg)'}}>
-                                                                                            
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="11"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                        style={{marginTop: '-13.5px', marginLeft: '-6.125px'}}>11</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="11"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="swiper-slide" role="group" aria-label="9 / 10"
-                                                            style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls="">
-                                                                            <source src="mp3/Nowaveus - RECKEDGE.mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="swiper-slide" role="group" aria-label="10 / 10"
-                                                            style={{width: '198px', marginRight: '30px'}}>
-                                                            <div class="stories-box">
-                                                                <div class="stories-img">
-                                                                    <img src="img/customer.png" alt="customer"/>
-                                                                    <div class="slide__audio js-audio">
-                                                                        <audio class="slide__audio-player" controls="">
-                                                                            <source src="mp3/Viper - berries.mp3"
-                                                                                type="audio/mpeg"/>
-                                                                        </audio>
-                                                                        <div class="audio__controls">
-                                                                            <svg version="1.1" class="circle"
-                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                xmlnsXlink="http://www.w3.org/1999/xlink"
-                                                                                viewBox="0 0 100 100">
-                                                                                <path class="seekbar" fill="none"
-                                                                                    stroke-meterlimit="10"
-                                                                                    d="M50,2.9L50,2.9C76,2.9,97.1,24,97.1,50v0C97.1,76,76,97.1,50,97.1h0C24,97.1,2.9,76,2.9,50v0C2.9,24,24,2.9,50,2.9z"
-                                                                                    stroke-dasharray="295.9578857421875"
-                                                                                    stroke-dashoffset="295.9578857421875">
-                                                                                </path>
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="equalizer" viewBox="0 0 100 100">
-                                                                                <g class="equalizer-group">
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                    <rect class="bar"></rect>
-                                                                                </g>
-                                                                            </svg>
-                                                                            <div class="audio__slider rs-control rs-animation"
-                                                                                style={{height: "100px", width: '100px'}}>
-                                                                                <div class="rs-container full"
-                                                                                    style={{height: "100px", width: '100px'}}>
-                                                                                    <div class="rs-inner-container">
-                                                                                        <div
-                                                                                            class="rs-block rs-outer rs-border rs-split">
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                style={{transform: "rotate(90deg)"}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-range-color"
-                                                                                                 style={{opacity: '0', transform: 'rotate(-90deg)'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{transform: 'rotate(90deg)', opacity: '1'}}>
-                                                                                            </div>
-                                                                                            <div class="rs-path rs-transition rs-path-color"
-                                                                                                style={{opacity: '1', zIndex: '1', transform: 'rotate(-90deg)'}}>
-                                                                                            </div><span class="rs-block"
-                                                                                                style={{padding: '5px'}}>
-                                                                                                <div
-                                                                                                    class="rs-inner rs-bg-color rs-border">
-                                                                                                </div>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="rs-bar rs-transition rs-first"
-                                                                                        style={{zIndex: '7', transform: 'rotate(90deg)'}}>
-                                                                                        <div class="rs-handle rs-move"
-                                                                                            index="2" tabindex="0"
-                                                                                            role="slider"
-                                                                                            aria-label="handle"
-                                                                                            aria-valuenow="0"
-                                                                                            aria-valuemin="0"
-                                                                                            aria-valuemax="100"
-                                                                                            style={{height: '11px', width: '11px', margin: '-5.5px 0px 0px -3px'}}>
-                                                                                        </div>
-                                                                                    </div><span
-                                                                                        class="rs-bar rs-transition rs-start"
-                                                                                        style={{transform: "rotate(90deg)"}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-bar rs-transition rs-end"
-                                                                                        style={{transform: 'rotate(450deg)'}}><span
-                                                                                            class="rs-seperator rs-border"
-                                                                                            style={{width: '5px', marginTop: '0px'}}></span></span><span
-                                                                                        class="rs-tooltip rs-tooltip-text edit"
-                                                                                         style={{marginTop: '-13.5px', marginLeft: '-6.03125px'}}>0</span>
-                                                                                </div><input type="hidden" name=""
-                                                                                    value="0"/>
-                                                                            </div>
-                                                                            <button class="play-pause"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <p>Mohammed Al Khaled</p>
-                                                                <h4>Sumbatik</h4>
-                                                                <div class="meal-snaks-soup d-flex justify-content-between">
-                                                                    <div>3 Meals</div>
-                                                                    <div>2 snack</div>
-                                                                    <div>1 soup</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <span class="swiper-notification" aria-live="assertive"
-                                                        aria-atomic="true"></span>
-                                                </div>
-                                                <div class="stories-button-prev swiper-button-prev" tabindex="0"
-                                                    role="button" aria-label="Previous slide"
-                                                    aria-controls="swiper-wrapper-489e5105f57564439" aria-disabled="false">
-                                                </div>
-                                                <div class="stories-button-next swiper-button-next swiper-button-disabled"
-                                                    tabindex="-1" role="button" aria-label="Next slide"
-                                                    aria-controls="swiper-wrapper-489e5105f57564439" aria-disabled="true">
-                                                </div>
-                                            </div>
+  const Audio1 = useRef()
+  const Audio2 = useRef()
+  const Audio3 = useRef()
+  const Audio4 = useRef()
+  const Audio5 = useRef()
+  const Audio6 = useRef()
+
+  const [Btn1, setBtn1] = useState('s_btn s_btn_play')
+  const [Btn2, setBtn2] = useState('s_btn2 s_btn_play2')
+  const [Btn3, setBtn3] = useState('s_btn3 s_btn_play3')
+  const [Btn4, setBtn4] = useState('s_btn4 s_btn_play4')
+  const [Btn5, setBtn5] = useState('s_btn5 s_btn_play5')
+  const [Btn6, setBtn6] = useState('s_btn6 s_btn_play6')
+
+  const CLICK_BTN_1=() => {
+    if(Audio1.current.paused){
+      Audio1.current.play()
+      setBtn1('s_btn s_btn_pause')
+
+      setBtn2('s_btn2 s_btn_play2')
+      setBtn3('s_btn3 s_btn_play3')
+      setBtn4('s_btn4 s_btn_play4')
+      setBtn5('s_btn5 s_btn_play5')
+      setBtn6('s_btn6 s_btn_play6')
+
+      Audio2.current.pause()
+      Audio3.current.pause()
+      Audio4.current.pause()
+      Audio5.current.pause()
+      Audio6.current.pause()
+    }else{
+      Audio1.current.pause()
+      setBtn1('s_btn s_btn_play')
+    }
+  }
+
+  const CLICK_BTN_2=() => {
+    if(Audio2.current.paused){
+      Audio2.current.play()
+      setBtn2('s_btn2 s_btn_pause2')
+
+      setBtn1('s_btn s_btn_play')
+      setBtn3('s_btn3 s_btn_play3')
+      setBtn4('s_btn4 s_btn_play4')
+      setBtn5('s_btn5 s_btn_play5')
+      setBtn6('s_btn6 s_btn_play6')
+
+      Audio1.current.pause()
+      Audio3.current.pause()
+      Audio4.current.pause()
+      Audio5.current.pause()
+      Audio6.current.pause()
+    }else{
+      Audio2.current.pause()
+      setBtn2('s_btn2 s_btn_play2')
+    }
+  }
+
+  const CLICK_BTN_3=() => {
+    if(Audio3.current.paused){
+      Audio3.current.play()
+      setBtn3('s_btn3 s_btn_pause3')
+
+      setBtn2('s_btn2 s_btn_play2')
+      setBtn1('s_btn s_btn_play')
+      setBtn4('s_btn4 s_btn_play4')
+      setBtn5('s_btn5 s_btn_play5')
+      setBtn6('s_btn6 s_btn_play6')
+
+      Audio2.current.pause()
+      Audio1.current.pause()
+      Audio4.current.pause()
+      Audio5.current.pause()
+      Audio6.current.pause()
+    }else{
+      Audio3.current.pause()
+      setBtn3('s_btn3 s_btn_play3')
+    }
+  }
+  
+  const CLICK_BTN_4=() => {
+    if(Audio4.current.paused){
+      Audio4.current.play()
+      setBtn4('s_btn4 s_btn_pause4')
+
+      setBtn2('s_btn2 s_btn_play2')
+      setBtn3('s_btn3 s_btn_play3')
+      setBtn1('s_btn  s_btn_play')
+      setBtn5('s_btn5 s_btn_play5')
+      setBtn6('s_btn6 s_btn_play6')
+
+      Audio2.current.pause()
+      Audio3.current.pause()
+      Audio1.current.pause()
+      Audio5.current.pause()
+      Audio6.current.pause()
+    }else{
+      Audio4.current.pause()
+      setBtn4('s_btn4 s_btn_play4')
+    }
+  }
+
+  const CLICK_BTN_5=() => {
+    if(Audio5.current.paused){
+      Audio5.current.play()
+      setBtn5('s_btn5 s_btn_pause5')
+
+      setBtn2('s_btn2 s_btn_play2')
+      setBtn3('s_btn3 s_btn_play3')
+      setBtn4('s_btn4 s_btn_play4')
+      setBtn1('s_btn s_btn_play')
+      setBtn6('s_btn6 s_btn_play6')
+
+      Audio2.current.pause()
+      Audio3.current.pause()
+      Audio4.current.pause()
+      Audio1.current.pause()
+      Audio6.current.pause()
+    }else{
+      Audio5.current.pause()
+      setBtn5('s_btn5 s_btn_play5')
+    }
+  }
+
+  const CLICK_BTN_6=() => {
+    if(Audio6.current.paused){
+      Audio6.current.play()
+      setBtn6('s_btn6 s_btn_pause6')
+
+      setBtn2('s_btn2 s_btn_play2')
+      setBtn3('s_btn3 s_btn_play3')
+      setBtn4('s_btn4 s_btn_play4')
+      setBtn5('s_btn5 s_btn_play5')
+      setBtn1('s_btn s_btn_play')
+
+      Audio2.current.pause()
+      Audio3.current.pause()
+      Audio4.current.pause()
+      Audio5.current.pause()
+      Audio1.current.pause()
+    }else{
+      Audio6.current.pause()
+      setBtn6('s_btn6 s_btn_play6')
+    }
+  }
+  console.log('Audio1',);
+  
+  return (
+    <section
+      class="section stories-main fp-section fp-table active fp-completely"
+      id="section4"
+      style={{
+        opacity: "1",
+        height: "657px",
+        backgroundColor: "rgb(255, 255, 255)",
+      }}
+      data-fp-styles={{ opacity: "1" }}
+      data-anchor="Testimonials"
+    >
+      <div class="fp-tableCell">
+        <div class="fp-scrollable">
+          <div class="fp-scroller">
+            <div class="page-div">
+              <div class="page-sub">
+                <div class="w-100">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-12">
+                        <h1 class="text-center">
+                          <span>CUSTOMER STORIES</span>
+                        </h1>
+                        <div class="stories-carousel">
+                        
+                            <Slider {...settings}>
+                                <div className="S_CARD1">
+                                    <div>
+                                        <audio ref={Audio1} className="Audio1" src="mp3/01.ogg" type='audio/ogg'/>
+                                        <div className="s_box">
+                                            <div className="s_visualizer"></div>
+                                        </div>
+                                        <div className="s_play" onClick={CLICK_BTN_1}>
+                                            <div className={Btn1}></div>
                                         </div>
                                     </div>
+                                    <p>حسن دشتي</p>
                                 </div>
-                            </div>
+
+                                <div  className="S_CARD1">
+                                    <div>
+                                        <audio ref={Audio2} className="Audio2" src="mp3/02.ogg" type='audio/ogg'/>
+                                        <div className="s_box2">
+                                            <div className="s_visualizer2"></div>
+                                        </div>
+                                        <div className="s_play2" onClick={CLICK_BTN_2}>
+                                            <div className={Btn2}></div>
+                                        </div>
+                                    </div>
+                                    <p>خالد المصيجر</p>
+                                </div>
+
+                                <div className="S_CARD1">
+                                    <div>
+                                        <audio ref={Audio3} className="Audio3" src="mp3/03.mpeg" type='audio/mpeg'/>
+                                        <div className="s_box3">
+                                            <div className="s_visualizer3"></div>
+                                        </div>
+                                        <div className="s_play3" onClick={CLICK_BTN_3}>
+                                            <div className={Btn3}></div>
+                                        </div>
+                                    </div>
+                                    <p>خليفة العجيل</p>
+                                </div>
+
+                                <div className="S_CARD1">
+                                    <div>
+                                        <audio ref={Audio4} className="Audio4" src="mp3/04.ogg" type='audio/ogg'/>
+                                        <div className="s_box4">
+                                            <div className="s_visualizer4"></div>
+                                        </div>
+                                        <div className="s_play4" onClick={CLICK_BTN_4}>
+                                            <div className={Btn4}></div>
+                                        </div>
+                                    </div>
+                                    <p>زامل الزامل</p>
+                                </div>
+
+                                <div className="S_CARD1">
+                                   <div>
+                                    <audio ref={Audio5} className="Audio5" src="mp3/05.ogg" type='audio/ogg'/>
+                                        <div className="s_box5">
+                                            <div className="s_visualizer5"></div>
+                                        </div>
+                                        <div className="s_play5" onClick={CLICK_BTN_5}>
+                                            <div className={Btn5}></div>
+                                        </div>
+                                   </div>
+                                   <p>فيصل العدواني</p>
+                                </div>
+
+                                <div className="S_CARD1">
+                                   <div>
+                                        <audio ref={Audio6} className="Audio6" src="mp3/06.ogg" type='audio/ogg'/>
+                                        <div className="s_box6">
+                                            <div className="s_visualizer6"></div>
+                                        </div>
+                                        <div className="s_play6" onClick={CLICK_BTN_6}>
+                                            <div className={Btn6}></div>
+                                        </div>
+                                   </div>
+                                   <p>محمد خاجه</p>
+                                </div>
+                            </Slider>
+                         
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
   );
 }

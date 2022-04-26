@@ -79,7 +79,7 @@ header .container{}
 
 /*.main{height:calc(100vh - 95px);margin-top:95px}*/
 .page-div{min-height:100vh;display:flex;width:100%;align-items:center;/*padding-bottom:75px;*//*min-height:100vh;*/}
-.page-sub{;width:100%;margin-top:70px}
+.page-sub{;width:100%;margin-top:50px}
 /*.page-div{min-height:calc(100vh - 80px);margin-top:75px;display:flex;width:100%;align-items:center;}*/
 .fp-tableCell{/*display:block;*/}
 .page-div h1{padding-top:0px}
@@ -213,7 +213,7 @@ footer{background:#FBFBFB;padding:35px 0;}
 .foot-box{position:relative;z-index:1}
 footer .col-lg-4 + .col-lg-4 .foot-box::after{content:'';left:-35px;top:15px;width:1px;background:#ddd;display:block;height:100%;position:absolute}
 .foot-box h3{font-size:25px;color:#000;text-transform:none}
-.foot-box ul{overflow:hidden}
+.foot-box ul{overflow:hidden; display: flex;}
 .foot-box ul li{float:left;width:50%;padding:5px 0}
 .foot-box ul li a,.foot-box p{color:#000000;font-size:16px}
 .foot-box ul li a{display:block;position:relative;z-index:1;overflow:hidden}

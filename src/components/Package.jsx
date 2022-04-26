@@ -19,19 +19,44 @@ import {
 } from "../Actions/homeActions";
 import { toast, ToastContainer } from "react-toastify";
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const disablePastDate = () => {
+    const today = new Date();
+    const dd = String(today.getDate() + 5).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
+    return yyyy + "-" + mm + "-" + dd;
+};
 
 const Package = () => {
 
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        initialSlide: 0,
+        className:'HomeSlider',
+        responsive:[
+            {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  infinite: true,
+                  dots: true
+                }
+            },
+        ]
+      };
+
+
     const PackageID = useParams()
     const Location = useLocation()
-
-    const disablePastDate = () => {
-        const today = new Date();
-        const dd = String(today.getDate() + 5).padStart(2, "0");
-        const mm = String(today.getMonth() + 1).padStart(2, "0");
-        const yyyy = today.getFullYear();
-        return yyyy + "-" + mm + "-" + dd;
-    };
 
     const dispatch = useDispatch()
 
@@ -39,11 +64,11 @@ const Package = () => {
     const PackageList = useSelector(state => state.home.PackageList);
     const DeliveryTime = useSelector(state => state.home.DeliveryTime);
     const DeliveryMethod = useSelector(state => state.home.DeliveryMethod);
-    const DislikeItems = useSelector(state => state.home.DislikeItems);
+    // const DislikeItems = useSelector(state => state.home.DislikeItems);
     const UserAddress = useSelector(state => state.home.UserAddress);
     const UserWallet = useSelector(state => state.home.UserWallet);
     const AreaList = useSelector(state => state.home.AreaList);
-    const Refresh = useSelector(state => state.home.Refresh);
+    // const Refresh = useSelector(state => state.home.Refresh);
     const ReadMore = useSelector(state => state.home.ReadMore);
     const Coupon = useSelector(state => state.home.Coupon);
 
@@ -68,7 +93,7 @@ const Package = () => {
     const [startDateS, setStartDateS] = useState()
     const [deliveryTime, setDeliveryTime] = useState()
     const [deliveryMethod, setDeliveryMethod] = useState()
-    const [isFriday, setIsFriday] = useState('no')
+    // const [isFriday, setIsFriday] = useState('no')
     const [paymentType, setPaymentType] = useState('')
     const [address, setAddress] = useState({})
     const [CouponCode, setCouponCode] = useState('')
@@ -88,7 +113,7 @@ const Package = () => {
         [name]: value,
         });
     }
-    
+
     useEffect(() => {
      var StartDate = new Date(startDate).getTime()
      var date = new Date(StartDate).getDate()
@@ -100,6 +125,23 @@ const Package = () => {
     localStorage.setItem('startDate',final)
      setStartDateS(final)
     }, [startDate])
+
+
+    useEffect(() => {
+        var StartDate = new Date(startDate).getTime()
+        var Today = new Date().getTime()+96*60*60*1000
+
+        console.log('Today',Today);
+        if(StartDate<Today){
+            setStartDateS('')
+            setStartDate()
+            toast.warning("Please Select A Date After 4 Days!", {
+            position: toast.POSITION.TOP_RIGHT
+            });
+            return false
+        }
+    }, [startDate])
+    
     
     useEffect(() => {
         
@@ -109,6 +151,7 @@ const Package = () => {
         }
 
     }, [PackageID])
+
     
     useEffect(() => {
         onPackages();
@@ -118,8 +161,9 @@ const Package = () => {
         dispatch(getUserWallet())
         onReadMore()
         localStorage.setItem('P_ID',24)
+        
     }, [])
-
+   
     console.log('UserWallet',UserWallet);
 
     useEffect(() => {
@@ -144,13 +188,6 @@ const Package = () => {
        
     // }, [subPackageID])
 
-    useEffect(() => {
-        
-        dispatch(getUserAddress())
-        dispatch(getAreaList())
-        
-     }, [Refresh])
-     
     
     const onPackages = () =>{
         var formData = new FormData
@@ -243,6 +280,13 @@ const Package = () => {
 
         dispatch(getCoupon(formData))
     }
+    
+    useEffect(() => {
+        if(UserWallet){
+            var amount = parseInt(UserWallet.wallet_amount)-WalletAmount
+            setFinalPrice(finalPrice-amount)
+        }
+    }, [SUBTOTAL])
 
     useEffect(() => {
         if(Coupon){
@@ -306,15 +350,6 @@ const Package = () => {
         
     }
 
-    useEffect(() => {
-        var amount = parseInt(UserWallet.wallet_amount)-WalletAmount
-      setFinalPrice(finalPrice-amount)
-    }, [SUBTOTAL])
-    
-    
-    console.log('finalPrice',finalPrice);
-    console.log('DISCOUNT',DISCOUNT);
-
     const [POP_UP, setPOP_UP] = useState(false)
 
     const EditAddress =()=>{
@@ -345,6 +380,8 @@ const Package = () => {
 
     const AddressSubmit =(e)=>{
         e.preventDefault()
+
+        setModalAddress(false)
         
         var formData = new FormData
         formData.append('user_id',localStorage.getItem('user_id'))
@@ -362,6 +399,12 @@ const Package = () => {
         dispatch(addAddress(formData))
     }
 
+    useEffect(() => {
+        dispatch(getUserAddress())
+        dispatch(getAreaList())
+    }, [])
+    
+    
     const PayNow = ()=>{
         if(USER_ID){
             if(!packageID){
@@ -418,7 +461,7 @@ const Package = () => {
             formData.append('delivery_method_id',deliveryMethod)
             formData.append('total_amount',finalPrice)
             formData.append('user_id',localStorage.getItem('user_id'))
-            formData.append('app_mode','dev')
+            formData.append('app_mode','prod')
 
             if(WalletSpend!==null){
                 formData.append('wallet_id',UserWallet.wallet_id)
@@ -448,6 +491,9 @@ const Package = () => {
     const SET_ID = (id)=>{
         localStorage.setItem('P_ID',id)
     }
+
+    console.log(packageID);
+    console.log(subPackageID);
   return (
     <>
     <Navbar/>
@@ -458,12 +504,8 @@ const Package = () => {
                     <div className="package-box">
                         <div className="select-package-carousel">
                             <h3 className="text-center text-transform-none color-black">Select a Package</h3>
-                            <div className="package-container swiper-container">
-                                <div className="swiper-wrapper" style={{
-                                            // border:"1px solid red",
-                                            display:'flex',
-                                            justifyContent:'center'
-                                        }}>
+                            <div className="PackageCards">
+                                <Slider {...settings} >
                                     {PackageList?PackageList.map((pack,index)=>(
                                         <div className="swiper-slide IMPORTANT2">
                                             <div className="package-card">
@@ -485,7 +527,7 @@ const Package = () => {
                                             </div>
                                         </div>
                                     )):null}
-                                </div>
+                                </Slider>
                             </div>
                             {/* <div className="package-button-prev swiper-button-prev"></div> */}
                             {/* <div className="package-button-next swiper-button-next"></div> */}
@@ -510,14 +552,13 @@ const Package = () => {
                             <div className="row">
                                 <div className="col-12">
                                 <div className="carousel-dishes">
-                                    <div className="dishes-container swiper-container" >
-                                        <div className="swiper-wrapper"style={{
-                                            marginBottom:'5px',
-                                            display:'flex',
-                                            justifyContent:'center'
-                                        }}>
+                                    <div className="dishes-container swiper-container" style={{
+                                        display:'flex',
+                                        justifyContent:'center'
+                                    }} >
+                                        <div className="swiper-wrapper row">
                                             {PackageDetails?PackageDetails.max_values_as_per_meal_type.filter(data=>data.meal_type_id!==1).map((value,index)=>(
-                                                <div className="swiper-slide IMPORTANT" >
+                                                <div className="swiper-slide col-lg-4 col-md-4 col-sm-12" style={{marginBottom:'1rem'}}>
                                                     <div className="dish-box meal-dish">
                                                         <h2><span>Choose Number of</span>{value.meal_type_id==2?'Meals':value.meal_type_id==3?'Snacks':value.meal_type_id==11?'Soups':''}</h2>
                                                         <ul className="unstyled dish-ul justify-content-between">
@@ -570,7 +611,7 @@ const Package = () => {
                             <div className="week-container menu-container">
                                 <div className="swiper-wrapper">
                                     <div className="swiper-slide WEEK DATE_STL">
-                                        <h3 style={{marginRight:'2rem'}}>Package Start Date</h3><input name='startDate' onChange={(e)=>setStartDate(e.target.value)} type="date" className="PACK_DATE" min={disablePastDate()}/>
+                                        <h3 style={{marginRight:'2rem'}}>Package Start Date</h3><input min={disablePastDate()} name='startDate' onChange={(e)=>setStartDate(e.target.value)} type="date" className="PACK_DATE" />
                                     </div>
                                 </div>
                             </div>
@@ -650,7 +691,7 @@ const Package = () => {
                         </div>:null}
                         <div className="row">
                             <div className="col-g-6 col-md-6 col-sm-6 starting-column">
-                                <div className="address-sub-div delivery-address">
+                                <div className="address-sub-div delivery-address" style={{height:'100%'}}>
 
                                     <div className="POP_UP" style={{display:POP_UP?'flex':'none'}}>
                                         <h4>You Are Not Logged In, Do You Want To Sign UP</h4>
@@ -660,7 +701,7 @@ const Package = () => {
                                         </div>
                                     </div>
                                     
-                                    <h3 className="text-left">Delivery Address <a onClick={()=>{
+                                    <h3 className="text-left addModelHead">Delivery Address <a onClick={()=>{
                                         EditAddress()
                                         setModalAddress(USER_ID?true:false)
                                     }} className="button change-btn">{UserAddress?'Change':'Add'}</a></h3>
@@ -701,19 +742,19 @@ const Package = () => {
                                 <div className="starting-box">
                                     <h4 className="text-center">Payment Method</h4>
                                     <p className="text-center">The Fridays will be the off days</p>
-                                    <div className="payment-method">
+                                    <div className="payment-method" style={{marginBottom:'1rem'}}>
                                         <div className="payment-detail">
                                             <ul className="unstyled">
-                                                <li><input onClick={()=>setPaymentType('knet')} type="radio" className="styled-checkbox" id="knet" name="payment" /><label htmlFor="knet" title="K-Net"><img src="img/k-net.png" alt="k net"/></label><div>k net</div></li>
+                                                <li><input onClick={()=>setPaymentType('knet')} type="radio" className="styled-checkbox" id="knet" name="payment" /><label htmlFor="knet" title="K-Net"><img src="img/k-net.png" alt="k net"/></label><div>K-NET</div></li>
                                                 <li><input onClick={()=>setPaymentType('visa')} type="radio" className="styled-checkbox" id="visa" name="payment" /><label htmlFor="visa" title="Credit Card"><img src="img/creditcard.png" alt="Credit Card"/></label><div>Credit Card</div></li>
                                                 {/* <li><input onClick={()=>setPaymentType('cash')} type="radio" className="styled-checkbox" id="cash" name="payment" /><label htmlFor="cash" title="Cash on Delivery"><img src="img/cash.png" alt="Cash on Delivery"/></label><div>Cash on Delivery</div></li> */}
                                             </ul>
                                         </div>
                                     </div>
-                                    <p className="text-center total-amount">SubTotal: <b>{SUBTOTAL.toFixed(3)}</b> KWD</p>
+                                    <p style={{fontSize:'1.3rem',fontWeight:'500'}} className="text-center total-amount">SubTotal: <b>{SUBTOTAL.toFixed(3)}</b> KWD</p>
                                     <p className="text-center total-amount">Wallet Spend: <b>{UserWallet?(parseInt(UserWallet.wallet_amount)-WalletAmount).toFixed(3):'0.000'}</b> KWD</p>
                                     <p className="text-center total-amount">Discount: <b>{DISCOUNT.toFixed(3)}</b> KWD</p>
-                                    <p className="text-center total-amount">Total: <strong>{finalPrice?finalPrice.toFixed(3):0.000}</strong> KWD</p>
+                                    <p style={{fontSize:'1.6rem',fontWeight:'500'}} className="text-center total-amount">Total: <strong>{finalPrice?finalPrice.toFixed(3):0.000}</strong> KWD</p>
                                     <div className="text-center"><button type="submit" onClick={PayNow} className="button">Pay Now</button></div>
                                 </div>	
                             </div>
@@ -794,19 +835,8 @@ const Package = () => {
             </div>
         </div> */}
         		
-        <div style={{
+        <div className="ModelAddress" style={{
             display: modalAddress?'block':'none',
-            position:'absolute',
-            bottom: '-75rem',
-            left:'0',
-            right:'0',
-            margin: '0 auto',
-            zIndex:'100',
-            background: '#fff',
-            width:'40%',
-            padding: "2rem",
-            borderRadius:'7px',
-            boxShadow:'3px 3px 5px grey',
         }}>
              <span style={{
                 position:'absolute',
@@ -882,7 +912,7 @@ const Package = () => {
                         <div className="inputbox"><input required value={address.directions} name='directions' onChange={AddressChange} type="text"  placeholder="Directions" className="form-control"/></div>
                     </div>
                 </div>
-                <div className="col-12 anim7"><button onClick={()=>setModalAddress(false)} className="button" type="submit" title="Close">Submit</button></div>
+                <div className="col-12 anim7"><button className="button" type="submit" title="Close">Submit</button></div>
             </form>
         </div>
     </>

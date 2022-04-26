@@ -1,0 +1,294 @@
+.S_BOX{
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+}
+
+.S_CARD1 > div{
+    /* border: 1px solid red; */
+    position: relative;
+}
+
+.S_CARD1 p {
+    /* border: 1px solid green; */
+    text-align: center;
+    font-size: 1.9rem;
+    margin-top: 1rem;
+}
+
+.s_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* filter: blur(5px) contrast(10); */
+    mix-blend-mode: screen !important;
+}
+.s_visualizer{
+    position: relative;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: #C5251C;
+    transition: 0.5s;
+    transform: rotateZ(180deg);
+}
+.s_play{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 220px;
+    height: 220px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.s_btn_play{
+    border-left:70px solid #C5251C ;
+    border-bottom: 40px solid transparent;
+    border-top: 40px solid transparent;
+    cursor: pointer;
+}
+.s_btn_pause{
+    border-right:20px solid #C5251C ;
+    border-left:20px solid #C5251C ;
+    height: 70px;
+    width: 55px;
+    cursor: pointer;
+}
+
+
+
+
+.s_box2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* filter: blur(5px) contrast(10); */
+    mix-blend-mode: screen !important;
+}
+.s_visualizer2{
+    position: relative;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: #C5251C;
+    transition: 0.5s;
+    transform: rotateZ(180deg);
+}
+.s_play2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 220px;
+    height: 220px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.s_btn_play2{
+    border-left:70px solid #C5251C ;
+    border-bottom: 40px solid transparent;
+    border-top: 40px solid transparent;
+    cursor: pointer;
+}
+.s_btn_pause2{
+    border-right:20px solid #C5251C ;
+    border-left:20px solid #C5251C ;
+    height: 70px;
+    width: 55px;
+    cursor: pointer;
+}
+
+
+
+
+
+.s_box3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* filter: blur(5px) contrast(10); */
+    mix-blend-mode: screen !important;
+}
+.s_visualizer3{
+    position: relative;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: #C5251C;
+    transition: 0.5s;
+    transform: rotateZ(180deg);
+}
+.s_play3{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 220px;
+    height: 220px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.s_btn_play3{
+    border-left:70px solid #C5251C ;
+    border-bottom: 40px solid transparent;
+    border-top: 40px solid transparent;
+    cursor: pointer;
+}
+.s_btn_pause3{
+    border-right:20px solid #C5251C ;
+    border-left:20px solid #C5251C ;
+    height: 70px;
+    width: 55px;
+    cursor: pointer;
+}
+
+
+
+.s_box4{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* filter: blur(5px) contrast(10); */
+    mix-blend-mode: screen !important;
+}
+.s_visualizer4{
+    position: relative;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: #C5251C;
+    transition: 0.5s;
+    transform: rotateZ(180deg);
+}
+.s_play4{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 220px;
+    height: 220px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.s_btn_play4{
+    border-left:70px solid #C5251C ;
+    border-bottom: 40px solid transparent;
+    border-top: 40px solid transparent;
+    cursor: pointer;
+}
+.s_btn_pause4{
+    border-right:20px solid #C5251C ;
+    border-left:20px solid #C5251C ;
+    height: 70px;
+    width: 55px;
+    cursor: pointer;
+}
+
+
+
+.s_box5{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* filter: blur(5px) contrast(10); */
+    mix-blend-mode: screen !important;
+}
+.s_visualizer5{
+    position: relative;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: #C5251C;
+    transition: 0.5s;
+    transform: rotateZ(180deg);
+}
+.s_play5{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 220px;
+    height: 220px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.s_btn_play5{
+    border-left:70px solid #C5251C ;
+    border-bottom: 40px solid transparent;
+    border-top: 40px solid transparent;
+    cursor: pointer;
+}
+.s_btn_pause5{
+    border-right:20px solid #C5251C ;
+    border-left:20px solid #C5251C ;
+    height: 70px;
+    width: 55px;
+    cursor: pointer;
+}
+
+
+
+.s_box6{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* filter: blur(5px) contrast(10); */
+    mix-blend-mode: screen !important;
+}
+.s_visualizer6{
+    position: relative;
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    background: #C5251C;
+    transition: 0.5s;
+    transform: rotateZ(180deg);
+}
+.s_play6{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 220px;
+    height: 220px;
+    background: #fff;
+    border-radius: 50%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.s_btn_play6{
+    border-left:70px solid #C5251C ;
+    border-bottom: 40px solid transparent;
+    border-top: 40px solid transparent;
+    cursor: pointer;
+}
+.s_btn_pause6{
+    border-right:20px solid #C5251C ;
+    border-left:20px solid #C5251C ;
+    height: 70px;
+    width: 55px;
+    cursor: pointer;
+}

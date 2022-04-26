@@ -19,14 +19,60 @@ code {
   /* margin-bottom: 1rem; */
   /* border:1px solid red; */
 }
+.PackageCards{
+  /* border: 1px solid red; */
+  width: 100%;
+ 
+}
+.FTR{
+  /* width: 100%; */
+}
+
+.HomeSlider button{
+  width: 50px;
+  opacity: 1;
+  z-index: 15000;
+}
+.HomeSlider .slick-prev{
+  /* right: 1px; */
+}
+.HomeSlider .slick-next{
+  /* right: -5px; */
+}
+
+.HomeSlider .slick-prev::before{
+  color: #C5251C;
+}
+.HomeSlider .slick-next::before{
+  color: #C5251C;
+}
+.FTR{
+  width: 100%;
+  overflow: visible;
+}
+.FTRSlider button{
+  width: 50px;
+  opacity: 1;
+  z-index: 15000;
+}
+
+.FTRSlider .slick-prev::before{
+  color: #C5251C;
+}
+.FTRSlider .slick-next::before{
+  color: #C5251C;
+}
 
 .IMPORTANT{
-  width: 360px !important;
-  margin-right: 15px !important;
+  width: 100% !important;
+  /* margin-right: 15px !important; */
+}
+.IMPORTANT > div {
+  margin: 0 5px;
 }
 .IMPORTANT2{
-  width: 370px !important;
-  margin: 0px 7px;
+  width: 100% !important;
+  /* margin: 0px 7px; */
 }
 .WEEK{
   width: 176px;
@@ -191,7 +237,10 @@ code {
 .package-dtl p:nth-child(2){
   display: none;
 }
-
+.FTR_BOX{
+  /* border: 1px solid red; */
+  padding: 0 5px !important;
+}
 .FTR_BOX .feature-box > p{
   /* border: 1px solid red; */
   height: 5.5rem;
@@ -352,3 +401,8 @@ code {
   margin: 1rem;
   margin-bottom: 0.2rem;
 }
+
+.week-container .swiper-slide .styled-checkbox + label::before{
+  z-index: -100;
+}
+

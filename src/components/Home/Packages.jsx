@@ -6,8 +6,35 @@ import { toast } from "react-toastify";
 import { getPackageList } from "../../Actions/homeActions";
 import { Link } from "react-router-dom";
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+
 
 const Packages = () => {
+
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        initialSlide: 0,
+        className:'HomeSlider',
+        responsive:[
+            {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                  infinite: true,
+                  dots: true
+                }
+            },
+        ]
+      };
+
     const dispatch = useDispatch()
 
     const PackageList = useSelector(state => state.home.PackageList);
@@ -44,42 +71,25 @@ const Packages = () => {
                                             display:'flex',
                                             justifyContent:'center'
                                         }}>
-                                            <div
-                                                class="package-container swiper-container swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
-                                                <div class="swiper-wrapper" id="swiper-wrapper-4a983da3c1b2fefc"
-                                                    aria-live="polite" >
+                                            <div class="PackageCards">
+                                                <Slider {...settings}>
                                                         {PackageList?PackageList.map((pack,index)=>(
                                                             <div class="swiper-slide IMPORTANT"  role="group" aria-label="1 / 6">
-                                                            <div class="package-card">
-                                                                <div class="package-img"><img src={pack.package_master_id==24?"img/sumbatik.jpg":pack.package_master_id==26?"img/FiT.jpg":pack.package_master_id==28?"img/Bulk.jpg":null}
-                                                                        class="img-fluid" alt="Sumbatik"/>
-                                                                    <div class="package-head">
-                                                                        <h2>{pack.package_name}</h2>
-                                                                        <p>{pack.gram_label}</p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="package-dtl">
-                                                                    {/* <h3>Popular amongst those</h3>
-                                                                    <p>Whose looking for weight lose and get in shape</p>
-                                                                    <h4>Most popular Meals choice</h4> */}
-                                                                    <h5><div dangerouslySetInnerHTML={{__html:pack.description}} /></h5>
-                                                                    <ul>
-                                                                        <li><img src="img/meals.svg" alt="Meals"/>3 Meals</li>
-                                                                        <li><img src="img/snack.svg" alt="snack"/>2 snack</li>
-                                                                        <li><img src="img/soup.svg" alt="soup"/>1 soup</li>
-                                                                    </ul>
-                                                                    <div class="price-subscribe d-flex justify-content-between">
-                                                                        <div>
-                                                                            <p><strong>Starting from</strong>Starting from 150
-                                                                                KWD</p>
+                                                                <div class="package-card">
+                                                                    <div class="package-img"><img src={pack.package_master_id==24?"img/sumbatik.jpg":pack.package_master_id==26?"img/FiT.jpg":pack.package_master_id==28?"img/Bulk.jpg":null}
+                                                                            class="img-fluid" alt="Sumbatik"/>
+                                                                        <div class="package-head">
+                                                                            <h2>{pack.package_name}</h2>
+                                                                            <p>{pack.gram_label}</p>
+                                                                            <div><Link to={`/PACKAGE/${pack.package_master_id}`} type="submit" class="button">Subscribe Now</Link></div>
                                                                         </div>
-                                                                        <div><Link to={`/PACKAGE/${pack.package_master_id}`} type="submit" class="button">Subscribe Now</Link></div>
+                                                                    
                                                                     </div>
                                                                 </div>
-                                                            </div>
                                                             </div>
                                                         )):null}
-                                                </div>
+                                                       
+                                                </Slider>
                                             </div>
                                         </div>
                                     </div>

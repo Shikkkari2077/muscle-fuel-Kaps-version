@@ -25,7 +25,7 @@ const RoutesPage = () => {
       <ToastContainer></ToastContainer>
         {Refresh?<Loading/>:null}
         <Routes>
-         {render?<Route exact path='/myProfile' element={<MyProfile /> }/>:null}
+         {/* {render?<Route exact path='/myProfile' element={<MyProfile /> }/>:null} */}
 
           <Route exact path='/' element={<Home/> }/>
           <Route exact path='/PACKAGE/:PackageID' element={<Package/>}/>

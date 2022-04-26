@@ -13,6 +13,7 @@ const Navbar = () => {
     })
     const [logOutBTN, setlogOutBTN] = useState(false)
     const [navActive, setNavActive] = useState(1);
+    const [Toggle, setToggle] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -51,10 +52,10 @@ const Navbar = () => {
                 <div className="col-12 d-flex justify-content-between">
                     <Link to='/' className="muscle-fuel"><img src="img/muscle-fuel.svg" alt="Muscle Fuel"/></Link>
                     <div className="navigation">
-                        <div className="wsmenucontainer clearfix">
+                        <div className={Toggle?"wsmenucontainer clearfix wsoffcanvasopener":"wsmenucontainer clearfix"}>
                             <div className="overlapblackbg"></div>
                             <div className="wsmobileheader clearfix">
-                                <a id="wsnavtoggle" className="animated-arrow"><span></span></a>
+                                <a id="wsnavtoggle" className="animated-arrow"><span onClick={()=>{setToggle(!Toggle)}}></span></a>
                             </div>
                             <div className="wsmain">
                                 <nav className="wsmenu clearfix">

@@ -1,0 +1,327 @@
+.welcomeContainer{
+    /* border: 1px solid red; */
+    background-image: url(/public/images/banner.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+  }
+  .H_SEC_Banner{
+    opacity: 1;
+    /* height: 400px; */
+    overflow: visible;
+    background-color: rgb(255, 255, 255);
+  }
+  .H_SEC_SEE_MENU{
+    opacity: 1;
+    height: 650px;
+  }
+
+  .BannerText h2 span{
+    color: rgb(22, 22, 22);
+  }
+  .BannerText h2{
+    font-size: 4rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+  }
+  .BannerText p{
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+  }
+  .BannerText > div{
+      margin-top: 2rem;
+  }
+  .BannerText > div a{
+      margin-right: 1rem;
+  }
+  .BannerText > div a:nth-child(2){
+      background: #fff;
+      color: #C5251C;
+      border:2px solid #C5251C;
+  }
+  .BannerText > div a:nth-child(2):hover{
+    background: #C5251C;
+    color: #fff;
+  }
+
+  .banner-buttons{
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    border-bottom: 1px solid #e5e5e5;
+    background: #fff;
+    padding: 25px 0;
+  }
+
+  
+
+  .banner-buttons a {
+    color: #C5251C;
+    font-size: 22px;
+    position: relative;
+    display: inline-block;
+    padding: 0 0 0 40px;
+}
+.banner-buttons a:hover{
+  color: rgb(5, 56, 133);
+}
+.banner-buttons a:nth-child(2)::before {
+  background: url(/public/images/icon2.jpg) center center no-repeat;
+  background-size: 100% auto;
+}
+.banner-buttons a::before {
+  content: '';
+  width: 30px;
+  height: 30px;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 3px;
+}
+.banner-buttons a:nth-child(1)::before {
+  background: url(/public/images/icon1.jpg) center center no-repeat;
+  background-size: 100% auto;
+}
+.banner-buttons a:nth-child(2)::before {
+  background: url(/public/images/icon2.jpg) center center no-repeat;
+  background-size: 100% auto;
+}
+.banner-buttons a:nth-child(3)::before {
+  background: url(/public/images/icon3.jpg) center center no-repeat;
+  background-size: 100% auto;
+}
+
+
+
+.SeeMenuContainer{
+  background: linear-gradient( rgba(248, 248, 248, 0.582), rgba(235, 235, 235, 0.562)),url(/public/images/menu-bg.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size:cover;
+}
+.SeeMenuContainer > div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20rem;
+}
+.see-the-menu-btn {
+  display: inline-block;
+  font-size: 70px;
+  background: #C5251C;
+  padding: 50px 100px;
+  color: #fff;
+  text-transform: uppercase;
+}
+.see-the-menu-btn:hover{
+  background:#000;
+  color: #fff;
+}
+.SOTRY_CARD{
+  /* border: 1px solid red; */
+  width: 15vw;
+  height: 15vw;
+}
+.SOTRY_CARD .stories-box > p{
+  font-size: 1.3rem;
+}
+.StorySlider{
+  display: flex;
+}
+.StorySlider button{
+  width: 50px;
+  opacity: 1;
+  z-index: 15000;
+}
+.StorySlider .slick-prev::before{
+  color: #C5251C;
+}
+.StorySlider .slick-next::before{
+  color: #C5251C;
+}
+
+.ModelAddress{
+  position:absolute;
+  bottom: -75rem;
+  left:0;
+  right:0;
+  margin: 0 auto;
+  z-index:100;
+  background: #fff;
+  width:500px;
+  padding: 2rem;
+  border-radius:7px;
+  box-shadow:3px 3px 5px grey;
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1439px){
+  .see-the-menu-btn {
+    font-size: 55px;
+    padding: 30px 80px;
+}
+}
+
+
+@media screen and (max-width: 768px){
+  .FeatureSlider .slick-slide {
+    margin: 0 20px;
+  }
+  .IMPORTANT >div{
+    margin: 0 5px;
+  }
+  .welcomeContainer{
+    background-size:cover;
+  }
+  .page-div{
+    min-height: 33vh;
+  }
+  .page-sub {
+    margin-top: 0px;
+  }
+  .BannerText h2{
+    font-size: 1.7rem;
+  }
+  .BannerText p{
+      font-size: 0.93rem;
+      margin-bottom: 0rem;
+      line-height: 1.5rem;
+  }
+  .BannerText > div{
+      margin-top: 0rem;
+  }
+  .BannerText > div a{
+      margin-bottom: 0.5rem;
+  }
+  .banner-buttons{
+    bottom: -150px;
+  }
+  .banner-buttons div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  
+  .banner-buttons a {
+    font-size: 18px;
+  }
+  .banner-buttons a::before {
+    width: 25px;
+    height: 25px;
+  }
+
+  .H_SEC_SEE_MENU{
+    height: 200px;
+  }
+
+  .SeeMenuContainer > div{
+    padding-top: 0rem;
+  }
+
+  .see-the-menu-btn {
+    font-size: 26px;
+    padding: 20px 45px;
+  }
+
+  .days-ul li .styled-checkbox + label{
+    width: 50px;
+    height: 50px;
+  }
+  .days-ul li .styled-checkbox + label h2{
+    font-size: 1.1rem !important;
+    line-height: 15px;
+  }
+  .days-ul li .styled-checkbox + label p{
+    font-size: 0.8rem !important;
+  }
+  .DATE_STL{
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+  }
+  .DATE_STL input{
+    margin: 0 20px;
+  }
+
+
+  .navigation .subscribe-div .button{
+
+    display: none;
+  }
+  .USER_NAME span {
+    font-weight: 600;
+    font-size: 1rem;
+    padding-left: 1rem;
+    color: #C5251C;
+    position: relative;
+    left: 30px;
+  }
+    .USER_PHOTO{
+      overflow: visible;
+    }
+  .USER_PHOTO span {
+    font-size: 2.5rem;
+    position: relative;
+    top: 10px;
+    left: 40px;
+  }
+
+  .week-container {
+   /* border: 1px solid red; */
+   overflow-y: scroll;
+  }
+  .week-container::-webkit-scrollbar{
+    /* display: none; */
+  }
+
+  .ModelAddress{
+    bottom: -120rem;
+    width:370px;
+    padding: 0.5rem;
+    box-shadow:0px 0px 5px grey;
+  }
+  .addModelHead{
+    font-size: 1.3rem !important;
+  }
+  .delivery-time li .styled-checkbox + label::after{
+    left: 45%;
+  }
+
+  .POP_UP{
+    position: absolute;
+    padding: 1rem 1rem;
+    right: 35px;
+    top: 200px;
+    z-index: 100;
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 0px 0px 10px  rgba(0, 0, 0, 0.322);
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .POP_UP h4{
+    text-align: center;
+    color: #000;
+    font-size: 1.2rem;
+  }
+  .POP_UP div a{
+    margin: 1rem;
+    margin-bottom: 0.2rem;
+  }
+  .banner-right{
+    display: none;
+  }
+  .sign-in-main {
+    min-height: 50vh;
+}
+
+.sign-in-main h2{
+  font-size: 2rem !important;
+}
+.LOGOUT{
+  right: 2rem;
+  bottom: -1.5rem;
+}
+}
